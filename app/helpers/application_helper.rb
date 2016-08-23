@@ -9,7 +9,7 @@ module ApplicationHelper
             link_to link.first, link.last
           end
         end
-      end.join().html_safe
+      end.join.html_safe
     end
   end
 end
