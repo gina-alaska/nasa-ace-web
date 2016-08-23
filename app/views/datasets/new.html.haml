@@ -1,0 +1,12 @@
+= breadcrumbs([['Home', root_url], ['Datasets', datasets_url], ['Create dataset']])
+
+.container-fluid
+  .row
+    .col-sm-2
+      A dataset is a collection of data resources
+    .col-sm-10
+      .panel.panel-default
+        .panel-heading
+          %h1.panel-title Create dataset
+        .panel-body
+          = render 'form'

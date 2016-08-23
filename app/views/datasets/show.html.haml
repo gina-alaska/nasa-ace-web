@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @dataset.title
+%p
+  %b Description:
+  = @dataset.description
+%p
+  %b Source:
+  = @dataset.source
+%p
+  %b Version:
+  = @dataset.version
+
+= link_to 'Edit', edit_dataset_path(@dataset)
+\|
+= link_to 'Back', datasets_path

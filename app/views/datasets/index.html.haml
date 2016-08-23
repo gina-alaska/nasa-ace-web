@@ -1,0 +1,13 @@
+= breadcrumbs([['Home', root_url], ['Datasets', datasets_url]])
+
+.row
+  .col-sm-3
+  .col-sm-9
+    = link_to 'Add dataset', new_dataset_url, class: 'btn btn-primary'
+
+    - @datasets.each do |dataset|
+      .dataset
+        %h4.title
+          = link_to dataset.title, dataset
+        %p.description
+          = dataset.description

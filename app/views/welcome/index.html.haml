@@ -1,0 +1,50 @@
+.welcome-banner
+.search-buttons.btn-group.btn-group-lg.btn-group-justified{ role: 'group' }
+  = link_to 'datasets?q=Sea+Ice', class: 'btn btn-default' do
+    Sea Ice
+  = link_to 'datasets?q=Oceans', class: 'btn btn-default' do
+    Oceans
+  = link_to 'datasets?q=Basemaps', class: 'btn btn-default' do
+    Basemaps
+  = link_to 'datasets?q=Wind', class: 'btn btn-default' do
+    Wind
+  = link_to 'datasets?q=Permafrost', class: 'btn btn-default' do
+    Permafrost
+  = link_to 'datasets?q=Vegetation', class: 'btn btn-default' do
+    Vegetation
+  = link_to 'datasets?q=Airports', class: 'btn btn-default' do
+    Airports
+  = link_to 'datasets?q=Migration', class: 'btn btn-default' do
+    Migration
+.container-fluid
+  .row
+    .col-sm-9
+      .well-sm.well
+        %p
+          Arctic Collaborative Environment (ACE) Joint Capability Technology Demonstration (JCTD) is an internet-based, open-access, Arctic-focused, environmental research and decision support system that integrates data from existing remote sensing assets with products from existing and new environmental models to provide monitoring, analysis, and visualization based on earth observation data and modeling. With an initial focus on the Arctic region, researchers, students, search-and-rescue operators, native hunters, etc. can draw from the open-access data. The goal of the ACE JCTD is to enable local, regional, and international cooperation and coordination on long-term environmental planning and near-term actions in response to climatic and environmental changes occurring in the Arctic Region.
+
+        %p
+          ACE is jointly developed by National Aeronautics and Space Administration NASA, U.S. European Command USEUCOM, Von Braun Center for Science and Innovation VCSI, North American Aerospace Defense Command NORAD / U.S. Northern Command USNORTHCOM, University of Alaska Fairbanks UAF and University of Alabama in Huntsville UAH.
+
+      .row-fluid
+        .col-sm-4.text-center
+          .btn.btn-default.btn-block
+            %span.text Most Popular Datasets
+
+        .col-sm-4.text-center
+          .btn.btn-default.btn-block
+            %span.text Recently Added Datasets
+
+        .col-sm-4.text-center
+          .btn.btn-default.btn-block
+            %span.text Popular Groups
+
+
+    .col-sm-3
+      .img-preview.thumbnail
+        %h4.text-center Current Daily Seaice Concentration
+        = image_tag("http://nsidc.org/data/seaice_index/images/daily_images/N_bm_conc.png")
+
+      .img-preview.thumbnail
+        %h4.text-center Arctic Cap Nowcast/Forecast
+        = image_tag("http://www7320.nrlssc.navy.mil/hycomARC/navo/arcticicespddrf_nowcast_anim30d.gif")

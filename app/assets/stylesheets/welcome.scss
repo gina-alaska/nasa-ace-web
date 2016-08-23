@@ -1,0 +1,63 @@
+// Place all the styles related to the Welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.img-preview img {
+  max-width: 100%;
+}
+
+.footer {
+  padding: 20px;
+  background: #005d7a asset-url("bg.png");
+  color: #fff;
+  font-size: 20px;
+
+  .footer-wrapper {
+    height: 200px;
+    text-align: center;
+  }
+
+  p {
+    margin: 0px 40px;
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    -webkit-transform: perspective(1px) translateY(-50%);
+    -ms-transform: perspective(1px) translateY(-50%);
+    transform: perspective(1px) translateY(-50%);
+  }
+}
+
+.welcome-banner {
+  margin-top: -20px;
+  height: 300px;
+  background-image: asset-url('mountains.jpg');
+  background-size: cover;
+}
+
+.quick-buttons {
+  margin-top: 50px;
+  text-align: center;
+  .btn-default {
+    text-align: center;
+    line-height: normal;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    padding: 20px 10px;
+    white-space:normal;
+    font-size: 20px;
+  }
+
+  .text {
+  }
+}
+
+.search-buttons {
+  margin-bottom: 20px;
+}
+
+.search-buttons.btn-group-lg > .btn {
+  border-radius: 0px;
+  height: 100px;
+}

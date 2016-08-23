@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Arctic Collaborative Environment
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    .container
+      %nav.navbar.navbar-default.navbar-static-top
+        .container-fluid
+          .navbar-header
+            %button.navbar-toggle.collapsed{ type: 'button', data: { toggle: 'collapse', target: '#navbar' }}
+              %span.sr-only Toggle Navigation
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            = link_to 'Arctic Collaborative Environment', root_url, class: 'navbar-brand'
+          #navbar.collapse.navbar-collapse
+            %ul.nav.navbar-nav.navbar-right
+              %li= link_to 'Home', '#'
+              %li= link_to 'About', '#'
+              %li= link_to 'Groups', '#'
+              %li= link_to 'Workspace', '#'
+              %li= link_to 'Datasets', '#'
+              %li= link_to 'Help', '#'
+
+    .container
+      .content
+        = yield
+
+      %section.footer
+        .footer-wrapper
+          %p
+            = image_tag 'ace_logo.png'
+          %p
+            ACE Proudly Partners with
+            %br/
+            = image_tag 'exact_earth.png'
