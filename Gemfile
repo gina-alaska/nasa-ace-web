@@ -54,4 +54,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '3.3.7'
 end
 
-gem 'simplecov', :require => false, :group => :test
+group :test do
+  gem 'simplecov', require: false
+  gem 'rubocop', require: false
+end

@@ -1,0 +1,50 @@
+Rails:
+  Enabled: true
+
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'bin/*'
+    - 'vendor/**/*'
+
+# Offense count: 124
+# Configuration parameters: AllowHeredoc, AllowURI, URISchemes.
+# URISchemes: http, https
+Metrics/LineLength:
+  Max: 180
+
+Style/AlignHash:
+  Enabled: false
+
+# Offense count: 2
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: nested, compact
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# Offense count: 20
+Style/Documentation:
+  Enabled: false
+
+# Offense count: 103
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
+# SupportedStyles: single_quotes, double_quotes
+Style/StringLiterals:
+  Enabled: false
+
+# Offense count: 2
+# Cop supports --auto-correct.
+Style/TrailingWhitespace:
+  Exclude:
+    - 'config/initializers/active_record_belongs_to_required_by_default.rb'
+    - 'config/initializers/callback_terminator.rb'
+
+Metrics/AbcSize:
+  Max: 20
+
+# Method length
+Metrics/MethodLength:
+  Max: 25
