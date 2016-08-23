@@ -1,5 +1,5 @@
 test:
   adapter: postgresql
-  database: travis_ci_test
-  username: postgres
+  database: travis
+  username: travis
   client_encoding: UTF8
