@@ -1,0 +1,17 @@
+.map-container
+  .map-sidebar
+    = link_to 'Edit', edit_workspace_path(@workspace)
+    \|
+    = link_to 'Back', workspaces_path
+  .map-content
+    #map.map
+
+
+:javascript
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
+  var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/satellite-streets-v9'
+  });
+  var nav = new mapboxgl.Navigation({position: 'top-left'}); // position is optional
+  map.addControl(nav);

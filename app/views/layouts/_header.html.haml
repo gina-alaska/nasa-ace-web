@@ -1,0 +1,17 @@
+%nav.navbar.navbar-default.navbar-static-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{ type: 'button', data: { toggle: 'collapse', target: '#navbar' }}
+        %span.sr-only Toggle Navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to 'Arctic Collaborative Environment', root_url, class: 'navbar-brand'
+    #navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        %li= link_to 'Home', '#'
+        %li= link_to 'About', '#'
+        %li= link_to 'Groups', '#'
+        %li= link_to 'Workspace', workspaces_path
+        %li= link_to 'Datasets', '#'
+        %li= link_to 'Help', '#'
