@@ -1,17 +1,42 @@
-.map-container
-  .map-sidebar
-    = link_to 'Edit', edit_workspace_path(@workspace)
-    \|
-    = link_to 'Back', workspaces_path
+#workspace-map.map-container
+  .map-sidebar{ data: { behavior: 'hover-toggle', target: '#workspace-map', class: 'expand' } }
+    %h4.text-center
+      .hide-collapsed Workspace
+      .show-collapsed WS
+
+    .list-group
+      = link_to workspaces_path, class: 'list-group-item' do
+        %i.fa.fa-fw.fa-arrow-left
+        %span.hide-collapsed Close
+
+      = link_to edit_workspace_path(@workspace), class: 'list-group-item' do
+        %i.fa.fa-fw.fa-gear
+        %span.hide-collapsed Settings
+
+    %h5.text-left
+      .hide-collapsed Layers
+      .show-collapsed &nbsp;
+    .list-group
+      = link_to '#style-list', class: 'list-group-item', data: { toggle: 'collapse' } do
+        %i.fa.fa-fw.fa-globe
+        %span.hide-collapsed Base Layer
+        .pull-right.hide-collapsed
+          %i.fa.fa-caret-left.rotatable
+      #style-list.list-group.sub.collapse
+        = link_to 'Mapbox Satellite', '#', class: 'list-group-item map-style active', data: { behavior: 'switch-base', name: 'satellite' }
+        = link_to 'Mapbox Streets', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'streets' }
+        = link_to 'Mapbox Light', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'light' }
+        = link_to 'Mapbox Dark', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'dark' }
+
+
+      = link_to '#overlay-layer-list', class: 'list-group-item', data: { toggle: 'collapse' } do
+        %i.fa.fa-fw.fa-map-o
+        %span.hide-collapsed Overlays
+        .pull-right.hide-collapsed
+          %i.fa.fa-caret-left.rotatable
+      #overlay-layer-list.list-group.sub.collapse
+        = link_to 'GINA Orthomosaic', '#', class: 'list-group-item layer active', data: { name: 'GINA Orthomosaic', behavior: 'add-layer', url: 'http://tiles.gina.alaska.edu/tiles/SPOT5.SDMI.ORTHO_RGB/tile/{x}/{y}/{z}', type: 'tile'  }
+        = link_to 'IMIQ Sites', '#', class: 'list-group-item layer', data: { name: 'IMIQ Sites', behavior: 'add-layer', url: 'http://imiq-api.gina.alaska.edu/sites.geojson?limit=5000', type: 'geojson'  }
+
   .map-content
     #map.map
-
-
-:javascript
-  mapboxgl.accessToken = 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
-  var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/satellite-streets-v9'
-  });
-  var nav = new mapboxgl.Navigation({position: 'top-left'}); // position is optional
-  map.addControl(nav);
