@@ -69,6 +69,6 @@ class WorkspacesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def workspace_params
-      params.require(:workspace).permit(:name)
+      params.require(:workspace).permit(:name, :center_lat, :center_lng, :zoom)
     end
 end

@@ -54,7 +54,7 @@ $sidebar_color: #242424;
 
   .map-content {
     position: absolute;
-    top: 0px;
+    top: 1px;
     bottom: 0px;
     left: 50px;
     right: 0px;
@@ -103,4 +103,9 @@ $sidebar_color: #242424;
 
 .workspaces .navbar {
   margin-bottom: 0px;
+}
+
+.mapboxgl-popup-content {
+  max-height: 300px;
+  overflow: auto;
 }

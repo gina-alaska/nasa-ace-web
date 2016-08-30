@@ -10,7 +10,7 @@
         %span.hide-collapsed Close
 
       = link_to edit_workspace_path(@workspace), class: 'list-group-item' do
-        %i.fa.fa-fw.fa-gear
+        %i.fa.fa-fw.fa-gear.loading
         %span.hide-collapsed Settings
 
     %h5.text-left
@@ -37,6 +37,7 @@
       #overlay-layer-list.list-group.sub.collapse
         = link_to 'GINA Orthomosaic', '#', class: 'list-group-item layer active', data: { name: 'GINA Orthomosaic', behavior: 'add-layer', url: 'http://tiles.gina.alaska.edu/tiles/SPOT5.SDMI.ORTHO_RGB/tile/{x}/{y}/{z}', type: 'tile'  }
         = link_to 'IMIQ Sites', '#', class: 'list-group-item layer', data: { name: 'IMIQ Sites', behavior: 'add-layer', url: 'http://imiq-api.gina.alaska.edu/sites.geojson?limit=5000', type: 'geojson'  }
-
   .map-content
-    #map.map
+    %nav.navbar.navbar-inverse.navbar-static-top{ style: 'margin-bottom: 0px;'}
+      %i.fa.fa-spinner.loading.navbar-text.pull-right{ style: 'font-size: 20px;'}
+    #map.map{ data: { center: [@workspace.center_lng.to_f, @workspace.center_lat.to_f], zoom: @workspace.zoom } }

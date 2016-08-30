@@ -5,20 +5,53 @@
 class Workspace
   constructor: (el) ->
     @workspace = $(el)
+    @clickable_layers = []
     @sidebar = $($(el).find('.map-sidebar'))
     @klass = $(@sidebar).data('class')
     @style = "mapbox://styles/mapbox/satellite-streets-v9"
+    center = $(el).find('.map').data('center')
+    zoom = $(el).find('.map').data('zoom')
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
     nav = new mapboxgl.Navigation({position: 'top-left'});
     @map = new mapboxgl.Map({
         container: 'map',
         style: @style,
-        center: [-147.8, 64.85],
-        zoom: 3
+        center: if center? then center else [-147.8, 64.85],
+        zoom: if zoom? then zoom else 3
     });
     @map.style.on 'load', @load
+    @map.on 'click', @featurePopup
     @map.addControl(nav)
+
+  featurePopup: (e) =>
+    features = @map.queryRenderedFeatures(e.point, { layers: @clickable_layers });
+    return if !features.length
+
+    feature = features[0]
+
+    html = "<h5>#{features.length} features found</h5>"
+    for feature in features
+      html += @buildHtml(feature.properties)
+
+    @buildPopup(feature.geometry.coordinates, html)
+
+  buildPopup: (coordinate, html) =>
+    popup = new mapboxgl.Popup()
+      .setLngLat(coordinate)
+      .setHTML(html)
+      .addTo(@map)
+
+  buildHtml: (properties) =>
+    @buildKeyValueHTML(properties)
+
+  buildKeyValueHTML: (properties) =>
+    html = "<table class='table table-bordered table-striped'>"
+    for name, value of properties
+      html += "<tr><td>#{name}</td><td>#{value}</td></tr>"
+    html += "</table>"
+
+    html
 
   addGeoJSONSource: (el) =>
     @map.addSource(el.data('name'), {
@@ -50,7 +83,6 @@ class Workspace
 
     if layer?
       visibility = @map.getLayoutProperty(layer_name, 'visibility')
-      console.log visibility
       if visibility == 'visible'
         @hideLayer(layer_name)
       else
@@ -58,7 +90,12 @@ class Workspace
 
       return @map.getLayoutProperty(layer_name, 'visibility') == 'visible'
     else
+      @loading()
       @addLayer(target)
+
+      source = @map.getSource(target.data('name'))
+      source.on 'load', @loaded
+
       return true
 
 
@@ -66,10 +103,11 @@ class Workspace
     @map.setLayoutProperty(layer, 'visibility', 'none')
   showLayer: (layer) =>
     @map.setLayoutProperty(layer, 'visibility', 'visible')
-    console.log 'test'
 
   addLayer: (target) =>
     layout = { 'visibility': 'visible' }
+    clickable = false
+
     if target.data('type') == 'wms'
       @addWMSSource(target)
       type = 'raster'
@@ -84,6 +122,7 @@ class Workspace
       paint = {
         'circle-color': 'rgba(255, 0,0, 0.8)'
       }
+      clickable = true
 
     @map.addLayer({
       id: "#{target.data('name')}-layer",
@@ -93,9 +132,23 @@ class Workspace
       paint: paint
     })
 
+    if clickable == true
+      @clickable_layers.push "#{target.data('name')}-layer"
+
   load: =>
     $('.layer.active').each (index, el) =>
       @toggleLayerFromEl(el)
+
+  loading: =>
+    @loading_count ||= 0
+    @loading_count += 1
+    $('.loading').addClass('fa-pulse')
+
+  loaded: =>
+    @loading_count ||= 0
+    @loading_count -= 1
+    if @loading_count == 0
+      $('.loading').removeClass('fa-pulse')
 
   expand_sidebar: =>
     @workspace.addClass(@klass)
