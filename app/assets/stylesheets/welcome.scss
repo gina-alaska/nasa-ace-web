@@ -50,6 +50,33 @@ html, body {
   background-size: cover;
 }
 
+.carousel {
+  margin-bottom: 10px;
+}
+
+.carousel-inner {
+  height: 340px;
+}
+
+.carousel-caption{
+  position: absolute;
+  top: 310px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: auto;
+  text-shadow: none;
+  background-color: rgba(255,255,255, 0.75);
+  margin: 0px;
+  padding: 5px;
+  color: #0c0c0c;
+  font-weight: bold;
+}
+
+.carousel-control {
+  padding-top: 140px;
+}
+
 .quick-buttons {
   margin-top: 50px;
   text-align: center;
