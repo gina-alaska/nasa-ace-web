@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+  
   resources :workspaces
   resources :datasets
   get 'welcome/index'

@@ -10,6 +10,7 @@ class WorkspacesController < ApplicationController
   # GET /workspaces/1
   # GET /workspaces/1.json
   def show
+    # WorkspacesChannel.broadcast_to "workspace_#{@workspace.id}", { test: 'testing' }
   end
 
   # GET /workspaces/new
