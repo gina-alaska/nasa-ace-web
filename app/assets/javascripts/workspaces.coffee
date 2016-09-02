@@ -188,8 +188,14 @@ class Workspace
     config = el.data()
     config.layer_name = "#{name}-layer"
 
-    if !next && el.next('.layer').length > 0
-      config.before = @getLayerConfig(el.next('.layer').data('name'), true).layer_name
+    if next
+      item = el.next('.layer')
+      while item.length > 0
+        if $(item).hasClass('active')
+          config.before = @getLayerConfig($(item).data('name'), false).layer_name
+          item = []
+        else
+          item = $(item).next('.layer')
 
     config
 
@@ -205,7 +211,7 @@ class Workspace
     @map.getLayer(name)?
 
   createLayer: (name) =>
-    config = @getLayerConfig(name)
+    config = @getLayerConfig(name, true)
     return config.layer_name if @isActiveLayer(config.layer_name)
 
     @createSource(name, config)
