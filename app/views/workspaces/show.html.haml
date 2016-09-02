@@ -38,7 +38,8 @@
           %i.fa.fa-caret-left.rotatable
       #overlay-layer-list.list-group.sub.collapse
         = link_to 'GINA BestDataLayer', '#', class: 'list-group-item layer', data: { name: 'GINA BestDataLayer', behavior: 'add-layer', url: 'http://tiles.gina.alaska.edu/tilesrv/bdl/tile/{x}/{y}/{z}', type: 'tile'  }
-        = link_to 'GINA Orthomosaic', '#', class: 'list-group-item layer', data: { name: 'GINA Orthomosaic', behavior: 'add-layer', url: 'http://tiles.gina.alaska.edu/tiles/SPOT5.SDMI.ORTHO_RGB/tile/{x}/{y}/{z}', type: 'tile'  }
+        = link_to 'GINA Orthomosaic RGB', '#', class: 'list-group-item layer', data: { name: 'GINA Orthomosaic RGB', behavior: 'add-layer', url: 'http://tiles.gina.alaska.edu/tiles/SPOT5.SDMI.ORTHO_RGB/tile/{x}/{y}/{z}', type: 'tile'  }
+        = link_to 'GINA Orthomosaic CIR', '#', class: 'list-group-item layer', data: { name: 'GINA Orthomosaic CIR', behavior: 'add-layer', url: 'http://tiles.gina.alaska.edu/tiles/SPOT5.SDMI.ORTHO_CIR/tile/{x}/{y}/{z}', type: 'tile'  }
         = link_to 'IMIQ Sites', '#', class: 'list-group-item layer', data: { name: 'IMIQ Sites', behavior: 'add-layer', url: 'http://imiq-api.gina.alaska.edu/sites.geojson?limit=5000', type: 'geojson'  }
   .map-content
     %nav.navbar.navbar-inverse.navbar-static-top{ style: 'margin-bottom: 0px;'}
