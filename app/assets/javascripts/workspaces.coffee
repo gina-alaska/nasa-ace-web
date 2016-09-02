@@ -69,7 +69,7 @@ class RemoteWorkspace
     current_time = timer.getTime()
 
     # need to rate limit these a bit
-    if !@last_broadcast? || (current_time - @last_broadcast) > 100
+    if !@last_broadcast? || (current_time - @last_broadcast) > 300
       # only broadcast message if we generated the event
       if @commandEnabled(data.command) && @myMessage(data)
         App.workspaces.send(data)
