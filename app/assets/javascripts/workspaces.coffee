@@ -26,6 +26,7 @@ class RemoteWorkspace
 
     move: (ws, data) ->
       location.hash = data.hash
+      @prevRemoteHash = @lastRemoteHash
       @lastRemoteHash = data.hash
 
     setStyle: (ws, data) ->
@@ -35,7 +36,9 @@ class RemoteWorkspace
   commandValidators: {
     move: (data) ->
       @lastRemoteHash ||= ""
-      @lastRemoteHash != data.hash
+      @prevRemoteHash ||= ""
+
+      @prevRemoteHash != data.hash and @lastRemoteHash != data.hash
   }
 
   validateCommand: (data) =>
@@ -45,8 +48,9 @@ class RemoteWorkspace
       true
 
   runCommand: (ws, data) =>
-    return if @myMessage(data) || !@commandEnabled(data.command)
-    return if !@validateCommand(data)
+    return if @myMessage(data)
+    return unless @commandEnabled(data.command)
+    return unless @validateCommand(data)
 
     if @commands[data.command]?
       @commands[data.command].call(@, ws, data)
@@ -70,7 +74,7 @@ class RemoteWorkspace
       if @commandEnabled(data.command) && @myMessage(data)
         App.workspaces.send(data)
         @last_broadcast = current_time
-        
+
   commandEnabled: (command) =>
     cmdType = (type for type, cmdlist of @commandTypes when command in cmdlist)
     @is_enabled(cmdType)
