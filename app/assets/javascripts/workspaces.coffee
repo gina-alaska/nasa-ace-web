@@ -3,25 +3,40 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 class RemoteWorkspace
+  syncState: {
+    movement: true,
+    layers: false
+  }
+
+  commandTypes: {
+    layers: ['hideLayer', 'showLayer', 'setStyle'],
+    movement: ['move']
+  }
+
   constructor: (@channel_key) ->
-    @enable()
+    # @enable()
 
-  hideLayer: (ws, data) ->
-    return if @myMessage(data)
-    ws.hideLayer(data.name, true)
+  commands: {
+    hideLayer: (ws, data) ->
+      ws.hideLayer(data.name, true)
 
-  showLayer: (ws, data) ->
-    return if @myMessage(data)
-    ws.showLayer(data.name, true)
+    showLayer: (ws, data) ->
+      ws.showLayer(data.name, true)
 
-  move: (ws, data) ->
-    return if @myMessage(data)
-    # ws.moveTo(data, true)
-    location.hash = data.hash
+    move: (ws, data) ->
+      location.hash = data.hash
 
-  setStyle: (ws, data) ->
-    return if @myMessage(data)
-    ws.setStyle(data.name, true)
+    setStyle: (ws, data) ->
+      ws.setStyle(data.name, true)
+  }
+
+  runCommand: (ws, data) =>
+    return if @myMessage(data) || !@commandEnabled(data.command)
+    if @commands[data.command]?
+      @commands[data.command](ws, data)
+    else
+      console.log "Unknown command: #{data.command}"
+
 
   myMessage: (data) =>
     return data.sentBy == @channel_key
@@ -31,16 +46,27 @@ class RemoteWorkspace
     data.sentBy ||= @channel_key
 
     # only broadcast message if we generated the event
-    App.workspaces.send(data) if @is_enabled() && @myMessage(data)
+    App.workspaces.send(data) if @commandEnabled(data.command) && @myMessage(data)
 
-  is_enabled: () =>
-    @sync
+  commandEnabled: (command) =>
+    cmdType = (type for type, cmdlist of @commandTypes when command in cmdlist)
+    @is_enabled(cmdType)
 
-  enable: () =>
-    @sync = true
+  is_enabled: (type) =>
+    @syncState[type]
 
-  disable: () =>
-    @sync = false
+  setSyncState: (type, state) =>
+    if type == 'all'
+      for name,value in @syncState
+        @syncState[name] = state
+    else
+      @syncState[type] = state
+
+  enable: (type = 'all') =>
+    @setSyncState(type, true)
+
+  disable: (type = 'all') =>
+    @setSyncState(type, false)
 
 class Workspace
   constructor: (el, channel_key) ->
@@ -73,12 +99,7 @@ class Workspace
     @map.addControl(nav)
 
   runRemoteCommand: (data) =>
-    return if !@remote.is_enabled() || @remote.myMessage(data)
-
-    if @remote[data.command]?
-      @remote[data.command](@, data, true)
-    else
-      console.log "Unknown command: #{data.command}"
+    @remote.runCommand(@, data)
 
   featurePopup: (e) =>
     features = @map.queryRenderedFeatures(e.point, { layers: @clickable_layers });
