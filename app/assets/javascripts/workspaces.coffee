@@ -15,6 +15,7 @@ class RemoteWorkspace
 
   constructor: (@channel_key) ->
     # @enable()
+    @timer = new Date()
 
   commands: {
     hideLayer: (ws, data) ->
@@ -25,15 +26,30 @@ class RemoteWorkspace
 
     move: (ws, data) ->
       location.hash = data.hash
+      @lastRemoteHash = data.hash
 
     setStyle: (ws, data) ->
       ws.setStyle(data.name, true)
   }
 
+  commandValidators: {
+    move: (data) ->
+      @lastRemoteHash ||= ""
+      @lastRemoteHash != data.hash
+  }
+
+  validateCommand: (data) =>
+    if @commandValidators[data.command]?
+      @commandValidators[data.command].call(@, data)
+    else
+      true
+
   runCommand: (ws, data) =>
     return if @myMessage(data) || !@commandEnabled(data.command)
+    return if !@validateCommand(data)
+
     if @commands[data.command]?
-      @commands[data.command](ws, data)
+      @commands[data.command].call(@, ws, data)
     else
       console.log "Unknown command: #{data.command}"
 
@@ -45,9 +61,16 @@ class RemoteWorkspace
     data.command = name
     data.sentBy ||= @channel_key
 
-    # only broadcast message if we generated the event
-    App.workspaces.send(data) if @commandEnabled(data.command) && @myMessage(data)
+    timer = new Date()
+    current_time = timer.getTime()
 
+    # need to rate limit these a bit
+    if !@last_broadcast? || (current_time - @last_broadcast) > 100
+      # only broadcast message if we generated the event
+      if @commandEnabled(data.command) && @myMessage(data)
+        App.workspaces.send(data)
+        @last_broadcast = current_time
+        
   commandEnabled: (command) =>
     cmdType = (type for type, cmdlist of @commandTypes when command in cmdlist)
     @is_enabled(cmdType)

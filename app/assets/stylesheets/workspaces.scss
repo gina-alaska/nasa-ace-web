@@ -23,6 +23,7 @@ $sidebar_color: #242424;
     transition: width 0.3s ease-in-out;
     white-space: nowrap;
     overflow: hidden;
+    overflow-y: auto;
     background-color: $sidebar_color;
 
     h5 { padding-left: 5px; }
