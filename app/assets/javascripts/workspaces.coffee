@@ -5,7 +5,7 @@
 class RemoteWorkspace
   syncState: {
     movement: true,
-    layers: false
+    layers: true
   }
 
   commandTypes: {
@@ -292,14 +292,19 @@ $(document).on 'turbolinks:load', ->
     document.workspace.toggleLayerFromEl(this)
     e.preventDefault()
 
-  $('[data-toggle="workspace.sync"]').on 'click', ->
-    if $(this).hasClass('active')
-      $(this).removeClass('btn-success active').addClass('btn-danger')
-      document.workspace.remote.disable()
-    else
-      $(this).removeClass('btn-danger').addClass('btn-success active')
-      document.workspace.remote.enable()
+  $('[data-toggle="workspace.sync"]').on 'click', (e) ->
+    checkbox = $(this).find('.toggle-checkbox')
 
+    if $(this).hasClass('active')
+      $(this).removeClass('active')
+      $(checkbox).removeClass('fa-check-square-o').addClass('fa-square-o')
+      document.workspace.remote.disable($(this).data('type'))
+    else
+      $(this).addClass('active')
+      $(checkbox).addClass('fa-check-square-o').removeClass('fa-square-o')
+      document.workspace.remote.enable($(this).data('type'))
+
+    return false
 
   $('[data-behavior="hover-toggle"]').on 'mouseover', document.workspace.expand_sidebar
   $('[data-behavior="hover-toggle"]').on 'mouseleave', document.workspace.contract_sidebar
@@ -312,3 +317,11 @@ $(document).on 'turbolinks:load', ->
     document.workspace.setStyle($(this).data('name'))
 
     e.preventDefault();
+
+  $('[data-toggle="perspective"]').on 'click', (e) ->
+    if $(this).hasClass('active')
+      document.workspace.map.easeTo(pitch: 0)
+      $(this).removeClass('active btn-success').addClass('btn-default')
+    else
+      document.workspace.map.easeTo(pitch: 60)
+      $(this).addClass('active btn-success').removeClass('btn-default')

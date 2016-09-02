@@ -43,8 +43,23 @@
   .map-content
     %nav.navbar.navbar-inverse.navbar-static-top{ style: 'margin-bottom: 0px;'}
       .container-fluid
-        %button.btn.btn-success.btn-sm.active.navbar-btn{ data: { toggle: 'workspace.sync' }}
+        %button.btn.btn-default.btn-sm.navbar-btn{ data: { toggle: 'dropdown' } }
           %i.fa.fa-refresh.loading
           Auto-Sync
+          %span.caret
+
+        %ul.dropdown-menu
+          %li
+            = link_to '#', class: 'active', data: { toggle: 'workspace.sync', type: 'movement' } do
+              %i.fa.fa-check-square-o.toggle-checkbox
+              Movement
+          %li
+            = link_to '#', class: 'active', data: { toggle: 'workspace.sync', type: 'layers' } do
+              %i.fa.fa-check-square-o.toggle-checkbox
+              Layers
+
         %i.fa.fa-spinner.loading.navbar-text.pull-right{ style: 'font-size: 20px;'}
+
+        %button.btn.btn-default.btn-sm.navbar-btn{ data: { toggle: 'perspective' } }
+          %i.fa.fa-street-view
     #map.map{ data: { center: [@workspace.center_lng.to_f, @workspace.center_lat.to_f], zoom: @workspace.zoom } }
