@@ -161,7 +161,7 @@ class @Workspace
 
   setMoveEndHandler: () =>
     @map.on 'moveend', =>
-      @remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom() })
+      @remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
 
   moveTo: (data, remoteCmd = false) =>
     @map.off('moveend')
