@@ -13,17 +13,67 @@ $sidebar_color: #242424;
   position: absolute;
 
   .map-sidebar {
-    color: #fff;
     position: absolute;
     top: 0px;
     bottom: 0px;
     left: 0px;
-    width: 50px;
-    padding: 10px 0;
+    width: 240px;
     transition: width 0.3s ease-in-out;
     white-space: nowrap;
     overflow: hidden;
     overflow-y: auto;
+  }
+
+  &.auto-collapse .map-sidebar {
+    width: 50px;
+  }
+
+  &.auto-collapse.open .map-sidebar {
+    width: 240px;
+  }
+
+  .map-content {
+    position: absolute;
+    top: 1px;
+    bottom: 0px;
+    left: 240px;
+    right: 0px;
+    transition: left 0.3s ease-in-out;
+  }
+
+  &.auto-collapse .map-content {
+    left: 50px;
+  }
+
+  &.auto-collapse.open .map-content {
+    left: 240px;
+  }
+
+  .show-collapsed { display: none; }
+  &.auto-collapse .hide-collapsed, &.auto-collapse.open .show-collapsed {
+    display: none;
+  }
+  &.auto-collapse .show-collapsed, &.auto-collapse.open .hide-collapsed {
+    display: initial;
+  }
+
+  // &.auto-colapse:not(.expand) .list-group.sub { display: none; }
+  //
+  // &.auto-colapse .show-collapsed { display: initial; }
+  // &.auto-colapse .hide-collapsed { display: none; }
+  // &.auto-colapse.expand .hide-collapsed { display: initial; }
+  // &.auto-colapse.expand .show-collapsed { display: none; }
+  // &.auto-colapse.expand .map-sidebar {
+  //   width: 204px;
+  //
+  // }
+  // &.auto-colapse.expand .map-content {
+  //   left: 204px;
+  // }
+
+  .map-sidebar {
+    color: #fff;
+    padding: 10px 0;
     background-color: $sidebar_color;
 
     h5 { padding-left: 5px; }
@@ -53,16 +103,6 @@ $sidebar_color: #242424;
     transform: rotate(-90deg);
   }
 
-  .map-content {
-    position: absolute;
-    top: 1px;
-    bottom: 0px;
-    left: 50px;
-    right: 0px;
-    transition: left 0.3s ease-in-out;
-
-  }
-
   .list-group.sub {
     padding: 0px;
     margin-bottom: 0px;
@@ -80,20 +120,6 @@ $sidebar_color: #242424;
       background-color: #ffcc00;
       color: #000;
     }
-  }
-  &:not(.expand) .list-group.sub { display: none; }
-
-  .show-collapsed { display: initial; }
-  .hide-collapsed { display: none; }
-  &.expand .hide-collapsed { display: initial; }
-  &.expand .show-collapsed { display: none; }
-  &.expand .map-sidebar {
-    width: 204px;
-
-  }
-
-  &.expand .map-content {
-    left: 204px;
   }
 }
 

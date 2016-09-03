@@ -2,107 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-class RemoteWorkspace
-  syncState: {
-    movement: true,
-    layers: true
-  }
-
-  commandTypes: {
-    layers: ['hideLayer', 'showLayer', 'setStyle'],
-    movement: ['move']
-  }
-
-  constructor: (@channel_key) ->
-    # @enable()
-    @timer = new Date()
-
-  commands: {
-    hideLayer: (ws, data) ->
-      ws.hideLayer(data.name, true)
-
-    showLayer: (ws, data) ->
-      ws.showLayer(data.name, true)
-
-    move: (ws, data) ->
-      location.hash = data.hash
-      @prevRemoteHash = @lastRemoteHash
-      @lastRemoteHash = data.hash
-
-    setStyle: (ws, data) ->
-      ws.setStyle(data.name, true)
-  }
-
-  commandValidators: {
-    move: (data) ->
-      @lastRemoteHash ||= ""
-      @prevRemoteHash ||= ""
-
-      @prevRemoteHash != data.hash and @lastRemoteHash != data.hash
-  }
-
-  validateCommand: (data) =>
-    if @commandValidators[data.command]?
-      @commandValidators[data.command].call(@, data)
-    else
-      true
-
-  runCommand: (ws, data) =>
-    return if @myMessage(data)
-    return unless @commandEnabled(data.command)
-    return unless @validateCommand(data)
-
-    if @commands[data.command]?
-      @commands[data.command].call(@, ws, data)
-    else
-      console.log "Unknown command: #{data.command}"
-
-
-  myMessage: (data) =>
-    return data.sentBy == @channel_key
-
-  broadcast: (name, data) =>
-    data.command = name
-    data.sentBy ||= @channel_key
-
-    timer = new Date()
-    current_time = timer.getTime()
-
-    # need to rate limit these a bit
-    if !@last_broadcast? || (current_time - @last_broadcast) > 300
-      # only broadcast message if we generated the event
-      if @commandEnabled(data.command) && @myMessage(data)
-        App.workspaces.send(data)
-        @last_broadcast = current_time
-
-  commandEnabled: (command) =>
-    cmdType = (type for type, cmdlist of @commandTypes when command in cmdlist)
-    @is_enabled(cmdType)
-
-  is_enabled: (type) =>
-    @syncState[type]
-
-  setSyncState: (type, state) =>
-    if type == 'all'
-      for name,value in @syncState
-        @syncState[name] = state
-    else
-      @syncState[type] = state
-
-  enable: (type = 'all') =>
-    @setSyncState(type, true)
-
-  disable: (type = 'all') =>
-    @setSyncState(type, false)
-
-class Workspace
+class @Workspace
   constructor: (el, channel_key) ->
-    @remote = new RemoteWorkspace(channel_key)
+    @remote = new Workspace.Remote(channel_key)
+    @ui = new Workspace.UI(el)
 
-    @workspace = $(el)
     @clickable_layers = []
-    @sidebar = $($(el).find('.map-sidebar'))
-    @klass = $(@sidebar).data('class')
     @style = "mapbox://styles/mapbox/satellite-streets-v9"
     center = $(el).find('.map').data('center')
     zoom = $(el).find('.map').data('zoom')
@@ -129,6 +34,7 @@ class Workspace
     @remote.runCommand(@, data)
 
   featurePopup: (e) =>
+    return if !@clickable_layers.length
     features = @map.queryRenderedFeatures(e.point, { layers: @clickable_layers });
     return if !features.length
 
@@ -245,8 +151,6 @@ class Workspace
     return if @map.getSource(name)?
     config = @getLayerConfig(name)
 
-    @map.style.once 'load', @loaded
-
     if config.type == 'wms'
       @addWMSSource(config)
     if config.type == 'tile'
@@ -260,16 +164,21 @@ class Workspace
     @map.flyTo(data)
     @remote.broadcast('move', data) unless remoteCmd
 
-  hideLayer: (name, remoteCmd = false) =>
-    layer = @createLayer(name)
-    @map.setLayoutProperty(layer, 'visibility', 'none')
-    $(".layer[data-name='#{name}']").removeClass('active')
+  removeLayer: (name) =>
+    @map.removeLayer(name)
+    index = @clickable_layers.indexOf(name)
+    @clickable_layers.splice(index, 1)
 
+  hideLayer: (name, remoteCmd = false) =>
+    config = @getLayerConfig(name)
+    @removeLayer(config.layer_name)
+
+    $(".layer[data-name='#{name}']").removeClass('active')
     @remote.broadcast('hideLayer', { name: name }) unless remoteCmd
 
   showLayer: (name, remoteCmd = false) =>
-    layer = @createLayer(name)
-    @map.setLayoutProperty(layer, 'visibility', 'visible')
+    @createLayer(name)
+    
     $(".layer[data-name='#{name}']").addClass('active')
     @remote.broadcast('showLayer', { name: name }) unless remoteCmd
 
@@ -311,13 +220,6 @@ class Workspace
       @loading_count = 0
       $('.loading').removeClass('fa-pulse')
 
-  expand_sidebar: =>
-    @workspace.addClass(@klass)
-
-  contract_sidebar: =>
-    @workspace.removeClass(@klass)
-
-
 $(document).on 'turbolinks:load', ->
   document.workspace = new Workspace('.map-container', $('meta[name="channel_key"]').attr('content'))
 
@@ -338,13 +240,6 @@ $(document).on 'turbolinks:load', ->
       document.workspace.remote.enable($(this).data('type'))
 
     return false
-
-  $('[data-behavior="hover-toggle"]').on 'mouseover', document.workspace.expand_sidebar
-  $('[data-behavior="hover-toggle"]').on 'mouseleave', document.workspace.contract_sidebar
-  $('[data-toggle="collapse"]').on 'click', ->
-    caret = $(this).find('i.rotatable')
-    if caret?
-      caret.toggleClass('on');
 
   $('[data-behavior="switch-base"]').on 'click', (e) ->
     document.workspace.setStyle($(this).data('name'))
