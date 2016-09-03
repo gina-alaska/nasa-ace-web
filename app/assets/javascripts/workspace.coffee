@@ -24,8 +24,7 @@ class @Workspace
     @map.on 'load', @onLoad
     @map.on 'click', @featurePopup
 
-    @map.on 'moveend', (e) =>
-      @remote.broadcast('move', { hash: location.hash })
+    @map.on 'moveend', @setMoveEndHandler
 
     nav = new mapboxgl.Navigation({position: 'top-left'});
     @map.addControl(nav)
@@ -158,11 +157,18 @@ class @Workspace
     if config.type == 'geojson'
       @addGeoJSONSource(config)
     @loading(name)
+    @map.getSource(name).once('load', @loaded)
+
+  setMoveEndHandler: () =>
+    @map.on 'moveend', =>
+      @remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom() })
 
   moveTo: (data, remoteCmd = false) =>
-    @remoteMove
+    @map.off('moveend')
     @map.flyTo(data)
-    @remote.broadcast('move', data) unless remoteCmd
+    @map.once 'moveend', @setMoveEndHandler
+
+    # @remote.broadcast('move', data) unless remoteCmd
 
   removeLayer: (name) =>
     @map.removeLayer(name)
@@ -178,7 +184,7 @@ class @Workspace
 
   showLayer: (name, remoteCmd = false) =>
     @createLayer(name)
-    
+
     $(".layer[data-name='#{name}']").addClass('active')
     @remote.broadcast('showLayer', { name: name }) unless remoteCmd
 
@@ -207,8 +213,7 @@ class @Workspace
       if $(el).hasClass('active')
         @showLayer(name)
 
-  loading: (name) =>
-    @map.getSource(name).once('load', @loaded)
+  loading: () =>
     @loading_count ||= 0
     @loading_count += 1
     $('.loading').addClass('fa-pulse')

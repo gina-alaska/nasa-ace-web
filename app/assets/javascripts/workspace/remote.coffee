@@ -17,9 +17,9 @@ class @Workspace.Remote
       ws.showLayer(data.name, true)
 
     move: (ws, data) ->
-      location.hash = data.hash
+      ws.moveTo(data, true)
       @prevRemoteHash = @lastRemoteHash
-      @lastRemoteHash = data.hash
+      @lastRemoteHash = data
 
     setStyle: (ws, data) ->
       ws.setStyle(data.name, true)
@@ -27,11 +27,15 @@ class @Workspace.Remote
 
   commandValidators: {
     move: (data) ->
-      @lastRemoteHash ||= ""
-      @prevRemoteHash ||= ""
+      @diffLocation(@prevRemoteHash, data) && @diffLocation(@lastRemoteHash, data)
 
-      @prevRemoteHash != data.hash and @lastRemoteHash != data.hash
   }
+
+  diffLocation: (loc1, loc2) ->
+    console.log loc1, loc2
+    return true if !loc1? || !loc2?
+    console.log loc1, loc2
+    loc1.center.lat != loc2.center.lat || loc1.center.lng != loc2.center.lng || loc1.zoom != loc2.zoom
 
   constructor: (@channel_key) ->
     # @enable()

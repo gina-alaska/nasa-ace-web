@@ -3,22 +3,23 @@
     %button.btn.btn-sm.btn-default.navbar-btn{ data: { toggle: 'auto-collapse' } }
       %i.fa.fa-columns
 
-    %button.btn.btn-default.btn-sm.navbar-btn{ data: { toggle: 'dropdown' } }
-      %i.fa.fa-refresh.loading
-      Auto-Sync
-      %span.caret
-
-    %ul.dropdown-menu
-      %li
-        = link_to '#', class: 'active', data: { toggle: 'workspace.sync', type: 'movement' } do
-          %i.fa.fa-check-square-o.toggle-checkbox
-          Movement
-      %li
-        = link_to '#', class: 'active', data: { toggle: 'workspace.sync', type: 'layers' } do
-          %i.fa.fa-check-square-o.toggle-checkbox
-          Layers
-
-    %i.fa.fa-spinner.loading.navbar-text.pull-right{ style: 'font-size: 20px;'}
-
     %button.btn.btn-default.btn-sm.navbar-btn{ data: { toggle: 'perspective' } }
       %i.fa.fa-street-view
+
+    .pull-right
+      %button.btn.btn-default.btn-sm.navbar-btn{ data: { toggle: 'dropdown' } }
+        %i.fa.fa-refresh
+        Auto-Sync
+        %span.caret
+
+      %ul.dropdown-menu
+        %li
+          = link_to '#', class: 'active', data: { toggle: 'workspace.sync', type: 'movement' } do
+            %i.fa.fa-check-square-o.toggle-checkbox
+            Movement
+        %li
+          = link_to '#', class: 'active', data: { toggle: 'workspace.sync', type: 'layers' } do
+            %i.fa.fa-check-square-o.toggle-checkbox
+            Layers
+
+      %i.fa.fa-spinner.loading.navbar-text{ style: 'font-size: 20px;'}
