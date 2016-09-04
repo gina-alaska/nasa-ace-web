@@ -1,0 +1,6 @@
+.layer.list-group-item{ draggable: "true", data: { behavior: 'add-layer' }.merge(layer) }
+  = layer[:name]
+  %span.badge.hide-collapsed{ data: { behavior: 'move-layer-up' } }
+    %i.fa.fa-caret-up
+  %span.badge.hide-collapsed{ data: { behavior: 'move-layer-down' } }
+    %i.fa.fa-caret-down

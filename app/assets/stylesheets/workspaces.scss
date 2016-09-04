@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 $sidebar_color: #242424;
-
+$sidebar_width: 300px;
 .map-container {
   width: 100%;
   top: 50px;
@@ -17,7 +17,7 @@ $sidebar_color: #242424;
     top: 0px;
     bottom: 0px;
     left: 0px;
-    width: 240px;
+    width: $sidebar_width;
     transition: width 0.3s ease-in-out;
     white-space: nowrap;
     overflow: hidden;
@@ -29,14 +29,14 @@ $sidebar_color: #242424;
   }
 
   &.auto-collapse.open .map-sidebar {
-    width: 240px;
+    width: $sidebar_width;
   }
 
   .map-content {
     position: absolute;
     top: 1px;
     bottom: 0px;
-    left: 240px;
+    left: $sidebar_width;
     right: 0px;
     transition: left 0.3s ease-in-out;
   }
@@ -46,15 +46,20 @@ $sidebar_color: #242424;
   }
 
   &.auto-collapse.open .map-content {
-    left: 240px;
+    left: $sidebar_width;
   }
 
-  .show-collapsed { display: none; }
+  .show-collapsed, .hide-collapsed {
+    transition: visibility 0.1s, opacity 0.5s linear;
+  }
+  .show-collapsed { visibility: hidden; opacity: 0; }
   &.auto-collapse .hide-collapsed, &.auto-collapse.open .show-collapsed {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
   }
   &.auto-collapse .show-collapsed, &.auto-collapse.open .hide-collapsed {
-    display: initial;
+    visibility: visible;
+    opacity: 1;
   }
 
   // &.auto-colapse:not(.expand) .list-group.sub { display: none; }
@@ -97,7 +102,7 @@ $sidebar_color: #242424;
   }
 
   .rotatable {
-    transition: all 0.3s ease;
+    transition: width 0.3s ease;
   }
   .rotatable.on {
     transform: rotate(-90deg);
@@ -110,17 +115,32 @@ $sidebar_color: #242424;
 
     .list-group-item {
       background-color: transparent;
-      border: none;
+      border: 1px solid transparent;
       padding: 5px 20px;
+
+      &.over { border-bottom: 3px dashed red; }
     }
+
+    .drop.over {
+      border-bottom: 3px dashed red;
+    }
+    .drop.over:last-child {
+      border-bottom: 1px dashed transparent;
+      border-top: 3px dashed red;
+    }
+
     .list-group-item:hover {
-      background-color: #000;
+      background-color: darken($sidebar_color, 10%);;
     }
     .list-group-item.active {
       background-color: #ffcc00;
       color: #000;
     }
   }
+}
+
+.drop {
+  height: 20px;
 }
 
 .map {

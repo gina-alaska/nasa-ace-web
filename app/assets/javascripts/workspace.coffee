@@ -5,7 +5,7 @@
 class @Workspace
   constructor: (el, channel_key) ->
     @remote = new Workspace.Remote(channel_key)
-    @ui = new Workspace.UI(el)
+    @ui = new Workspace.UI(@, el)
 
     @clickable_layers = []
     @style = "mapbox://styles/mapbox/satellite-streets-v9"
@@ -169,6 +169,15 @@ class @Workspace
     @map.once 'moveend', @setMoveEndHandler
 
     # @remote.broadcast('move', data) unless remoteCmd
+
+  reloadLayers: () =>
+    activeLayers = $('.layer.active').toArray()
+
+    for layer in activeLayers.reverse()
+      name = $(layer).data('name')
+      config = @getLayerConfig(name)
+      @hideLayer(name)
+      @showLayer(name)
 
   removeLayer: (name) =>
     @map.removeLayer(name)
