@@ -102,6 +102,8 @@ class @Workspace
   onLoad: =>
     for el in @ui.getAllLayers()
       name = $(el).data('name')
+      # preload source data
+      @layers.createSource(name)
       if $(el).hasClass('active')
         @layers.show(name)
 

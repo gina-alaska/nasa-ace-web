@@ -59,7 +59,8 @@ class @Workspace.Remote
     return unless @validateCommand(data)
 
     if @commands[data.command]?
-      @commands[data.command].call(@, ws, data)
+      @ignoreBroadcasts =>
+        @commands[data.command].call(@, ws, data)
     else
       console.log "Unknown command: #{data.command}"
 
