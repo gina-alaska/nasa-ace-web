@@ -6,8 +6,8 @@ class @Workspace
   constructor: (el, channel_key) ->
     @remote = new Workspace.Remote(channel_key)
     @ui = new Workspace.UI(@, el)
+    @layers = new Workspace.Layers(@)
 
-    @clickable_layers = []
     @style = "mapbox://styles/mapbox/satellite-streets-v9"
     center = $(el).find('.map').data('center')
     zoom = $(el).find('.map').data('zoom')
@@ -21,9 +21,9 @@ class @Workspace
         zoom: if zoom? then zoom else 3,
         hash: true
     });
+
     @map.on 'load', @onLoad
     @map.on 'click', @featurePopup
-
     @map.on 'moveend', @setMoveEndHandler
 
     nav = new mapboxgl.Navigation({position: 'top-left'});
@@ -33,8 +33,8 @@ class @Workspace
     @remote.runCommand(@, data)
 
   featurePopup: (e) =>
-    return if !@clickable_layers.length
-    features = @map.queryRenderedFeatures(e.point, { layers: @clickable_layers });
+    return if !@layers.clickable.length
+    features = @map.queryRenderedFeatures(e.point, { layers: @layers.clickable });
     return if !features.length
 
     feature = features[0]
@@ -62,102 +62,14 @@ class @Workspace
 
     html
 
-  addGeoJSONSource: (config) =>
-    @map.addSource(config.name, {
-      type: 'geojson',
-      data: config.url
-    })
-
-  addWMSSource: (config) =>
-    @map.addSource(config.name, {
-      type: 'raster',
-      tiles: [
-        "#{config.url}?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&layers=#{config.layers}"
-      ],
-      tileSize: 256
-    })
-  addTileSource: (config) =>
-    @map.addSource(config.name, {
-      type: 'raster',
-      tiles: [
-        "#{config.url}"
-      ],
-      tileSize: 256
-    })
-
-  getLayerConfig: (name, next = false) ->
-    return unless name?
-
-    el = $(".layer[data-name='#{name}']")
-
-    config = el.data()
-    config.layer_name = "#{name}-layer"
-
-    if next
-      item = el.next('.layer')
-      while item.length > 0
-        if $(item).hasClass('active')
-          config.before = @getLayerConfig($(item).data('name'), false).layer_name
-          item = []
-        else
-          item = $(item).next('.layer')
-
-    config
-
   toggleLayerFromEl: (el) =>
     name = $(el).data('name')
     if $(el).hasClass('active')
-      @hideLayer(name)
+      @layers.hide(name)
+      $(el).removeClass('active')
     else
-      @showLayer(name)
+      @layers.show(name)
       $(el).addClass('active')
-
-  isActiveLayer: (name) =>
-    @map.getLayer(name)?
-
-  createLayer: (name) =>
-    config = @getLayerConfig(name, true)
-    return config.layer_name if @isActiveLayer(config.layer_name)
-
-    @createSource(name, config)
-
-    layout = { 'visibility': 'visible' }
-    if config.type == 'wms'
-      type = 'raster'
-      paint = {}
-    if config.type == 'tile'
-      type = 'raster'
-      paint = {}
-    if config.type == 'geojson'
-      type = 'circle'
-      paint = {
-        'circle-color': 'rgba(255, 0, 0, 0.8)'
-      }
-      @clickable_layers.push config.layer_name
-
-    @map.addLayer({
-      id: config.layer_name,
-      type: type,
-      source: config.name,
-      layout: layout,
-      paint: paint,
-
-    }, if @isActiveLayer(config.before) then config.before else null)
-
-    return config.layer_name
-
-  createSource: (name) =>
-    return if @map.getSource(name)?
-    config = @getLayerConfig(name)
-
-    if config.type == 'wms'
-      @addWMSSource(config)
-    if config.type == 'tile'
-      @addTileSource(config)
-    if config.type == 'geojson'
-      @addGeoJSONSource(config)
-    @loading(name)
-    @map.getSource(name).once('load', @loaded)
 
   setMoveEndHandler: () =>
     @map.on 'moveend', =>
@@ -169,33 +81,6 @@ class @Workspace
     @map.once 'moveend', @setMoveEndHandler
 
     # @remote.broadcast('move', data) unless remoteCmd
-
-  reloadLayers: () =>
-    activeLayers = $('.layer.active').toArray()
-
-    for layer in activeLayers.reverse()
-      name = $(layer).data('name')
-      config = @getLayerConfig(name)
-      @hideLayer(name)
-      @showLayer(name)
-
-  removeLayer: (name) =>
-    @map.removeLayer(name)
-    index = @clickable_layers.indexOf(name)
-    @clickable_layers.splice(index, 1)
-
-  hideLayer: (name, remoteCmd = false) =>
-    config = @getLayerConfig(name)
-    @removeLayer(config.layer_name)
-
-    $(".layer[data-name='#{name}']").removeClass('active')
-    @remote.broadcast('hideLayer', { name: name }) unless remoteCmd
-
-  showLayer: (name, remoteCmd = false) =>
-    @createLayer(name)
-
-    $(".layer[data-name='#{name}']").addClass('active')
-    @remote.broadcast('showLayer', { name: name }) unless remoteCmd
 
   setStyle: (style, remoteCmd = false) =>
     @reload()
@@ -210,36 +95,18 @@ class @Workspace
 
     @remote.broadcast('setStyle', { name: style }) unless remoteCmd
 
-
   reload: =>
     @map.style.off 'load'
-    @loading_count = 0
+    @ui.reset()
 
   onLoad: =>
-    $('.layer').each (index, el) =>
+    for el in @ui.getAllLayers()
       name = $(el).data('name')
-      @createSource(name)
       if $(el).hasClass('active')
-        @showLayer(name)
-
-  loading: () =>
-    @loading_count ||= 0
-    @loading_count += 1
-    $('.loading').addClass('fa-pulse')
-
-  loaded: =>
-    @loading_count ||= 0
-    @loading_count -= 1
-    if @loading_count <= 0
-      @loading_count = 0
-      $('.loading').removeClass('fa-pulse')
+        @layers.show(name)
 
 $(document).on 'turbolinks:load', ->
   document.workspace = new Workspace('.map-container', $('meta[name="channel_key"]').attr('content'))
-
-  $('[data-behavior="add-layer"]').on 'click', (e) ->
-    document.workspace.toggleLayerFromEl(this)
-    e.preventDefault()
 
   $('[data-toggle="workspace.sync"]').on 'click', (e) ->
     checkbox = $(this).find('.toggle-checkbox')

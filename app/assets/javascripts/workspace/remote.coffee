@@ -5,16 +5,19 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['hideLayer', 'showLayer', 'setStyle'],
+    layers: ['hideLayer', 'showLayer', 'setStyle', 'reorderLayers'],
     movement: ['move']
   }
 
   commands: {
     hideLayer: (ws, data) ->
-      ws.hideLayer(data.name, true)
+      ws.layers.hide(data.name, true)
 
     showLayer: (ws, data) ->
-      ws.showLayer(data.name, true)
+      ws.layers.show(data.name, true)
+
+    reorderLayers: (ws, data) ->
+      ws.layers.reorder(data.layers, true)
 
     move: (ws, data) ->
       ws.moveTo(data, true)
@@ -28,18 +31,21 @@ class @Workspace.Remote
   commandValidators: {
     move: (data) ->
       @diffLocation(@prevRemoteHash, data) && @diffLocation(@lastRemoteHash, data)
-
   }
 
-  diffLocation: (loc1, loc2) ->
-    console.log loc1, loc2
-    return true if !loc1? || !loc2?
-    console.log loc1, loc2
-    loc1.center.lat != loc2.center.lat || loc1.center.lng != loc2.center.lng || loc1.zoom != loc2.zoom
-
   constructor: (@channel_key) ->
-    # @enable()
     @timer = new Date()
+    @ignore ||= 0
+
+  ignoreBroadcasts: (callback) =>
+    @ignore = 0 if @ignore < 0
+    @ignore += 1
+    callback()
+    @ignore -= 1
+
+  diffLocation: (loc1, loc2) ->
+    return true if !loc1? || !loc2?
+    loc1.center.lat != loc2.center.lat || loc1.center.lng != loc2.center.lng || loc1.zoom != loc2.zoom
 
   validateCommand: (data) =>
     if @commandValidators[data.command]?
@@ -62,6 +68,7 @@ class @Workspace.Remote
     return data.sentBy == @channel_key
 
   broadcast: (name, data) =>
+    return if @ignore > 0
     data.command = name
     data.sentBy ||= @channel_key
 

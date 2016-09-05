@@ -1,10 +1,14 @@
 class @Workspace.UI
-  constructor: (@workspace, @el) ->
+  constructor: (@ws, @el) ->
     @workspaceEl = $(@el)
     @sidebar = $(@workspaceEl.find('.map-sidebar'))
     @collapseClass = @sidebar.data('class')
+    @overlayList = $(@workspaceEl.find('#overlay-layer-list'))
 
     @initEvents()
+
+  reset: () =>
+    @loading_count = 0
 
   expand_sidebar: =>
     @workspaceEl.addClass('open')
@@ -14,29 +18,34 @@ class @Workspace.UI
 
   initEvents: () =>
     ui = @
-    $('[data-behavior="hover-toggle"]').on 'mouseover', @expand_sidebar
-    $('[data-behavior="hover-toggle"]').on 'mouseleave', @contract_sidebar
-    $('[data-toggle="collapse"]').on 'click', @rotateIcon
-    $('[data-toggle="auto-collapse"]').on 'click', @toggleAutoCollapse
-    $('[data-behavior="move-layer-up"]').on 'click', @moveLayerUp
-    $('[data-behavior="move-layer-down"]').on 'click', @moveLayerDown
-    $('.layer').on 'dragstart', @layerDragStart
-    $('.layer').on 'dragend', @layerDragEnd
-    $('.layer').on 'dragover', @layerDragOver
-    $('.layer,.drop').on 'drop', @layerDrop
+    $(document).on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
+    $(document).on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
+    $(document).on 'click', '[data-toggle="collapse"]', @rotateIcon
+    $(document).on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
+    $(document).on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
+    $(document).on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
+
+    $(document).on 'click', '[data-behavior="add-layer"]', (e) =>
+      @toggleLayer($(e.currentTarget).data('name'))
+      e.preventDefault()
+
+    $(document).on 'dragstart', '.layer', @layerDragStart
+    $(document).on 'dragend', '.layer', @layerDragEnd
+    $(document).on 'dragover', '.layer', @layerDragOver
+    $(document).on 'drop', '.layer,.drop', @layerDrop
 
   layerDragStart: (e) =>
-    @dragSrc = $(e.delegateTarget)
+    @dragSrc = $(e.currentTarget)
     @dragSrc.css('opacity', 0.4)
 
   layerDragEnd: (e) =>
     @dragSrc.css('opacity', 1)
-    @workspace.reloadLayers()
+    @ws.layers.reload()
 
 
   layerDragOver: (e) =>
     if e.preventDefault?
-      @dragTarget = $(e.delegateTarget)
+      @dragTarget = $(e.currentTarget)
       @insertLayerEl(@dragTarget, @dragSrc, { x: e.clientX, y: e.clientY })
       e.preventDefault()
 
@@ -49,43 +58,43 @@ class @Workspace.UI
 
     if relativeY >= 0.5
       $(src).insertAfter(target)
-      # @setLayerOrder(target, src)
     else
       $(src).insertBefore(target)
-      # @setLayerOrder(target.prev(), src)
 
 
   layerDrop: (e) =>
     @dragTarget.removeClass('over')
     @insertLayerEl(@dragTarget, @dragSrc, { x: e.clientX, y: e.clientY })
+    @ws.remote.broadcast('reorderLayers', { layers: @ws.ui.getLayerList() })
 
   setLayerOrder: (first, second) =>
     $(second).insertAfter(first)
 
   moveLayerUp: (e) =>
-    target = $(e.delegateTarget).parent('.list-group-item')
+    target = $(e.currentTarget).parent('.list-group-item')
     prev = $(target).prev('.list-group-item')
-
     if prev.length > 0
       $(target).insertBefore(prev)
-      @workspace.reloadLayers()
+      @ws.layers.reload()
+      @ws.remote.broadcast('reorderLayers', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()
 
   moveLayerDown: (e) =>
-    target = $(e.delegateTarget).parent('.list-group-item')
+    target = $(e.currentTarget).parent('.list-group-item')
     next = $(target).next('.list-group-item')
 
     if next.length > 0
       $(target).insertAfter(next)
-      @workspace.reloadLayers()
+      @ws.layers.reload()
+      @ws.remote.broadcast('reorderLayers', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()
 
   toggleAutoCollapse: (e) =>
-    btn = e.delegateTarget
+    btn = e.currentTarget
 
     if $(btn).hasClass('active')
       $(btn).removeClass('active btn-success')
@@ -101,3 +110,37 @@ class @Workspace.UI
       caret.toggleClass('on');
 
   sidebar: () =>
+
+  toggleLayer: (name) ->
+    el = @getLayer(name)
+    if $(el).hasClass('active')
+      @ws.layers.hide(name)
+      $(el).removeClass('active')
+    else
+      @ws.layers.show(name)
+      $(el).addClass('active')
+
+  getLayer: (name) ->
+    $(".layer[data-name='#{name}']")
+
+  getAllLayers: () ->
+    $('.layer')
+
+  getLayerList: () =>
+    list = ($(layer).data('name') for layer in @getAllLayers())
+
+  getActiveLayers: () ->
+    $('.layer.active').toArray()
+
+  startLoading: () ->
+    @loading_count ||= 0
+    @loading_count += 1
+
+    $('.loading').addClass('fa-pulse')
+
+  stopLoading: () ->
+    @loading_count ||= 0
+    @loading_count -= 1
+    if @loading_count <= 0
+      @loading_count = 0
+      $('.loading').removeClass('fa-pulse')
