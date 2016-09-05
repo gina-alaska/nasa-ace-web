@@ -18,21 +18,21 @@ class @Workspace.UI
 
   initEvents: () =>
     ui = @
-    $(document).on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
-    $(document).on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
-    $(document).on 'click', '[data-toggle="collapse"]', @rotateIcon
-    $(document).on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
-    $(document).on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
-    $(document).on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
+    $('.map-container').on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
+    $('.map-container').on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
+    $('.map-container').on 'click', '[data-toggle="collapse"]', @rotateIcon
+    $('.map-container').on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
+    $('.map-container').on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
+    $('.map-container').on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
 
-    $(document).on 'click', '[data-behavior="add-layer"]', (e) =>
+    $('.map-container').on 'click', '[data-behavior="add-layer"]', (e) =>
       @toggleLayer($(e.currentTarget).data('name'))
       e.preventDefault()
 
-    $(document).on 'dragstart', '.layer', @layerDragStart
-    $(document).on 'dragend', '.layer', @layerDragEnd
-    $(document).on 'dragover', '.layer', @layerDragOver
-    $(document).on 'drop', '.layer,.drop', @layerDrop
+    $('.map-container').on 'dragstart', '.layer', @layerDragStart
+    $('.map-container').on 'dragend', '.layer', @layerDragEnd
+    $('.map-container').on 'dragover', '.layer', @layerDragOver
+    $('.map-container').on 'drop', '.layer,.drop', @layerDrop
 
   layerDragStart: (e) =>
     @dragSrc = $(e.currentTarget)
