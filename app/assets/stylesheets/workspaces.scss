@@ -78,8 +78,8 @@ $sidebar_width: 300px;
 
   .map-sidebar {
     color: #fff;
-    padding: 10px 0;
     background-color: $sidebar_color;
+    border-right: 1px solid darken($sidebar_color, 10%);
 
     h5 { padding-left: 5px; }
 
@@ -159,4 +159,23 @@ $sidebar_width: 300px;
 .mapboxgl-popup-content {
   max-height: 300px;
   overflow: auto;
+}
+
+.sidebar-header {
+  position: relative;
+  height: 50px;
+  text-align:center;
+  font-weight: 500;
+  font-size: 18px;
+
+  .top-left {
+    padding-top: 12px;
+  }
+}
+
+.top-left {
+  position: absolute;
+  top:0px;
+  left: 0px;
+  width: 100%;
 }

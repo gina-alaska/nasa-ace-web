@@ -1,42 +1,7 @@
 - meta workspace: @workspace.id, channel_key: SecureRandom.hex(10)
 #workspace-map.map-container.auto-collapse
   .map-sidebar{ data: { behavior: 'hover-toggle', target: '#workspace-map', class: 'expand' } }
-    %h4.text-center
-      .hide-collapsed Workspace
-      .show-collapsed WS
-
-    .list-group
-      = link_to workspaces_path, class: 'list-group-item' do
-        %i.fa.fa-fw.fa-arrow-left
-        %span.hide-collapsed Close
-
-      = link_to edit_workspace_path(@workspace), class: 'list-group-item' do
-        %i.fa.fa-fw.fa-gear.loading
-        %span.hide-collapsed Settings
-
-    %h5.text-left
-      .hide-collapsed Layers
-    .list-group
-      = link_to '#style-list', class: 'list-group-item', data: { toggle: 'collapse' } do
-        %i.fa.fa-fw.fa-globe
-        %span.hide-collapsed Base Layer
-        .pull-right.hide-collapsed
-          %i.fa.fa-caret-left.rotatable
-      #style-list.list-group.sub.collapse
-        = link_to 'Mapbox Satellite', '#', class: 'list-group-item map-style active', data: { behavior: 'switch-base', name: 'satellite-streets' }
-        = link_to 'Mapbox Streets', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'streets' }
-        = link_to 'Mapbox Outdoors', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'outdoors' }
-        = link_to 'Mapbox Light', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'light' }
-        = link_to 'Mapbox Dark', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'dark' }
-
-
-      = link_to '#overlay-layer-list', class: 'list-group-item', data: { toggle: 'collapse' } do
-        %i.fa.fa-fw.fa-map-o
-        %span.hide-collapsed Overlays
-        .pull-right.hide-collapsed
-          %i.fa.fa-caret-left.rotatable
-      #overlay-layer-list.list-group.sub.collapse.overlay-list
-        = render 'overlays'
+    = render 'map_sidebar'
   .map-content
     = render 'map_toolbar'
     #map.map{ data: { center: [@workspace.center_lng.to_f, @workspace.center_lat.to_f], zoom: @workspace.zoom } }
