@@ -72,6 +72,12 @@ class @Workspace.Layers
         'circle-color': 'rgba(255, 0, 0, 0.8)'
       }
       @clickable.push config.layer_name
+    if config.type == 'kml'
+      type = 'circle'
+      paint = {
+        'circle-color': 'rgba(50, 50, 255, 0.8)'
+      }
+      @clickable.push config.layer_name
 
     beforeLayer = config.before || null
 
@@ -101,10 +107,8 @@ class @Workspace.Layers
       @addTileSource(config)
     if config.type == 'geojson'
       @addGeoJSONSource(config)
-
-    @loading()
-    @ws.map.getSource(name).once('load', @loaded)
-
+    if config.type == 'kml'
+      @addKMLSource(config)
 
   loading: () =>
     @ws.ui.startLoading()
@@ -112,15 +116,20 @@ class @Workspace.Layers
   loaded: =>
     @ws.ui.stopLoading()
 
+  addSource:(name, config) =>
+    @loading()
+    @ws.map.addSource(name, config)
+    @ws.map.getSource(name).once('load', @loaded)
+
   # Layer sources
   addGeoJSONSource: (config) =>
-    @ws.map.addSource(config.name, {
+    @addSource(config.name, {
       type: 'geojson',
       data: config.url
     })
 
   addWMSSource: (config) =>
-    @ws.map.addSource(config.name, {
+    @addSource(config.name, {
       type: 'raster',
       tiles: [
         "#{config.url}?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&layers=#{config.layers}"
@@ -128,10 +137,23 @@ class @Workspace.Layers
       tileSize: 256
     })
   addTileSource: (config) =>
-    @ws.map.addSource(config.name, {
+    @addSource(config.name, {
       type: 'raster',
       tiles: [
         "#{config.url}"
       ],
       tileSize: 256
     })
+
+  addKMLSource: (config) =>
+    @addSource(config.name, {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: []
+      }
+    })
+
+    $.ajax(config.url).done (xml) =>
+      source = @ws.map.getSource(config.name)
+      source.setData toGeoJSON.kml(xml)

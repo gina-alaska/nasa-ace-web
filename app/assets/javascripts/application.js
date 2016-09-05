@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require togeojson
 //= require turbolinks
+//= require togeojson
 //= require cable
 //= require_tree ./channels
 //= require workspace

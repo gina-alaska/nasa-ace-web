@@ -52,7 +52,19 @@ class @Workspace
       .addTo(@map)
 
   buildHtml: (properties) =>
-    @buildKeyValueHTML(properties)
+    if properties.description
+      header = "<h1>#{properties.name}</h1>"
+      contents = $.parseHTML($.trim(properties.description))
+      html = $("<div></div>")
+      # html.append(contents)
+      for content in contents
+        html.append(content) unless content.nodeName == '#text'
+
+      table = html.find('table').addClass('table table-bordered table-striped')
+
+      header + html.html()
+    else
+      @buildKeyValueHTML(properties)
 
   buildKeyValueHTML: (properties) =>
     html = "<table class='table table-bordered table-striped'>"
