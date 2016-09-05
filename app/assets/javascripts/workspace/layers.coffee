@@ -17,18 +17,18 @@ class @Workspace.Layers
         @hide(name)
         @show(name)
 
-  hide: (name, remoteCmd = false) =>
+  hide: (name) =>
     config = @getConfig(name)
     @remove(config.layer_name)
 
     @ws.ui.getLayer(name).removeClass('active')
-    @ws.remote.broadcast('hideLayer', { name: name }) unless remoteCmd
+    @ws.remote.broadcast('hideLayer', { name: name })
 
-  show: (name, remoteCmd = false) =>
+  show: (name) =>
     @create(name)
 
     @ws.ui.getLayer(name).addClass('active')
-    @ws.remote.broadcast('showLayer', { name: name }) unless remoteCmd
+    @ws.remote.broadcast('showLayer', { name: name })
 
 
   getConfig: (name, next = false) ->

@@ -75,14 +75,12 @@ class @Workspace
     @map.on 'moveend', =>
       @remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
 
-  moveTo: (data, remoteCmd = false) =>
+  moveTo: (data) =>
     @map.off('moveend')
     @map.flyTo(data)
     @map.once 'moveend', @setMoveEndHandler
 
-    # @remote.broadcast('move', data) unless remoteCmd
-
-  setStyle: (style, remoteCmd = false) =>
+  setStyle: (style) =>
     @reload()
 
     @style = "mapbox://styles/mapbox/#{style}-v9"
@@ -93,7 +91,7 @@ class @Workspace
     $('.map-style.active').removeClass('active')
     $(".map-style[data-name='#{style}']").addClass('active')
 
-    @remote.broadcast('setStyle', { name: style }) unless remoteCmd
+    @remote.broadcast('setStyle', { name: style })
 
   reload: =>
     @map.style.off 'load'

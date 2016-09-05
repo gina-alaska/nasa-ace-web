@@ -11,21 +11,21 @@ class @Workspace.Remote
 
   commands: {
     hideLayer: (ws, data) ->
-      ws.layers.hide(data.name, true)
+      ws.layers.hide(data.name)
 
     showLayer: (ws, data) ->
-      ws.layers.show(data.name, true)
+      ws.layers.show(data.name)
 
     reorderLayers: (ws, data) ->
-      ws.layers.reorder(data.layers, true)
+      ws.layers.reorder(data.layers)
 
     move: (ws, data) ->
-      ws.moveTo(data, true)
+      ws.moveTo(data)
       @prevRemoteHash = @lastRemoteHash
       @lastRemoteHash = data
 
     setStyle: (ws, data) ->
-      ws.setStyle(data.name, true)
+      ws.setStyle(data.name)
   }
 
   commandValidators: {
