@@ -115,26 +115,18 @@ $sidebar_width: 300px;
 
     .list-group-item {
       background-color: transparent;
-      border: 1px solid transparent;
+      border: 0px solid transparent;
+      border-left: 5px solid transparent;
       padding: 5px 20px;
-
-      &.over { border-bottom: 3px dashed red; }
-    }
-
-    .drop.over {
-      border-bottom: 3px dashed red;
-    }
-    .drop.over:last-child {
-      border-bottom: 1px dashed transparent;
-      border-top: 3px dashed red;
+      white-space:nowrap;
     }
 
     .list-group-item:hover {
-      background-color: darken($sidebar_color, 10%);;
+      background-color: rgba($sidebar_color, 0.6);
     }
     .list-group-item.active {
-      background-color: #ffcc00;
-      color: #000;
+      border-left: 5px solid #ffcc00;
+      background-color: rgba($sidebar_color, 0.8);
     }
   }
 }
@@ -178,4 +170,13 @@ $sidebar_width: 300px;
   top:0px;
   left: 0px;
   width: 100%;
+}
+
+.layer-label {
+  display: inline-block;
+  max-width: 165px;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }

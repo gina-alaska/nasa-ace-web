@@ -1,6 +1,7 @@
 class @Workspace.Layers
   constructor: (@ws) ->
     @clickable = []
+    @_layerGroups = {}
 
   reorder: (layers) =>
     layerList = (@ws.ui.getLayer(name)[0] for name in layers)
@@ -18,8 +19,7 @@ class @Workspace.Layers
         @show(name)
 
   hide: (name) =>
-    config = @getConfig(name)
-    @remove(config.layer_name)
+    @remove(name)
 
     @ws.ui.getLayer(name).removeClass('active')
     @ws.remote.broadcast('hideLayer', { name: name })
@@ -43,7 +43,7 @@ class @Workspace.Layers
       item = el.next('.layer')
       while item.length > 0
         if $(item).hasClass('active')
-          config.before = @getConfig($(item).data('name'), false).layer_name
+          config.before = @_layerGroups[item.data('name')][0]
           item = []
         else
           item = $(item).next('.layer')
@@ -53,6 +53,51 @@ class @Workspace.Layers
   isActive: (name) =>
     @ws.map.getLayer(name)?
 
+  addWMS: (config) =>
+    beforeLayer = config.before || null
+    @addToMap({
+      id: config.layer_name,
+      type: 'raster',
+      source: config.name,
+      layout: { 'visibility': 'visible' }
+    }, beforeLayer)
+
+  addTile: (config) =>
+    beforeLayer = config.before || null
+    @addToMap({
+      id: config.layer_name,
+      type: 'raster',
+      source: config.name,
+      layout: { 'visibility': 'visible' }
+    }, beforeLayer)
+
+  addGeoJSON: (config) =>
+    beforeLayer = config.before || null
+    color = config.color || randomColor()
+
+    @addToMap({
+      id: config.layer_name + 'circle',
+      type: 'circle',
+      source: config.name,
+      layout: { 'visibility': 'visible' }
+      paint: { 'circle-color': color }
+    }, beforeLayer, true)
+    @addToMap({
+      id: config.layer_name + 'fill',
+      type: 'fill',
+      source: config.name,
+      layout: { 'visibility': 'visible' }
+      paint: { 'fill-color': color }
+    }, beforeLayer, true)
+
+  addToMap: (config, beforeLayer, clickable = false) =>
+    @ws.map.addLayer(config, beforeLayer)
+    @_layerGroups[config.source] ||= []
+    @_layerGroups[config.source].push(config.id)
+    @clickable.push config.id
+
+    config.id
+
   create: (name) =>
     config = @getConfig(name, true)
     return config.layer_name if @isActive(config.layer_name)
@@ -60,43 +105,16 @@ class @Workspace.Layers
     @createSource(name, config)
 
     layout = { 'visibility': 'visible' }
-    if config.type == 'wms'
-      type = 'raster'
-      paint = {}
-    if config.type == 'tile'
-      type = 'raster'
-      paint = {}
-    if config.type == 'geojson'
-      type = 'circle'
-      paint = {
-        'circle-color': 'rgba(255, 0, 0, 0.8)'
-      }
-      @clickable.push config.layer_name
-    if config.type == 'kml'
-      type = 'circle'
-      paint = {
-        'circle-color': 'rgba(50, 50, 255, 0.8)'
-      }
-      @clickable.push config.layer_name
-
-    beforeLayer = config.before || null
-
-    @ws.map.addLayer({
-      id: config.layer_name,
-      type: type,
-      source: config.name,
-      layout: layout,
-      paint: paint,
-
-    }, beforeLayer)
-
-    return config.layer_name
+    @addWMS(config) if config.type == 'wms'
+    @addTile(config) if config.type == 'tile'
+    @addGeoJSON(config) if config.type == 'geojson' || config.type == 'kml'
 
   remove: (name) =>
-    @ws.map.removeLayer(name)
-    index = @clickable.indexOf(name)
-    @clickable.splice(index, 1) if index >= 0
-
+    for layer, index in @_layerGroups[name]
+      @ws.map.removeLayer(layer)
+      ci = @clickable.indexOf(layer)
+      @clickable.splice(ci, 1) if ci >= 0
+    @_layerGroups[name] = []
   createSource: (name) =>
     return if @ws.map.getSource(name)?
     config = @getConfig(name)
