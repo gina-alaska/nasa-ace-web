@@ -111,7 +111,8 @@ class @Workspace.Layers
 
   remove: (name) =>
     for layer, index in @_layerGroups[name]
-      @ws.map.removeLayer(layer)
+      if @isActive(layer)
+        @ws.map.removeLayer(layer)
       ci = @clickable.indexOf(layer)
       @clickable.splice(ci, 1) if ci >= 0
     @_layerGroups[name] = []
