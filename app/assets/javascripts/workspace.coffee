@@ -18,8 +18,7 @@ class @Workspace
         container: 'map',
         style: @style,
         center: if center? then center else [-147.8, 64.85],
-        zoom: if zoom? then zoom else 3,
-        hash: true
+        zoom: if zoom? then zoom else 3
     });
 
     @map.on 'load', @onLoad
