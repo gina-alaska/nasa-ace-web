@@ -52,7 +52,6 @@ gem 'simple_form'
 gem 'font-awesome-rails'
 gem 'metamagic'
 
-
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '3.3.7'
   gem 'rails-assets-randomColor'
