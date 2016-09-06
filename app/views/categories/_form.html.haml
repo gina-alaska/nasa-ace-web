@@ -1,0 +1,14 @@
+= simple_form_for(@category) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :maptype
+    = f.input :postfix
+
+  .form-actions
+    = link_to categories_path, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+    .pull-right
+      = f.button :submit, class: 'btn btn-primary'
