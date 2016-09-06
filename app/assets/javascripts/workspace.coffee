@@ -97,7 +97,7 @@ class @Workspace
     @style = "mapbox://styles/mapbox/#{style}-v9"
 
     @map.setStyle(@style)
-    @map.style.once 'load', @onLoad
+    @map.style.once 'load', @layers.reload
 
     $('.map-style.active').removeClass('active')
     $(".map-style[data-name='#{style}']").addClass('active')
@@ -105,16 +105,10 @@ class @Workspace
     @remote.broadcast('setStyle', { name: style })
 
   reload: =>
-    @map.style.off 'load'
     @ui.reset()
 
   onLoad: =>
-    for el in @ui.getAllLayers()
-      name = $(el).data('name')
-      # preload source data
-      @layers.createSource(name)
-      if $(el).hasClass('active')
-        @layers.show(name)
+    @layers.reload()
 
 $(document).on 'turbolinks:load', ->
   document.workspace = new Workspace('.map-container', $('meta[name="channel_key"]').attr('content'))
