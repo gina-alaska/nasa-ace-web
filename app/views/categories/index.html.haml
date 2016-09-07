@@ -1,0 +1,25 @@
+.clearfix
+  = link_to 'New Category', new_category_path, class: 'btn btn-success pull-right'
+
+.panel.panel-default{ style: 'margin-top: 12px;' }
+  .panel-heading
+    %h1.panel-title Layer Categories
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Maptype
+        %th Postfix
+        %th.text-right Actions
+
+    %tbody
+      - @categories.each do |category|
+        %tr
+          %td= category.name
+          %td= category.maptype
+          %td{ style: 'white-space:nowrap; text-overflow: ellipsis; overflow: hidden; max-width: 100px;'}= category.postfix
+          %td.text-right
+            .btn-group.btn-group-sm
+              = link_to 'Edit', edit_category_path(category), class: 'btn btn-primary'
+              = link_to 'Destroy', category, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'

@@ -11,6 +11,24 @@ class WorkspacesChannel < ApplicationCable::Channel
 
   def receive(data)
     workspace = Workspace.find(params[:id])
+
+    case data["command"]
+    when 'reorderLayers'
+      reorder_layers(workspace, data['layers'])
+    else
+      Rails.logger.info "unknown command #{data['command']}"
+    end
+
     WorkspacesChannel.broadcast_to("workspace_#{workspace.id}", data)
+  end
+
+  def reorder_layers(workspace, layers)
+    layers.each_with_index do |name, index|
+      layer = workspace.layers.where(name: name).first
+      unless layer.nil?
+        wl = workspace.workspace_layers.where(layer: layer).first
+        wl.insert_at(index + 1)
+      end
+    end
   end
 end

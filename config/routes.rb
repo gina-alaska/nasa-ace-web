@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :workspace_layers
+  resources :layers
+  resources :categories
   mount ActionCable.server => '/cable'
 
   resources :workspaces

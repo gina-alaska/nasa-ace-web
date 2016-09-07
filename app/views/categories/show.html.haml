@@ -1,0 +1,23 @@
+%p#notice= notice
+
+.row
+  .col-sm-6.col-sm-offset-3
+    .panel.panel-default
+      .panel-heading
+        %h1.panel-title
+          %strong Name:
+          = @category.name
+      .panel-body
+        %p
+          %b Maptype:
+          = @category.maptype
+        %p
+          %b Postfix:
+          = @category.postfix
+      .panel-footer
+        = link_to categories_path, class: 'btn btn-default' do
+          %i.fa.fa-arrow-left
+          Back
+        = link_to edit_category_path(@category), class: 'btn btn-primary' do
+          %i.fa.fa-edit
+          Edit

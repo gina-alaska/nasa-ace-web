@@ -1,7 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: Workspace1
+  workspace: one
+  layer: one
+  position: 0
 
 two:
-  name: Workspace2
+  workspace: one
+  layer: two
+  position: 1

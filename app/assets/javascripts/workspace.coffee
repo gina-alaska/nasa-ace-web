@@ -108,6 +108,7 @@ class @Workspace
     @ui.reset()
 
   onLoad: =>
+    @layers.addSources()
     @layers.reload()
 
 $(document).on 'turbolinks:load', ->

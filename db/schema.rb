@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827003423) do
+ActiveRecord::Schema.define(version: 20160907002020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "maptype"
+    t.string   "postfix"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "datasets", force: :cascade do |t|
     t.string   "title"
@@ -22,6 +30,27 @@ ActiveRecord::Schema.define(version: 20160827003423) do
     t.string   "version"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "layers", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "category_id"
+    t.text     "url"
+    t.string   "params"
+    t.json     "style"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_layers_on_category_id", using: :btree
+  end
+
+  create_table "workspace_layers", force: :cascade do |t|
+    t.integer  "workspace_id"
+    t.integer  "layer_id"
+    t.integer  "position"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["layer_id"], name: "index_workspace_layers_on_layer_id", using: :btree
+    t.index ["workspace_id"], name: "index_workspace_layers_on_workspace_id", using: :btree
   end
 
   create_table "workspaces", force: :cascade do |t|
@@ -33,4 +62,7 @@ ActiveRecord::Schema.define(version: 20160827003423) do
     t.decimal  "zoom",       precision: 12, scale: 8
   end
 
+  add_foreign_key "layers", "categories"
+  add_foreign_key "workspace_layers", "layers"
+  add_foreign_key "workspace_layers", "workspaces"
 end

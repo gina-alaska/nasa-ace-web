@@ -1,0 +1,23 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @layer.name
+%p
+  %b Category:
+  = @layer.category.pretty_name
+%p
+  %b Url:
+  = @layer.url
+- unless @layer.params.blank?
+  %p
+    %b Params:
+    = @layer.params
+- unless @layer.style.nil?
+  %p
+    %b Style:
+    = @layer.style.to_json
+
+= link_to 'Edit', edit_layer_path(@layer)
+\|
+= link_to 'Back', layers_path

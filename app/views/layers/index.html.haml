@@ -1,0 +1,30 @@
+.clearfix
+  = link_to 'New Layer', new_layer_path, class: 'btn btn-success pull-right'
+%br/
+
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Layers
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Category
+        %th Url
+        %th Params
+        %th Style
+        %th
+
+    %tbody
+      - @layers.each do |layer|
+        %tr
+          %td= layer.name
+          %td= layer.category.pretty_name
+          %td= layer.url
+          %td= layer.params
+          %td= layer.style
+          %td
+            = link_to 'Show', layer
+            = link_to 'Edit', edit_layer_path(layer)
+            = link_to 'Destroy', layer, :method => :delete, :data => { :confirm => 'Are you sure?' }
