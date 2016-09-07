@@ -24,6 +24,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 
 gem 'redis', '~> 3.0'
+# static web pages
+gem 'high_voltage', '~> 3.0.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -62,4 +65,4 @@ group :test do
   gem 'rubocop', require: false
 end
 
-ruby '2.3.0'
+ruby '~> 2.3.0'
