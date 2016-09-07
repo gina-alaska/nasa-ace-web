@@ -62,13 +62,14 @@ class WorkspaceLayersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_workspace_layer
-      @workspace_layer = WorkspaceLayer.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def workspace_layer_params
-      params.require(:workspace_layer).permit(:workspace_id, :layer_id, :position)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_workspace_layer
+    @workspace_layer = WorkspaceLayer.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def workspace_layer_params
+    params.require(:workspace_layer).permit(:workspace_id, :layer_id, :position)
+  end
 end
