@@ -1,15 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Layer One
   category: one
   url: MyText
   params: MyString
   style: MyText
 
 two:
-  name: MyString
+  name: Layer Two
   category: two
   url: MyText
   params: MyString
   style: MyText
+
+orphan:
+  name: Orphan Layer
+  category: one
+  url: http://test.com/

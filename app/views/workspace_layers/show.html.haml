@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Workspace:
+  = @workspace_layer.workspace
+%p
+  %b Layer:
+  = @workspace_layer.layer
+%p
+  %b Position:
+  = @workspace_layer.position
+
+= link_to 'Edit', edit_workspace_layer_path(@workspace_layer)
+\|
+= link_to 'Back', workspace_layers_path

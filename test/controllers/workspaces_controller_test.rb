@@ -17,7 +17,7 @@ class WorkspacesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create workspace" do
     assert_difference('Workspace.count') do
-      post workspaces_url, params: { workspace: { name: @workspace.name } }
+      post workspaces_url, params: { workspace: { name: @workspace.name + " testing" } }
     end
 
     assert_redirected_to workspace_url(Workspace.last)

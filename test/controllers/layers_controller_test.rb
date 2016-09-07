@@ -17,7 +17,7 @@ class LayersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create layer" do
     assert_difference('Layer.count') do
-      post layers_url, params: { layer: { category_id: @layer.category_id, name: @layer.name, params: @layer.params, style: @layer.style, url: @layer.url } }
+      post layers_url, params: { layer: { category_id: @layer.category_id, name: @layer.name + " test", params: @layer.params, style: @layer.style, url: @layer.url } }
     end
 
     assert_redirected_to layer_url(Layer.last)

@@ -4,5 +4,5 @@
 -# = render 'overlay_layer', layer: { name: 'GINA Topographic Maps', url: 'http://tiles.gina.alaska.edu/tilesrv/drg/tile/{x}/{y}/{z}', type: 'tile'  }
 -# = render 'overlay_layer', layer: { name: 'IMIQ Sites', url: 'http://imiq-api.gina.alaska.edu/sites.geojson?limit=5000', type: 'geojson', color: 'rgba(247, 173, 89, 0.8)'  }
 -# = render 'overlay_layer', layer: { name: 'KML Test', url: '/wc.kml', type: 'kml', color: 'rgba(86, 106, 216, 0.8)'  }
-- Layer.all.each do |layer|
+- @workspace.layers.each do |layer|
   = render 'overlay_layer', layer: { name: layer.name, url: layer.full_url, type: layer.category.maptype, color: layer.style.try(:[], 'color') }

@@ -1,0 +1,10 @@
+= simple_form_for(@workspace_layer) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :workspace
+    = f.association :layer
+    = f.input :position
+
+  .form-actions
+    = f.button :submit
