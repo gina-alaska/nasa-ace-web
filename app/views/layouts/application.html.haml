@@ -7,16 +7,16 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
+    %section.site-header
+      = render 'layouts/header'
     .container
-      %section.site-header
-        = render 'layouts/header'
       %section.site-content
         = yield
-      %section.site-footer
-        .footer-wrapper
-          %p
-            = image_tag 'ace_logo.png'
-          %p
-            ACE Proudly Partners with
-            %br/
-            = image_tag 'exact_earth.png'
+    %section.site-footer
+      .footer-wrapper
+        %p
+        = image_tag 'ace_logo.png'
+        %p
+          ACE Proudly Partners with
+          %br/
+          = image_tag 'exact_earth.png'
