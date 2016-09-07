@@ -20,8 +20,8 @@ layers.each do |config|
   layer.save
 end
 
-workspace = Workspace.where(name: 'Testing', center_lat: 64.5, center_lng: -146.5, zoom: 3).first_or_create do |ws|
-  ws.save!
+workspace = Workspace.where(name: 'Testing').first_or_create do |ws|
+  ws.update_attributes(center_lat: 64.5, center_lng: -146.5, zoom: 3)
   ws.layers = Layer.all
-  ws.save!
 end
+workspace.save!
