@@ -18,6 +18,10 @@ class @Workspace.Layers
         @hide(name)
         @show(name)
 
+  addSources: () =>
+    for layer in @ws.ui.getAllLayers()
+      @createSource $(layer).data('name')
+
   hide: (name) =>
     @remove(name)
 
