@@ -66,4 +66,4 @@ group :test do
   gem 'rubocop', require: false
 end
 
-ruby '~> 2.3.0'
+ruby '2.3.1'
