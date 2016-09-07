@@ -17,7 +17,11 @@ class WorkspaceLayersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create workspace_layer" do
     assert_difference('WorkspaceLayer.count') do
-      post workspace_layers_url, params: { workspace_layer: { layer_id: layers(:orphan).id, workspace_id: @workspace_layer.workspace_id } }
+      post workspace_layers_url, params: {
+        workspace_layer: {
+          layer_id: layers(:orphan).id, workspace_id: @workspace_layer.workspace_id
+        }
+      }
     end
 
     assert_redirected_to workspace_layer_url(WorkspaceLayer.last)
@@ -34,7 +38,13 @@ class WorkspaceLayersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update workspace_layer" do
-    patch workspace_layer_url(@workspace_layer), params: { workspace_layer: { layer_id: @workspace_layer.layer_id, position: @workspace_layer.position, workspace_id: @workspace_layer.workspace_id } }
+    patch workspace_layer_url(@workspace_layer), params: {
+      workspace_layer: {
+        layer_id: @workspace_layer.layer_id,
+        position: @workspace_layer.position,
+        workspace_id: @workspace_layer.workspace_id
+      }
+    }
     assert_redirected_to workspace_layer_url(@workspace_layer)
   end
 

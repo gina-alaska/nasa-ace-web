@@ -14,7 +14,7 @@ class WorkspacesChannel < ApplicationCable::Channel
 
     case data["command"]
     when 'reorderLayers'
-      reorderLayers(workspace, data['layers'])
+      reorder_layers(workspace, data['layers'])
     else
       Rails.logger.info "unknown command #{data['command']}"
     end
@@ -22,7 +22,7 @@ class WorkspacesChannel < ApplicationCable::Channel
     WorkspacesChannel.broadcast_to("workspace_#{workspace.id}", data)
   end
 
-  def reorderLayers(workspace, layers)
+  def reorder_layers(workspace, layers)
     layers.each_with_index do |name, index|
       layer = workspace.layers.where(name: name).first
       unless layer.nil?
