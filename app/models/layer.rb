@@ -6,6 +6,8 @@ class Layer < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :url, presence: true
 
+  delegate :maptype, to: :category
+
   def full_url
     File.join(url, category.postfix)
   end
