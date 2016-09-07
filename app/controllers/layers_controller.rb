@@ -62,13 +62,14 @@ class LayersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_layer
-      @layer = Layer.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def layer_params
-      params.require(:layer).permit(:name, :category_id, :url, :params, style: [:color])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_layer
+    @layer = Layer.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def layer_params
+    params.require(:layer).permit(:name, :category_id, :url, :params, style: [:color])
+  end
 end
