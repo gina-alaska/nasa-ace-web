@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  category: one
+  url: MyText
+  params: MyString
+  style: MyText
+
+two:
+  name: MyString
+  category: two
+  url: MyText
+  params: MyString
+  style: MyText

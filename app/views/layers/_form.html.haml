@@ -1,0 +1,15 @@
+= simple_form_for(@layer) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.association :category, label_method: :pretty_name
+    = f.input :url
+    = f.input :params
+
+    %h3 Style
+    = f.simple_fields_for :style do |style|
+      = style.input :color
+
+  .form-actions
+    = f.button :submit
