@@ -10,8 +10,8 @@
     #navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         %li= link_to 'Home', '#'
-        %li= link_to 'About', '#'
-        %li= link_to 'Groups', '#'
+        %li= link_to 'About', page_path('about')
+        %li= link_to 'Groups', page_path('groups')
         %li= link_to 'Workspace', workspaces_path
-        %li= link_to 'Datasets', '#'
-        %li= link_to 'Help', '#'
+        %li= link_to 'Datasets', page_path('datasets')
+        %li= link_to 'Help', page_path('help')
