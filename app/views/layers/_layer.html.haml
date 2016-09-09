@@ -1,0 +1,26 @@
+.layer.list-group-item{ data: { name: layer.name, type: layer.maptype, url: layer.full_url, color: layer.style.try(:[], 'color') } }
+  .layer-handle{ draggable: "true", data: { toggle: 'layer' } }
+    &nbsp;
+
+  .layer-controls{ data: { toggle: 'layer' } }
+    %span.layer-label
+      = overlay_icon(layer)
+      = layer.name
+
+  .layer-buttons.btn-group.btn-group-sm.hide-collapsed
+    .btn.btn-default{ data: { toggle: 'collapse', target: dom_id(layer, '#info') }, title: layer.name }
+      %i.fa.fa-info
+    .btn.btn-default{ data: { behavior: 'move-layer-down' } }
+      %i.fa.fa-caret-down
+    .btn.btn-default{ data: { behavior: 'move-layer-up' } }
+      %i.fa.fa-caret-up
+
+
+  .hide-collapsed.collapse{ id: dom_id(layer, 'info')  }
+    .layer-settings
+      .setting-group
+        %label Opacity:
+        %input{ name: 'opacity', type: 'range', min: 0, max: 100, step: 0, value: 100, data: { adjust: 'opacity', layer: layer.name } }
+      .setting-group.text-center
+        %button.btn.btn-default.btn-sm.btn-block{ data: { toggle: 'layer'} }
+          Toggle layer

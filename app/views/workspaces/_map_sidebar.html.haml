@@ -20,11 +20,31 @@
     .pull-right.hide-collapsed
       %i.fa.fa-caret-left.rotatable
   #style-list.list-group.sub.collapse
-    = link_to 'Mapbox Satellite', '#', class: 'list-group-item map-style active', data: { behavior: 'switch-base', name: 'satellite-streets' }
-    = link_to 'Mapbox Streets', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'streets' }
-    = link_to 'Mapbox Outdoors', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'outdoors' }
-    = link_to 'Mapbox Light', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'light' }
-    = link_to 'Mapbox Dark', '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'dark' }
+    = link_to '#', class: 'list-group-item map-style active layer', data: { behavior: 'switch-base', name: 'satellite-streets' } do
+      .layer-handle
+        &nbsp;
+      .layer-controls
+        .layer-label Mapbox Satellite
+    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'streets' } do
+      .layer-handle
+        &nbsp;
+      .layer-controls
+        .layer-label Mapbox Streets
+    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'outdoors' } do
+      .layer-handle
+        &nbsp;
+      .layer-controls
+        .layer-label Mapbox Outdoors
+    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'light' } do
+      .layer-handle
+        &nbsp;
+      .layer-controls
+        .layer-label Mapbox Light
+    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'dark' } do
+      .layer-handle
+        &nbsp;
+      .layer-controls
+        .layer-label Mapbox Dark
 
 
   = link_to '#overlay-layer-list', class: 'list-group-item', data: { toggle: 'collapse' } do

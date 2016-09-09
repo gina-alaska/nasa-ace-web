@@ -62,19 +62,9 @@ $sidebar_width: 300px;
     opacity: 1;
   }
 
-  // &.auto-colapse:not(.expand) .list-group.sub { display: none; }
-  //
-  // &.auto-colapse .show-collapsed { display: initial; }
-  // &.auto-colapse .hide-collapsed { display: none; }
-  // &.auto-colapse.expand .hide-collapsed { display: initial; }
-  // &.auto-colapse.expand .show-collapsed { display: none; }
-  // &.auto-colapse.expand .map-sidebar {
-  //   width: 204px;
-  //
-  // }
-  // &.auto-colapse.expand .map-content {
-  //   left: 204px;
-  // }
+  &.auto-collapse:not(.open) .hide-collapsed.collapse.in {
+    display: none;
+  }
 
   .map-sidebar {
     color: #fff;
@@ -99,7 +89,10 @@ $sidebar_width: 300px;
     .list-group-item:last-child {
       border-bottom: 1px solid lighten($sidebar_color, 10%);
     }
+
+    .modal { color: #000; }
   }
+
 
   .rotatable {
     transition: all 0.3s ease;
@@ -116,8 +109,8 @@ $sidebar_width: 300px;
     .list-group-item {
       background-color: transparent;
       border: 0px solid transparent;
-      border-left: 5px solid transparent;
-      padding: 8px 20px;
+      // border-left: 5px solid transparent;
+      padding: 0px;
       white-space:nowrap;
       font-size: 0.9em;
     }
@@ -125,10 +118,61 @@ $sidebar_width: 300px;
     .list-group-item:hover {
       background-color: rgba($sidebar_color, 0.6);
     }
-    .list-group-item.active {
-      border-left: 5px solid #ffcc00;
-      background-color: rgba($sidebar_color, 0.8);
+  }
+
+  .layer {
+    position: relative;
+    padding: 0px;
+  }
+
+  .layer-controls {
+    position: relative;
+    height: 36px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  .layer-settings {
+    padding: 10px 20px;
+    z-index: 1;
+
+    .setting-group {
+      margin-bottom: 5px;
     }
+  }
+
+  .layer-buttons {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    vertical-align: middle;
+    z-index: 10;
+  }
+
+  .layer-label {
+    display: inline-block;
+    max-width: 180px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    padding: 10px 0px;
+  }
+
+  .layer-handle {
+    background:transparent;
+    border: 0px solid transparent;
+    border-left: 5px solid #888;
+    position: absolute;
+    left: 0px;
+    width: 20px;
+    top:0px;
+    bottom:0px;
+    cursor: move;
+  }
+  .active .layer-handle {
+    border-left: 5px solid #ffcc00;
+    // background-color: rgba($sidebar_color, 0.8);
   }
 }
 
@@ -171,13 +215,4 @@ $sidebar_width: 300px;
   top:0px;
   left: 0px;
   width: 100%;
-}
-
-.layer-label {
-  display: inline-block;
-  max-width: 165px;
-  overflow:hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  vertical-align: middle;
 }

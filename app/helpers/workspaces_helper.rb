@@ -1,6 +1,8 @@
 module WorkspacesHelper
   def overlay_icon(layer)
-    case layer[:type]
+    Rails.logger.info '*' * 10
+    Rails.logger.info layer.maptype
+    case layer.maptype
     when 'wms'
       symbol = 'globe'
       color = '#fff'
@@ -9,10 +11,10 @@ module WorkspacesHelper
       color = '#fff'
     when 'geojson'
       symbol = 'circle'
-      color = layer[:color]
+      color = layer.style.try(:[], 'color')
     when 'kml'
       symbol = 'circle'
-      color = layer[:color]
+      color = layer.style.try(:[], 'color')
     end
 
     content_tag :i, '', class: "fa fa-fw fa-#{symbol}", style: "color: #{color}"
