@@ -8,6 +8,27 @@ html, body {
   height: 100%;
 }
 
+.navbar.navbar-default {
+  background-color: #005d7a;
+  color: #fff;
+
+  .navbar-brand {
+    color: #fff;
+  }
+
+  .nav > li > a  {
+    color: #fff;
+    border-bottom: 4px solid #005d7a;
+
+    &:hover {
+      border-bottom: 4px solid #fff;
+    }
+  }
+  .navbar-right {
+    margin-right: 0px;
+  }
+}
+
 .img-preview img {
   max-width: 100%;
 }
