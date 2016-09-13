@@ -1,7 +1,5 @@
 module WorkspacesHelper
   def overlay_icon(layer)
-    Rails.logger.info '*' * 10
-    Rails.logger.info layer.maptype
     case layer.maptype
     when 'wms'
       symbol = 'globe'

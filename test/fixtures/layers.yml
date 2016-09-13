@@ -2,19 +2,45 @@
 
 one:
   name: Layer One
-  category: one
+  category: kml
   url: MyText
   params: MyString
-  style: MyText
 
 two:
   name: Layer Two
-  category: two
+  category: kml
   url: MyText
   params: MyString
-  style: MyText
 
 orphan:
   name: Orphan Layer
-  category: one
+  category: kml
   url: http://test.com/
+
+kml:
+  name: kml
+  category: kml
+  url: http://test.com/
+  style:
+    color: rgba(255,0,0,0.8)
+
+geojson:
+  name: geojson
+  category: geojson
+  url: http://test.com/
+  style:
+    color: rgba(255,0,0,0.8)
+
+wms:
+  name: wms
+  category: wms
+  url: http://test.com/
+  style:
+    color: rgba(255,0,0,0.8)
+
+tile:
+  name: tile
+  category: tile
+  url: http://test.com/
+  style:
+    color: rgba(255,0,0,0.8)
