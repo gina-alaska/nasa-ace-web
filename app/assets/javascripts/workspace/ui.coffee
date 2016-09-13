@@ -18,6 +18,9 @@ class @Workspace.UI
 
   initEvents: () =>
     ui = @
+
+    $('.map-container').on 'input', '[data-adjust="opacity"]', @setOpacity
+
     $('.map-container').on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
     $('.map-container').on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
     $('.map-container').on 'click', '[data-toggle="collapse"]', @rotateIcon
@@ -25,14 +28,19 @@ class @Workspace.UI
     $('.map-container').on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
     $('.map-container').on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
 
-    $('.map-container').on 'click', '[data-behavior="add-layer"]', (e) =>
-      @toggleLayer($(e.currentTarget).data('name'))
+    $('.map-container').on 'click', '[data-toggle="layer"]', (e) =>
+      @toggleLayer($(e.currentTarget).parents('.layer').data('name'))
       e.preventDefault()
 
-    $('.map-container').on 'dragstart', '.layer', @layerDragStart
-    $('.map-container').on 'dragend', '.layer', @layerDragEnd
-    $('.map-container').on 'dragover', '.layer', @layerDragOver
-    $('.map-container').on 'drop', '.layer,.drop', @layerDrop
+    $('.map-container').on 'dragstart', '.overlay-list .layer', @layerDragStart
+    $('.map-container').on 'dragend', '.overlay-list .layer', @layerDragEnd
+    $('.map-container').on 'dragover', '.overlay-list .layer', @layerDragOver
+    $('.map-container').on 'drop', '.overlay-list .layer,.drop', @layerDrop
+
+  setOpacity: (e) =>
+    value = parseInt(e.currentTarget.value, 10) / 100
+    layer = $(e.currentTarget).data('layer')
+    @ws.layers.setPaintProperty(layer, 'opacity', value)
 
   layerDragStart: (e) =>
     @dragSrc = $(e.currentTarget)
@@ -71,8 +79,8 @@ class @Workspace.UI
     $(second).insertAfter(first)
 
   moveLayerUp: (e) =>
-    target = $(e.currentTarget).parent('.list-group-item')
-    prev = $(target).prev('.list-group-item')
+    target = $(e.currentTarget).parents('.list-group-item')
+    prev = $(target).prev()
     if prev.length > 0
       $(target).insertBefore(prev)
       @ws.layers.reload()
@@ -82,8 +90,8 @@ class @Workspace.UI
     e.stopPropagation()
 
   moveLayerDown: (e) =>
-    target = $(e.currentTarget).parent('.list-group-item')
-    next = $(target).next('.list-group-item')
+    target = $(e.currentTarget).parents('.list-group-item')
+    next = $(target).next()
 
     if next.length > 0
       $(target).insertAfter(next)
@@ -121,16 +129,16 @@ class @Workspace.UI
       $(el).addClass('active')
 
   getLayer: (name) ->
-    $(".layer[data-name='#{name}']")
+    $(".overlay-list .layer[data-name='#{name}']")
 
   getAllLayers: () ->
-    $('.layer')
+    $('.overlay-list .layer')
 
   getLayerList: () =>
     list = ($(layer).data('name') for layer in @getAllLayers())
 
   getActiveLayers: () ->
-    $('.layer.active').toArray()
+    $('.overlay-list .layer.active').toArray()
 
   startLoading: () ->
     @loading_count ||= 0

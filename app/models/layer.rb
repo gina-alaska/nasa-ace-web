@@ -9,7 +9,7 @@ class Layer < ApplicationRecord
   delegate :maptype, to: :category
 
   def full_url
-    File.join(url, category.postfix)
+    category.postfix.blank? ? url : File.join(url, category.postfix)
   end
 
   def to_s

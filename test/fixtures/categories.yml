@@ -9,3 +9,19 @@ two:
   name: MyString
   maptype: MyString
   postfix: MyString
+
+kml:
+  name: KML
+  maptype: kml
+
+wms:
+  name: WMS
+  maptype: wms
+
+geojson:
+  name: GeoJSON
+  maptype: geojson
+
+tile:
+  name: Tile
+  maptype: tile
