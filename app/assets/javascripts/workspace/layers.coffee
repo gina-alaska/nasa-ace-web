@@ -57,42 +57,51 @@ class @Workspace.Layers
   isActive: (name) =>
     @ws.map.getLayer(name)?
 
+  setPaintProperty: (name, property, value) =>
+    return unless @_layerGroups[name]
+    for layer in @_layerGroups[name]
+      [first,...,last] = layer.split('-')
+      @ws.map.setPaintProperty(layer, "#{last}-#{property}", value)
+
   addWMS: (config) =>
     beforeLayer = config.before || null
+    type = 'raster'
     @addToMap({
-      id: config.layer_name,
-      type: 'raster',
+      id: "#{config.layer_name}-#{type}",
+      type: type,
       source: config.name,
-      layout: { 'visibility': 'visible' }
+      layout: { 'visibility': 'visible' },
+      paint: { "#{type}-opacity": @getOpacity(config.name)  }
     }, beforeLayer)
 
   addTile: (config) =>
     beforeLayer = config.before || null
+    type = 'raster'
     @addToMap({
-      id: config.layer_name,
-      type: 'raster',
+      id: "#{config.layer_name}-#{type}",
+      type: type,
       source: config.name,
-      layout: { 'visibility': 'visible' }
+      layout: { 'visibility': 'visible' },
+      paint: { "#{type}-opacity": @getOpacity(config.name)  }
     }, beforeLayer)
+
+  getOpacity: (name) =>
+    parseInt(@ws.ui.getLayer(name).find('input[name="opacity"]')[0].value, 10) / 100
 
   addGeoJSON: (config) =>
     beforeLayer = config.before || null
     color = config.color || randomColor()
-
-    @addToMap({
-      id: config.layer_name + 'circle',
-      type: 'circle',
-      source: config.name,
-      layout: { 'visibility': 'visible' }
-      paint: { 'circle-color': color }
-    }, beforeLayer, true)
-    @addToMap({
-      id: config.layer_name + 'fill',
-      type: 'fill',
-      source: config.name,
-      layout: { 'visibility': 'visible' }
-      paint: { 'fill-color': color }
-    }, beforeLayer, true)
+    for type in ['circle', 'fill', 'line']
+      @addToMap({
+        id: "#{config.layer_name}-#{type}",
+        type: type,
+        source: config.name,
+        layout: { 'visibility': 'visible' }
+        paint: {
+          "#{type}-color": color,
+          "#{type}-opacity": @getOpacity(config.name)
+        }
+      }, beforeLayer, true)
 
   addToMap: (config, beforeLayer, clickable = false) =>
     @ws.map.addLayer(config, beforeLayer)
