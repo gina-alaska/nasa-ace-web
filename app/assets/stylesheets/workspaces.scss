@@ -6,7 +6,7 @@ $sidebar_color: #242424;
 $sidebar_width: 300px;
 .map-container {
   width: 100%;
-  top: 50px;
+  top: 54px;
   left: 0px;
   right: 0px;
   bottom: 0px;
@@ -34,7 +34,7 @@ $sidebar_width: 300px;
 
   .map-content {
     position: absolute;
-    top: 1px;
+    top: 0px;
     bottom: 0px;
     left: $sidebar_width;
     right: 0px;
