@@ -11,7 +11,7 @@
       %ul.nav.navbar-nav.navbar-right
         %li= link_to 'Home', root_url
         %li= link_to 'About', page_path('about')
-        %li= link_to 'Groups', page_path('groups')
+        %li= link_to 'Groups', ckan_url('group')
+        %li= link_to 'Catalog', ckan_url('dataset')
         %li= link_to 'Workspace', workspaces_path
-        %li= link_to 'Datasets', page_path('datasets')
         %li= link_to 'Help', page_path('help')
