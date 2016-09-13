@@ -12,4 +12,9 @@ module ApplicationHelper
       end.join.html_safe
     end
   end
+
+  def ckan_url(path = nil)
+    ckan = Rails.application.secrets.ckan_url
+    path.blank? ? ckan : ::File.join(ckan, path)
+  end
 end
