@@ -15,10 +15,10 @@
             %li
               %h4
                 <a href="#logging-in">Logging In</a>
-        %li 
+        %li
           %h3
             <a href="#organizations">Organizations</a>
-        %li 
+        %li
           %h3
             <a href="#data">Data</a>
         %li
@@ -30,7 +30,7 @@
     .col-xs-9
       %h2 HELP page
       %h3{ id: 'user' } USER
-      %p 
+      %p
         Register for publishing features and for personalization features, such as “following” datasets. Anyone, even people without accounts, can search for and download data.
 
       %h4{ id: 'create-user' } Create User ID
@@ -79,41 +79,44 @@
           %li Admin – can add, remove and change roles for organization members
 
       %h3{ id: 'data' } DATA
-      %h4 Add Data 
+      %h4 Add Data
       %p
         You can access the “Create dataset” screen in two ways.
         Select the “Datasets” link at the top of any page. From this, above the search box, select the “Add Dataset” button.
         Alternatively, select the “organizations” link at the top of a page. Now select the page for the organization that should own your new dataset. Provided that you are a member of this organization, you can now select the “Add Dataset” button above the search box.
         %br
-        You will then be ask for the following information about your data. 
-        Title – this title will be unique across NASA ACE, so make it brief but specific. E.g. “AK population density by region” is better than “Population figures”.
-        Description – You can add a longer description of the dataset here, including information such as where the data is from and any information that people will need to know when using the data.
-        Tags – here you may add tags that will help people find the data and link it with other related data. Examples could be “population”, “crime”, “East Anglia”. Hit the <return> key between tags. If you enter a tag wrongly, you can use its delete button to remove it before saving the dataset.
-        License – it is important to include license information so that people know how they can use the data. This field should be a drop-down box. If you need to use a license not on the list, contact your site administrator.
-        Organization - If you are a member of any organizations, this drop-down will enable you to choose which one should own the dataset. Ensure the default chosen is the correct one before you proceed. (Probably most users will be in only one organization. If this is you, NASA ACE will have chosen your organization by default and you need not do anything.)
-        When you have filled in the information on this page, select the “Next: Add Data” button. 
+        You will then be ask for the following information about your data.
+        %ul
+          %li Title – this title will be unique across NASA ACE, so make it brief but specific. E.g. “AK population density by region” is better than “Population figures”.
+          %li Description – You can add a longer description of the dataset here, including information such as where the data is from and any information that people will need to know when using the data.
+          %li Tags – here you may add tags that will help people find the data and link it with other related data. Examples could be “population”, “crime”, “East Anglia”. Hit the <return> key between tags. If you enter a tag wrongly, you can use its delete button to remove it before saving the dataset.
+          %li License – it is important to include license information so that people know how they can use the data. This field should be a drop-down box. If you need to use a license not on the list, contact your site administrator.
+          %li Organization - If you are a member of any organizations, this drop-down will enable you to choose which one should own the dataset. Ensure the default chosen is the correct one before you proceed. (Probably most users will be in only one organization. If this is you, NASA ACE will have chosen your organization by default and you need not do anything.)
+        When you have filled in the information on this page, select the <strong>“Next: Add Data”</strong> button.
         %br
         NASA ACE will display the “Add data” screen. This is where you will add one or more “resources” which contain the data for this dataset. Choose a file or link for your data resource and select the appropriate choice at the top of the screen:
         If you are giving NASA ACE a link to the data, like http://example.com/mydata.csv, then select “Link to a file” or “Link to an API”. (If you don’t know what an API is, you don’t need to worry about this option - select “Link to a file”.)
         If the data to be added to NASA ACE is in a file on your computer, select “Upload a file”. NASA ACE will give you a file browser to select it.
         %br
         Add the other information on the page. NASA ACE does not require this information, but it is good practice to add it:
-        Name – a name for this resource, e.g. “Population density 2011, CSV”. Different resources in the dataset should have different names.
-        Description – a short description of the resource.
-        Format – the file format of the resource, e.g. CSV (comma-separated values), XLS, JSON, PDF, etc.
-        If you have more resources (files or links) to add to the dataset, select the “Save & add another” button. When you have finished adding resources, select “Next: Additional Info”.
+        %ul
+          %li Name – a name for this resource, e.g. “Population density 2011, CSV”. Different resources in the dataset should have different names.
+          %li Description – a short description of the resource.
+          %li Format – the file format of the resource, e.g. CSV (comma-separated values), XLS, JSON, PDF, etc.
+          %li If you have more resources (files or links) to add to the dataset, select the “Save & add another” button. When you have finished adding resources, select “Next: Additional Info”.
         %br
         NASA ACE displays the “Additional data” screen.
-        Visibility – a Public dataset is public and can be seen by any user of the site. A Private dataset can only be seen by members of the organization owning the dataset and will not show up in searches by other users.
-        Author – The name of the person or organization responsible for producing the data.
-        Author e-mail – an e-mail address for the author, to which queries about the data should be sent.
-        Maintainer / maintainer e-mail – If necessary, details for a second person responsible for the data.
-        Custom fields – If you want the dataset to have another field, you can add the field name and value here. E.g. “Year of publication”. Note that if there is an extra field that is needed for a large number of datasets, you should talk to your site administrator about changing the default schema and dataset forms.
+        %ul
+          %li Visibility – a Public dataset is public and can be seen by any user of the site. A Private dataset can only be seen by members of the organization owning the dataset and will not show up in searches by other users.
+          %li Author – The name of the person or organization responsible for producing the data.
+          %li Author e-mail – an e-mail address for the author, to which queries about the data should be sent.
+          %li Maintainer / maintainer e-mail – If necessary, details for a second person responsible for the data.
+          %li Custom fields – If you want the dataset to have another field, you can add the field name and value here. E.g. “Year of publication”. Note that if there is an extra field that is needed for a large number of datasets, you should talk to your site administrator about changing the default schema and dataset forms.
         %br
-        Select the ‘Finish’ button. 
+        Select the ‘Finish’ button.
         %br
         Search for Data
-        You should be able to find your dataset by typing the title, or some relevant words from the description, into the search box on any page in NASA ACE. 
+        You should be able to find your dataset by typing the title, or some relevant words from the description, into the search box on any page in NASA ACE.
         To find datasets in NASA ACE, type any combination of search words (e.g. “health”, “transport”, etc) in the search box on any page. NASA ACE displays the first page of results for your search. You can:
         View more pages of results
         Repeat the search, altering some terms
@@ -121,16 +124,19 @@
         If there are a large number of results, the filters can be very helpful, since you can combine filters, selectively adding and removing them, and modify and repeat the search with existing filters still in place.
         If datasets are tagged by geographical area, it is also possible to run NASA ACE with an extension which allows searching and filtering of datasets by selecting an area on a map.
         %br
+        %br
         Searching for data within an organization
         If you want to look for data owned by a particular organization, you can search within that organization from its home page in NASA ACE.
         Select the “Organizations” link at the top of any page.
         Select the organization you are interested in. NASA ACE will display your organization’s home page.
         Type your search query in the main search box on the page.
         NASA ACE will return search results as normal, but restricted to datasets from the organization.
-        If the organization is of interest, you can opt to be notified of changes to it (such as new datasets and modifications to datasets) by using the “Follow” button on the organization page. 
+        If the organization is of interest, you can opt to be notified of changes to it (such as new datasets and modifications to datasets) by using the “Follow” button on the organization page.
+        %br
         %br
         Delete Data
         Go to the dataset’s “Edit dataset” page (see “Editing a dataset”, above). Select the “Delete” button. To complete deletion of the dataset, select “Confirm”.
+        %br
         %br
         Public and Private Data
         Datasets can be marked as public or private. Public datasets are visible to everyone. Private datasets can only be seen by logged-in users who are members of the dataset’s organization. Private datasets are not shown in general dataset searches but are shown in dataset searches within the owning organization.
