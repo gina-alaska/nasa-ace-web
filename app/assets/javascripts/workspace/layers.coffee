@@ -96,7 +96,7 @@ class @Workspace.Layers
         layout: { 'visibility': 'visible' }
         paint: {
           "#{type}-color": color,
-          "#{type}-opacity": @getOpacity(config.name)
+          "#{type}-opacity": @ws.ui.getOpacity(config.name)
         }
       }, beforeLayer, true)
 
