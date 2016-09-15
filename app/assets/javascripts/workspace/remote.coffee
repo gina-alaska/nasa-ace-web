@@ -1,12 +1,14 @@
 class @Workspace.Remote
   syncState: {
     movement: true,
-    layers: true
+    layers: true,
+    presenter: true
   }
 
   commandTypes: {
     layers: ['hideLayer', 'showLayer', 'setStyle', 'reorderLayers', 'opacity'],
-    movement: ['move']
+    movement: ['move'],
+    presenter: ['requestPresenter', 'presenter']
   }
 
   commands: {
@@ -30,6 +32,14 @@ class @Workspace.Remote
 
     setStyle: (ws, data) ->
       ws.setStyle(data.name)
+
+    presenter: (ws, data) ->
+      if data.id == null
+        ws.ui.clearPresenter()
+      else if data.id == ws.remote.channel_key
+        ws.ui.setPresenter(true)
+      else
+        ws.ui.setPresenter(false)
   }
 
   commandValidators: {
@@ -38,8 +48,12 @@ class @Workspace.Remote
   }
 
   constructor: (@channel_key) ->
+    @presenter = false
     @timer = new Date()
     @ignore ||= 0
+
+  requestPresenter: (state = true) =>
+    @broadcast('requestPresenter', { "state": state })
 
   ignoreBroadcasts: (callback) =>
     @ignore = 0 if @ignore < 0
@@ -72,7 +86,7 @@ class @Workspace.Remote
   myMessage: (data) =>
     return data.sentBy == @channel_key
 
-  broadcast: (name, data) =>
+  broadcast: (name, data = {}) =>
     return if @ignore > 0
     data.command = name
     data.sentBy ||= @channel_key

@@ -23,7 +23,8 @@ class @Workspace
 
     @map.on 'load', @onLoad
     @map.on 'click', @featurePopup
-    @map.on 'moveend', @setMoveEndHandler
+    @setMoveEndHandler()
+    # @map.on 'moveend',
 
     nav = new mapboxgl.Navigation({position: 'top-right'});
     @map.addControl(nav)
@@ -87,9 +88,7 @@ class @Workspace
       @remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
 
   moveTo: (data) =>
-    @map.off('moveend')
     @map.flyTo(data)
-    @map.once 'moveend', @setMoveEndHandler
 
   setStyle: (style) =>
     @reload()

@@ -1,10 +1,13 @@
 $(document).on 'turbolinks:load', ->
   App.workspaces = App.cable.subscriptions.create {
       channel: "WorkspacesChannel",
-      id: $('meta[name="workspace"]').attr('content')
+      id: $('meta[name="workspace"]').attr('content'),
+      key: $('meta[name="channel_key"]').attr('content')
     },
-    connected: (data) ->
+    connected: () ->
       # Called when the subscription is ready for use on the server
+      if document.workspace?
+        document.workspace.remote.requestPresenter()
 
     disconnected: ->
       # Called when the subscription has been terminated by the server

@@ -37,6 +37,21 @@ class @Workspace.UI
     $('.map-container').on 'dragover', '.overlay-list .layer', @layerDragOver
     $('.map-container').on 'drop', '.overlay-list .layer,.drop', @layerDrop
 
+    $('.map-container').on 'click', '[data-toggle="presenter"]', @togglePresenter
+
+  setPresenter: (state) =>
+    if state
+      $('[data-toggle="presenter"]').addClass('active btn-success').removeClass('btn-default btn-warning')
+    else
+      $('[data-toggle="presenter"]').removeClass('active btn-success').addClass('btn-warning')
+
+  clearPresenter: () =>
+      $('[data-toggle="presenter"]').addClass('btn-default').removeClass('btn-success btn-warning active')
+
+  togglePresenter: (e) =>
+    @ws.remote.requestPresenter(!$(e.currentTarget).hasClass('active'))
+    # if $(e.currentTarget).hasClass('active')
+
   handleOpacity: (e) =>
     value = parseInt(e.currentTarget.value, 10) / 100
     layer = $(e.currentTarget).data('layer')

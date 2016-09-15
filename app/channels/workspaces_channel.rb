@@ -7,6 +7,10 @@ class WorkspacesChannel < ApplicationCable::Channel
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
+    workspace = Workspace.find(params[:id])
+    if workspace.presenter_id == params[:key]
+      workspace.update_attributes(presenter_id: nil)
+    end
   end
 
   def receive(data)
@@ -15,11 +19,43 @@ class WorkspacesChannel < ApplicationCable::Channel
     case data["command"]
     when 'reorderLayers'
       reorder_layers(workspace, data['layers'])
-    else
-      Rails.logger.info "unknown command #{data['command']}"
+    when 'requestPresenter'
+      request_presenter(data)
     end
 
-    WorkspacesChannel.broadcast_to("workspace_#{workspace.id}", data)
+    if workspace.presenter_id.nil? || workspace.presenter_id == params[:key]
+      WorkspacesChannel.broadcast_to("workspace_#{workspace.id}", data)
+    end
+  end
+
+  def request_presenter(data)
+    workspace = Workspace.find(params[:id])
+
+    if data['state']
+      presenter = set_presenter(workspace)
+    else
+      presenter = unset_presenter(workspace)
+    end
+
+    WorkspacesChannel.broadcast_to("workspace_#{workspace.id}", { command: 'presenter', id: presenter })
+  end
+
+  protected
+
+  def set_presenter(workspace)
+    if workspace.presenter_id.nil? || workspace.presenter_id == params[:key]
+      workspace.update_attributes(presenter_id: params[:key])
+    end
+
+    workspace.presenter_id
+  end
+
+  def unset_presenter(workspace)
+    if workspace.presenter_id.nil? || workspace.presenter_id == params[:key]
+      workspace.update_attributes(presenter_id: nil)
+    end
+
+    workspace.presenter_id
   end
 
   def reorder_layers(workspace, layers)
