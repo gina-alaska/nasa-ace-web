@@ -3,30 +3,53 @@
     .col-xs-3
       %ul
         %li
-          %h3
+          %h4
             <a href="#user">User</a>
           %ul
             %li
-              %h4
+              %h5
                 <a href="#create-user">Create User ID</a>
             %li
-              %h4
+              %h5
                 <a href="#delete-user">Delete User Account</a>
             %li
-              %h4
+              %h5
                 <a href="#logging-in">Logging In</a>
-        %li
-          %h3
+        %li 
+          %h4
             <a href="#organizations">Organizations</a>
-        %li
-          %h3
+          %ul
+            %li
+              %h5
+                <a href="#join-org">Join an Organization</a>
+            %li
+              %h5
+                <a href="#create-org">Create an Organization</a>
+            %li
+              %h5
+                <a href="#data-org">Add data to an Organization</a>
+            %li
+              %h5
+                <a href="#manage-org">Manage an Organization</a>
+        %li 
+          %h4
             <a href="#data">Data</a>
+          %ul
+            %li
+              %h5
+                <a href="#add-data">Add Data</a>
+            %li
+              %h5
+                <a href="#search-data">Search for Data</a>
         %li
-          %h3 Workspace
+          %h4
+            <a href='#workspace-data'>Workspace</a>
         %li
-          %h3 Chat
+          %h4
+            <a href='#chat'>Chat</a>
         %li
-          %h3 Groups
+          %h4
+            <a href='#groups'>Groups</a>
     .col-xs-9
       %h2 HELP page
       %h3{ id: 'user' } USER
@@ -54,8 +77,8 @@
       %p
         Each organization has a home page, where users can find some information about the organization and search within its datasets. This allows different data publishing departments, bodies, etc to control their own publishing policies.
 
-      %h4 Join an Organization
-      %h4 Create an Organization
+      %h4{ id: 'join-org' } Join an Organization
+      %h4{ id: 'create-org' } Create an Organization
       %ul
         %li
           Select the “Organizations” link at the top of any page.
@@ -66,11 +89,11 @@
         %li
           Select the “Create Organization” button. Your organization is created and displays its home page. Initially, of course, the organization has no datasets.
 
-      %h4 Add Data to an Organization
+      %h4{ id: 'data-org' } Add Data to an Organization
       %p
         Once you have selected the page for the organization that you want to own your new dataset. Provided that you are a member of this organization, you can now select the “Add Dataset” button above the search box to add data to this organization.
 
-      %h4 Manage an Organization
+      %h4{ id: 'manage-org' } Manage an Organization
       %p
         By default CKAN allows members of organizations with three roles:
         %ul
@@ -79,74 +102,84 @@
           %li Admin – can add, remove and change roles for organization members
 
       %h3{ id: 'data' } DATA
-      %h4 Add Data
+      %h4{ id: 'add-data' } Add Data 
       %p
         You can access the “Create dataset” screen in two ways.
         Select the “Datasets” link at the top of any page. From this, above the search box, select the “Add Dataset” button.
         Alternatively, select the “organizations” link at the top of a page. Now select the page for the organization that should own your new dataset. Provided that you are a member of this organization, you can now select the “Add Dataset” button above the search box.
-        %br
-        You will then be ask for the following information about your data.
+      %p
+        You will then be ask for the following information about your data. 
         %ul
-          %li Title – this title will be unique across NASA ACE, so make it brief but specific. E.g. “AK population density by region” is better than “Population figures”.
-          %li Description – You can add a longer description of the dataset here, including information such as where the data is from and any information that people will need to know when using the data.
-          %li Tags – here you may add tags that will help people find the data and link it with other related data. Examples could be “population”, “crime”, “East Anglia”. Hit the <return> key between tags. If you enter a tag wrongly, you can use its delete button to remove it before saving the dataset.
-          %li License – it is important to include license information so that people know how they can use the data. This field should be a drop-down box. If you need to use a license not on the list, contact your site administrator.
-          %li Organization - If you are a member of any organizations, this drop-down will enable you to choose which one should own the dataset. Ensure the default chosen is the correct one before you proceed. (Probably most users will be in only one organization. If this is you, NASA ACE will have chosen your organization by default and you need not do anything.)
-        When you have filled in the information on this page, select the <strong>“Next: Add Data”</strong> button.
-        %br
+          %li
+            Title – this title will be unique across NASA ACE, so make it brief but specific. E.g. “AK population density by region” is better than “Population figures”.
+          %li
+            Description – You can add a longer description of the dataset here, including information such as where the data is from and any information that people will need to know when using the data.
+          %li
+            Tags – here you may add tags that will help people find the data and link it with other related data. Examples could be “population”, “crime”, “East Anglia”. Hit the <return> key between tags. If you enter a tag wrongly, you can use its delete button to remove it before saving the dataset.
+          %li
+            License – it is important to include license information so that people know how they can use the data. This field should be a drop-down box. If you need to use a license not on the list, contact your site administrator.
+          %li
+            Organization - If you are a member of any organizations, this drop-down will enable you to choose which one should own the dataset. Ensure the default chosen is the correct one before you proceed. (Probably most users will be in only one organization. If this is you, NASA ACE will have chosen your organization by default and you need not do anything.)
+        When you have filled in the information on this page, select the “Next: Add Data” button. 
+      %p
         NASA ACE will display the “Add data” screen. This is where you will add one or more “resources” which contain the data for this dataset. Choose a file or link for your data resource and select the appropriate choice at the top of the screen:
         If you are giving NASA ACE a link to the data, like http://example.com/mydata.csv, then select “Link to a file” or “Link to an API”. (If you don’t know what an API is, you don’t need to worry about this option - select “Link to a file”.)
         If the data to be added to NASA ACE is in a file on your computer, select “Upload a file”. NASA ACE will give you a file browser to select it.
-        %br
+      %p
         Add the other information on the page. NASA ACE does not require this information, but it is good practice to add it:
         %ul
-          %li Name – a name for this resource, e.g. “Population density 2011, CSV”. Different resources in the dataset should have different names.
-          %li Description – a short description of the resource.
-          %li Format – the file format of the resource, e.g. CSV (comma-separated values), XLS, JSON, PDF, etc.
-          %li If you have more resources (files or links) to add to the dataset, select the “Save & add another” button. When you have finished adding resources, select “Next: Additional Info”.
-        %br
+          %li
+            Name – a name for this resource, e.g. “Population density 2011, CSV”. Different resources in the dataset should have different names.
+          %li
+            Description – a short description of the resource.
+          %li
+            Format – the file format of the resource, e.g. CSV (comma-separated values), XLS, JSON, PDF, etc.
+        If you have more resources (files or links) to add to the dataset, select the “Save & add another” button. When you have finished adding resources, select “Next: Additional Info”.
+      %p
         NASA ACE displays the “Additional data” screen.
         %ul
-          %li Visibility – a Public dataset is public and can be seen by any user of the site. A Private dataset can only be seen by members of the organization owning the dataset and will not show up in searches by other users.
-          %li Author – The name of the person or organization responsible for producing the data.
-          %li Author e-mail – an e-mail address for the author, to which queries about the data should be sent.
-          %li Maintainer / maintainer e-mail – If necessary, details for a second person responsible for the data.
-          %li Custom fields – If you want the dataset to have another field, you can add the field name and value here. E.g. “Year of publication”. Note that if there is an extra field that is needed for a large number of datasets, you should talk to your site administrator about changing the default schema and dataset forms.
-        %br
-        Select the ‘Finish’ button.
-        %br
-        Search for Data
-        You should be able to find your dataset by typing the title, or some relevant words from the description, into the search box on any page in NASA ACE.
+          %li
+            Visibility – a Public dataset is public and can be seen by any user of the site. A Private dataset can only be seen by members of the organization owning the dataset and will not show up in searches by other users.
+          %li
+            Author – The name of the person or organization responsible for producing the data.
+          %li
+            Author e-mail – an e-mail address for the author, to which queries about the data should be sent.
+          %li
+            Maintainer / maintainer e-mail – If necessary, details for a second person responsible for the data.
+          %li
+            Custom fields – If you want the dataset to have another field, you can add the field name and value here. E.g. “Year of publication”. Note that if there is an extra field that is needed for a large number of datasets, you should talk to your site administrator about changing the default schema and dataset forms.
+        Select the ‘Finish’ button. 
+      %br/
+      %h4{ id: 'search-data' } Search for Data
+      %p
+        You should be able to find your dataset by typing the title, or some relevant words from the description, into the search box on any page in NASA ACE. 
         To find datasets in NASA ACE, type any combination of search words (e.g. “health”, “transport”, etc) in the search box on any page. NASA ACE displays the first page of results for your search. You can:
         View more pages of results
         Repeat the search, altering some terms
         Restrict the search to datasets with particular tags, data formats, etc using the filters in the left-hand column
         If there are a large number of results, the filters can be very helpful, since you can combine filters, selectively adding and removing them, and modify and repeat the search with existing filters still in place.
         If datasets are tagged by geographical area, it is also possible to run NASA ACE with an extension which allows searching and filtering of datasets by selecting an area on a map.
-        %br
-        %br
+      %p
         Searching for data within an organization
         If you want to look for data owned by a particular organization, you can search within that organization from its home page in NASA ACE.
         Select the “Organizations” link at the top of any page.
         Select the organization you are interested in. NASA ACE will display your organization’s home page.
         Type your search query in the main search box on the page.
         NASA ACE will return search results as normal, but restricted to datasets from the organization.
-        If the organization is of interest, you can opt to be notified of changes to it (such as new datasets and modifications to datasets) by using the “Follow” button on the organization page.
-        %br
-        %br
+        If the organization is of interest, you can opt to be notified of changes to it (such as new datasets and modifications to datasets) by using the “Follow” button on the organization page. 
+      %p
         Delete Data
         Go to the dataset’s “Edit dataset” page (see “Editing a dataset”, above). Select the “Delete” button. To complete deletion of the dataset, select “Confirm”.
-        %br
-        %br
+      %p
         Public and Private Data
         Datasets can be marked as public or private. Public datasets are visible to everyone. Private datasets can only be seen by logged-in users who are members of the dataset’s organization. Private datasets are not shown in general dataset searches but are shown in dataset searches within the owning organization.
 
 
-      %h3 Workspace
+      %h3{ id: 'workspace-data' } Workspace
       TBD
 
-      %h3 Chat
+      %h3{ id: 'chat' } Chat
       TBD
 
-      %h3 GROUPS
+      %h3{ id: 'groups' } GROUPS
       TBD
