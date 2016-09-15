@@ -71,7 +71,7 @@ class @Workspace.Layers
       type: type,
       source: config.name,
       layout: { 'visibility': 'visible' },
-      paint: { "#{type}-opacity": @getOpacity(config.name)  }
+      paint: { "#{type}-opacity": @ws.ui.getOpacity(config.name)  }
     }, beforeLayer)
 
   addTile: (config) =>
@@ -82,11 +82,8 @@ class @Workspace.Layers
       type: type,
       source: config.name,
       layout: { 'visibility': 'visible' },
-      paint: { "#{type}-opacity": @getOpacity(config.name)  }
+      paint: { "#{type}-opacity": @ws.ui.getOpacity(config.name)  }
     }, beforeLayer)
-
-  getOpacity: (name) =>
-    parseInt(@ws.ui.getLayer(name).find('input[name="opacity"]')[0].value, 10) / 100
 
   addGeoJSON: (config) =>
     beforeLayer = config.before || null

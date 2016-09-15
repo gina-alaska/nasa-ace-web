@@ -19,7 +19,7 @@ class @Workspace.UI
   initEvents: () =>
     ui = @
 
-    $('.map-container').on 'input', '[data-adjust="opacity"]', @setOpacity
+    $('.map-container').on 'input', '[data-adjust="opacity"]', @handleOpacity
 
     $('.map-container').on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
     $('.map-container').on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
@@ -37,10 +37,11 @@ class @Workspace.UI
     $('.map-container').on 'dragover', '.overlay-list .layer', @layerDragOver
     $('.map-container').on 'drop', '.overlay-list .layer,.drop', @layerDrop
 
-  setOpacity: (e) =>
+  handleOpacity: (e) =>
     value = parseInt(e.currentTarget.value, 10) / 100
     layer = $(e.currentTarget).data('layer')
     @ws.layers.setPaintProperty(layer, 'opacity', value)
+    @ws.remote.broadcast('opacity', { name: layer, value: value })
 
   layerDragStart: (e) =>
     @dragSrc = $(e.currentTarget)
@@ -145,6 +146,12 @@ class @Workspace.UI
     @loading_count += 1
 
     $('.loading').addClass('fa-pulse')
+
+  getOpacity: (name) =>
+    parseInt(@getLayer(name).find('input[name="opacity"]')[0].value, 10) / 100
+
+  setOpacity: (name, value) =>
+    $(@getLayer(name).find('input[name="opacity"]')).val(value)
 
   stopLoading: () ->
     @loading_count ||= 0

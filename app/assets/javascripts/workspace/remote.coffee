@@ -5,7 +5,7 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['hideLayer', 'showLayer', 'setStyle', 'reorderLayers'],
+    layers: ['hideLayer', 'showLayer', 'setStyle', 'reorderLayers', 'opacity'],
     movement: ['move']
   }
 
@@ -18,6 +18,10 @@ class @Workspace.Remote
 
     reorderLayers: (ws, data) ->
       ws.layers.reorder(data.layers)
+
+    opacity: (ws, data) ->
+      ws.ui.setOpacity(data.name, data.value * 100)
+      ws.layers.setPaintProperty(data.name, 'opacity', data.value)
 
     move: (ws, data) ->
       ws.moveTo(data)
@@ -73,15 +77,7 @@ class @Workspace.Remote
     data.command = name
     data.sentBy ||= @channel_key
 
-    timer = new Date()
-    current_time = timer.getTime()
-
-    # need to rate limit these a bit
-    if !@last_broadcast? || (current_time - @last_broadcast) > 300
-      # only broadcast message if we generated the event
-      if @commandEnabled(data.command) && @myMessage(data)
-        App.workspaces.send(data)
-        @last_broadcast = current_time
+    App.workspaces.send(data)
 
   commandEnabled: (command) =>
     cmdType = (type for type, cmdlist of @commandTypes when command in cmdlist)
