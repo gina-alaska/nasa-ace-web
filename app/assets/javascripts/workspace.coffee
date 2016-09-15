@@ -25,7 +25,7 @@ class @Workspace
     @map.on 'click', @featurePopup
     @map.on 'moveend', @setMoveEndHandler
 
-    nav = new mapboxgl.Navigation({position: 'top-left'});
+    nav = new mapboxgl.Navigation({position: 'top-right'});
     @map.addControl(nav)
 
   runRemoteCommand: (data) =>

@@ -14,7 +14,7 @@ $sidebar_width: 300px;
 
   .map-sidebar {
     position: absolute;
-    top: 0px;
+    top: 50px;
     bottom: 0px;
     left: 0px;
     width: $sidebar_width;
@@ -22,6 +22,7 @@ $sidebar_width: 300px;
     white-space: nowrap;
     overflow: hidden;
     overflow-y: auto;
+    z-index: 10;
   }
 
   &.auto-collapse .map-sidebar {
@@ -36,18 +37,18 @@ $sidebar_width: 300px;
     position: absolute;
     top: 0px;
     bottom: 0px;
-    left: $sidebar_width;
+    left: 0px;
     right: 0px;
     transition: left 0.3s ease-in-out;
   }
 
-  &.auto-collapse .map-content {
-    left: 50px;
-  }
+  // &.auto-collapse .map-content {
+  //   left: 50px;
+  // }
 
-  &.auto-collapse.open .map-content {
-    left: $sidebar_width;
-  }
+  // &.auto-collapse.open .map-content {
+  //   left: $sidebar_width;
+  // }
 
   .show-collapsed, .hide-collapsed {
     transition: visibility 0.1s, opacity 0.5s linear;
