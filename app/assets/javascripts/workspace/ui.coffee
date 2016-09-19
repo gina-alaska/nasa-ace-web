@@ -18,6 +18,7 @@ class @Workspace.UI
 
   initEvents: () =>
     ui = @
+    ws = @ws
 
     $('.map-container').on 'input', '[data-adjust="opacity"]', @handleOpacity
 
@@ -38,6 +39,36 @@ class @Workspace.UI
     $('.map-container').on 'drop', '.overlay-list .layer,.drop', @layerDrop
 
     $('.map-container').on 'click', '[data-toggle="presenter"]', @togglePresenter
+
+    $('.map-container').on 'click', '[data-toggle="workspace.sync"]', (e) ->
+      checkbox = $(this).find('.toggle-checkbox')
+
+      if $(this).hasClass('active')
+        $(this).removeClass('active')
+        $(checkbox).removeClass('fa-check-square-o').addClass('fa-square-o')
+        ws.remote.disable($(this).data('type'))
+      else
+        $(this).addClass('active')
+        $(checkbox).addClass('fa-check-square-o').removeClass('fa-square-o')
+        ws.remote.enable($(this).data('type'))
+
+      return false
+
+    $('.map-container').on 'click', '[data-behavior="switch-base"]', (e) ->
+      ws.view.setBaseLayer($(this).data('name'))
+      $('.map-style.active').removeClass('active')
+      $(this).addClass('active')
+
+      e.preventDefault();
+
+    $('.map-container').on 'click', '[data-toggle="perspective"]', (e) ->
+      if $(this).hasClass('active')
+        ws.view.map.easeTo(pitch: 0)
+        $(this).removeClass('active btn-success').addClass('btn-default')
+      else
+        ws.view.map.easeTo(pitch: 60)
+        $(this).addClass('active btn-success').removeClass('btn-default')
+
 
   setPresenter: (state) =>
     btn = $('[data-toggle="presenter"]')

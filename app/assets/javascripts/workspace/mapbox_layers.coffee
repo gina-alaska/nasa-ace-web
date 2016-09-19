@@ -1,5 +1,5 @@
-class @Workspace.Layers
-  constructor: (@ws) ->
+class @Workspace.MapboxLayers
+  constructor: (@ws, @map) ->
     @clickable = []
     @_layerGroups = {}
 
@@ -55,15 +55,15 @@ class @Workspace.Layers
 
   isActive: (name) =>
     if @_layerGroups[name]?
-      @ws.map.getLayer(@_layerGroups[name][0])?
+      @map.getLayer(@_layerGroups[name][0])?
     else
-      @ws.map.getLayer(name)?
+      @map.getLayer(name)?
 
   setPaintProperty: (name, property, value) =>
     return unless @_layerGroups[name]
     for layer in @_layerGroups[name]
       [first,...,last] = layer.split('-')
-      @ws.map.setPaintProperty(layer, "#{last}-#{property}", value)
+      @map.setPaintProperty(layer, "#{last}-#{property}", value)
 
   addWMS: (config) =>
     beforeLayer = config.before || null
@@ -103,7 +103,7 @@ class @Workspace.Layers
       }, beforeLayer, true)
 
   addToMap: (config, beforeLayer, clickable = false) =>
-    @ws.map.addLayer(config, beforeLayer)
+    @map.addLayer(config, beforeLayer)
     @_layerGroups[config.source] ||= []
     @_layerGroups[config.source].push(config.id)
     @clickable.push config.id
@@ -126,13 +126,13 @@ class @Workspace.Layers
 
     for layer, index in @_layerGroups[name]
       if @isActive(layer)
-        @ws.map.removeLayer(layer)
+        @map.removeLayer(layer)
       ci = @clickable.indexOf(layer)
       @clickable.splice(ci, 1) if ci >= 0
     delete @_layerGroups[name]
 
   createSource: (name) =>
-    return if @ws.map.getSource(name)?
+    return if @map.getSource(name)?
     config = @getConfig(name)
 
     if config.type == 'wms'
@@ -152,8 +152,8 @@ class @Workspace.Layers
 
   addSource:(name, config) =>
     @loading()
-    @ws.map.addSource(name, config)
-    @ws.map.getSource(name).once('load', @loaded)
+    @map.addSource(name, config)
+    @map.getSource(name).once('load', @loaded)
 
   # Layer sources
   addGeoJSONSource: (config) =>
@@ -189,5 +189,5 @@ class @Workspace.Layers
     })
 
     $.ajax(config.url).done (xml) =>
-      source = @ws.map.getSource(config.name)
+      source = @map.getSource(config.name)
       source.setData toGeoJSON.kml(xml)
