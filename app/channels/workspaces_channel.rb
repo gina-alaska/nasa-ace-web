@@ -6,7 +6,7 @@ class WorkspacesChannel < ApplicationCable::Channel
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
-    unset_presenter(params[:key])
+    clear_presenter(params[:key])
   end
 
   def receive(data)
@@ -22,50 +22,43 @@ class WorkspacesChannel < ApplicationCable::Channel
 
   def request_presenter(data)
     if data['state']
-      set_presenter(params[:key])
+      update_presenter(params[:key])
     else
-      unset_presenter(params[:key])
+      clear_presenter(params[:key])
     end
   end
 
-  def get_presenter_state
+  def presenter_state
     presenter_notification
   end
 
   protected
 
   def rebroadcast(data)
-    if current_workspace.presenter_id.blank? || current_workspace.presenter_id == params[:key]
-      WorkspacesChannel.broadcast_to("workspace_#{current_workspace.id}", data)
-    end
+    return if !current_workspace.presenter_id.blank? && current_workspace.presenter_id != params[:key]
+    WorkspacesChannel.broadcast_to("workspace_#{current_workspace.id}", data)
   end
 
   def current_workspace
     Workspace.find(params[:id])
   end
 
-  def set_presenter(key)
-    Rails.logger.info '*'*10
-    Rails.logger.info 'set'
+  def update_presenter(key)
     if current_workspace.presenter_id.blank?
-      Rails.logger.info "#{current_workspace.presenter_id} == #{key}"
       current_workspace.update_attributes(presenter_id: key)
     end
     presenter_notification
   end
 
-  def unset_presenter(key)
-    Rails.logger.info '*'*10
-    Rails.logger.info 'unset'
+  def clear_presenter(key)
     if current_workspace.presenter_id == key
-      Rails.logger.info "#{current_workspace.presenter_id} == #{key}"
       current_workspace.update_attributes(presenter_id: nil)
     end
     presenter_notification
   end
 
   def presenter_notification
-    WorkspacesChannel.broadcast_to("workspace_#{current_workspace.id}", { command: 'presenter', id: current_workspace.presenter_id })
+    WorkspacesChannel.broadcast_to("workspace_#{current_workspace.id}", command: 'presenter', id: current_workspace.presenter_id)
   end
 
   def reorder_layers(layers)

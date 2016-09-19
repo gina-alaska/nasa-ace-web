@@ -56,7 +56,7 @@ class @Workspace.Remote
     @broadcast('requestPresenter', { "state": state })
 
   getPresenterState: () =>
-    @perform('get_presenter_state')
+    @perform('presenter_state')
 
   ignoreBroadcasts: (callback) =>
     @ignore = 0 if @ignore < 0
