@@ -30,7 +30,6 @@ class @Workspace.Layers
 
   show: (name) =>
     @create(name)
-
     @ws.ui.getLayer(name).addClass('active')
     @ws.remote.broadcast('showLayer', { name: name })
 
@@ -55,7 +54,10 @@ class @Workspace.Layers
     config
 
   isActive: (name) =>
-    @ws.map.getLayer(name)?
+    if @_layerGroups[name]?
+      @ws.map.getLayer(@_layerGroups[name][0])?
+    else
+      @ws.map.getLayer(name)?
 
   setPaintProperty: (name, property, value) =>
     return unless @_layerGroups[name]
@@ -109,9 +111,9 @@ class @Workspace.Layers
     config.id
 
   create: (name) =>
-    config = @getConfig(name, true)
-    return config.layer_name if @isActive(config.layer_name)
+    return if @isActive(name)
 
+    config = @getConfig(name, true)
     @createSource(name, config)
 
     layout = { 'visibility': 'visible' }
@@ -120,12 +122,15 @@ class @Workspace.Layers
     @addGeoJSON(config) if config.type == 'geojson' || config.type == 'kml'
 
   remove: (name) =>
+    return unless @_layerGroups[name]?
+
     for layer, index in @_layerGroups[name]
       if @isActive(layer)
         @ws.map.removeLayer(layer)
       ci = @clickable.indexOf(layer)
       @clickable.splice(ci, 1) if ci >= 0
-    @_layerGroups[name] = []
+    delete @_layerGroups[name]
+
   createSource: (name) =>
     return if @ws.map.getSource(name)?
     config = @getConfig(name)

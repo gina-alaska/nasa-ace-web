@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require notify.min
 //= require bootstrap
 //= require togeojson
 //= require turbolinks

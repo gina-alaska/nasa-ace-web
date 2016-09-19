@@ -55,6 +55,9 @@ class @Workspace.Remote
   requestPresenter: (state = true) =>
     @broadcast('requestPresenter', { "state": state })
 
+  getPresenterState: () =>
+    @perform('get_presenter_state')
+
   ignoreBroadcasts: (callback) =>
     @ignore = 0 if @ignore < 0
     @ignore += 1
@@ -92,6 +95,9 @@ class @Workspace.Remote
     data.sentBy ||= @channel_key
 
     App.workspaces.send(data)
+
+  perform: (name, data = {}) =>
+    App.workspaces.perform(name, data)
 
   commandEnabled: (command) =>
     cmdType = (type for type, cmdlist of @commandTypes when command in cmdlist)

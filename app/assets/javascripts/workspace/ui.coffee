@@ -40,13 +40,29 @@ class @Workspace.UI
     $('.map-container').on 'click', '[data-toggle="presenter"]', @togglePresenter
 
   setPresenter: (state) =>
-    if state
-      $('[data-toggle="presenter"]').addClass('active btn-success').removeClass('btn-default btn-warning')
-    else
-      $('[data-toggle="presenter"]').removeClass('active btn-success').addClass('btn-warning')
+    btn = $('[data-toggle="presenter"]')
+    if state == true
+      return if btn.hasClass('btn-success')
+
+      $.notify('You are now the presenter', 'success')
+      btn.addClass('active btn-success btn-default').removeClass('btn-default btn-warning')
+    if state == false
+      return if btn.hasClass('btn-warning')
+
+      $.notify('You are no longer the presenter', 'info') if btn.hasClass('btn-success')
+      $.notify('Presenter connected', 'info') if btn.hasClass('btn-default')
+
+      btn.removeClass('active btn-success btn-default').addClass('btn-warning')
+    if state == null
+      return if btn.hasClass('btn-default')
+
+      $.notify('You are no longer the presenter', 'info') if btn.hasClass('btn-success')
+      $.notify('Presenter disconnected', 'info') if btn.hasClass('btn-warning')
+
+      btn.addClass('btn-default').removeClass('btn-success btn-warning active')
 
   clearPresenter: () =>
-      $('[data-toggle="presenter"]').addClass('btn-default').removeClass('btn-success btn-warning active')
+    @setPresenter(null)
 
   togglePresenter: (e) =>
     @ws.remote.requestPresenter(!$(e.currentTarget).hasClass('active'))
