@@ -88,7 +88,9 @@ class @Workspace
       @remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
 
   moveTo: (data) =>
+    @map.off('moveend')
     @map.flyTo(data)
+    @map.once 'moveend', @setMoveEndHandler
 
   setStyle: (style) =>
     @reload()
