@@ -22,7 +22,6 @@ class @Workspace.MapboxView
     @map.on 'click', @featurePopup
     @setMoveEndHandler()
 
-
   onLoad: =>
     @ws.layers.addSources()
     @ws.layers.reload()

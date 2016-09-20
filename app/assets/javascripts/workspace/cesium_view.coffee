@@ -2,39 +2,40 @@
 
 class @Workspace.CesiumView
   constructor: (@ws, el) ->
+    Cesium.BingMapsApi.defaultKey = 'Ah1VAfThdeX7JxKOS0BldGGAAcvjmW72i89XYRt42hc0stR5QkjCqnFKKX3MPCvg'
     Cesium.MapboxApi.defaultAccessToken = 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ'
 
     @activeBaseLayer = "satellite"
-
-    @baseLayers = {}
-
 
     @center = $(el).find('.map').data('center')
     @zoom = $(el).find('.map').data('zoom')
 
     @map = new Cesium.Viewer('map', {
       baseLayerPicker: false,
-      imageryProvider: @getBaseLayer(@activeBaseLayer)
+      homeButton: false,
+      sceneModePicker: false,
+      timeline: false,
+      geocode: false,
+      imageryProvider: @getLayerProvider(@activeBaseLayer)
     })
     @initializeCamera()
 
   setBaseLayer: (name) =>
     layers = @map.imageryLayers
-    layers.removeAll()
-    layers.addImageryProvider(@getBaseLayer(name))
+    @ws.layers.removeAll()
+    layers.addImageryProvider(@getLayerProvider(name))
     @activeBaseLayer = name
+    @ws.layers.reload()
 
-  getBaseLayer: (name) =>
+  getLayerProvider: (name) =>
     if name == 'satellite-streets'
       name = 'satellite'
-      
+
     mapId = "mapbox.#{name}"
 
-    @baseLayers[name] ||= new Cesium.MapboxImageryProvider({
+    new Cesium.MapboxImageryProvider({
         mapId: mapId
     })
-
-    @baseLayers[name]
 
   initializeCamera: () =>
     @map.camera.flyTo({

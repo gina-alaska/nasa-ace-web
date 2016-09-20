@@ -1,4 +1,4 @@
-class @Workspace.MapboxLayers
+class @Workspace.MapboxLayers extends Workspace.Layers
   constructor: (@ws, @map) ->
     @clickable = []
     @_layerGroups = {}
@@ -7,16 +7,6 @@ class @Workspace.MapboxLayers
     layerList = (@ws.ui.getLayer(name)[0] for name in layers)
     @ws.ui.overlayList.html(layerList)
     @reload()
-
-  reload: () =>
-    activeLayers = @ws.ui.getActiveLayers().reverse()
-
-    for layer in activeLayers
-      name = $(layer).data('name')
-      config = @getConfig(name)
-      @ws.remote.ignoreBroadcasts =>
-        @hide(name)
-        @show(name)
 
   addSources: () =>
     for layer in @ws.ui.getAllLayers()
@@ -32,26 +22,6 @@ class @Workspace.MapboxLayers
     @create(name)
     @ws.ui.getLayer(name).addClass('active')
     @ws.remote.broadcast('showLayer', { name: name })
-
-
-  getConfig: (name, next = false) ->
-    return unless name?
-
-    el = @ws.ui.getLayer(name)
-
-    config = $.extend({}, el.data()) # clone the data
-    config.layer_name = "#{name}-layer"
-
-    if next
-      item = el.next('.layer')
-      while item.length > 0
-        if $(item).hasClass('active')
-          config.before = @_layerGroups[item.data('name')][0]
-          item = []
-        else
-          item = $(item).next('.layer')
-
-    config
 
   isActive: (name) =>
     if @_layerGroups[name]?
