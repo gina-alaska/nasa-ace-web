@@ -3,12 +3,16 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 class @Workspace
+  supports: {
+    'cesium': false
+  }
+
   constructor: (el, channel_key, view = 'cesium') ->
     return unless $(el).length > 0
 
     @remote = new Workspace.Remote(channel_key)
     @ui = new Workspace.UI(@, el)
-    if view == '3d'
+    if view == '3d' && @supports.cesium
       @view = new Workspace.CesiumView(@, el)
       @layers = new Workspace.CesiumLayers(@, @view.map)
     else
@@ -16,6 +20,7 @@ class @Workspace
       @layers = new Workspace.MapboxLayers(@, @view.map)
 
     @ui.perspective_tool(@view.supports.perspective)
+    @ui.map_view_picker(@supports.cesium)
 
   runRemoteCommand: (data) =>
     @remote.runCommand(@, data)

@@ -7,11 +7,17 @@ class @Workspace.UI
 
     @initEvents()
 
-  perspective_tool: (enable = true) =>
+  perspective_tool: (enable) =>
     if enable
       $('[data-toggle="perspective"]').removeAttr('disabled')
     else
       $('[data-toggle="perspective"]').addClass('disabled', 'disabled')
+
+  map_view_picker: (enable) =>
+    if enable
+      $('[data-behavior="map-view-picker"]').show()
+    else
+      $('[data-behavior="map-view-picker"]').hide()
 
   reset: () =>
     @loading_count = 0
