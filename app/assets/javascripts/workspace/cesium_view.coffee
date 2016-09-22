@@ -1,6 +1,10 @@
 @CESIUM_BASE_URL = 'http://nasa-ace-web.dev/cesium'
 
 class @Workspace.CesiumView
+  supports: {
+    perspective: false
+  }
+
   constructor: (@ws, el) ->
     Cesium.BingMapsApi.defaultKey = 'Ah1VAfThdeX7JxKOS0BldGGAAcvjmW72i89XYRt42hc0stR5QkjCqnFKKX3MPCvg'
     Cesium.MapboxApi.defaultAccessToken = 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ'

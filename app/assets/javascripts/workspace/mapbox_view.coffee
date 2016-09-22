@@ -1,4 +1,8 @@
 class @Workspace.MapboxView
+  supports: {
+    perspective: true
+  }
+
   constructor: (@ws, el) ->
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
     @style = "mapbox://styles/mapbox/satellite-streets-v9"

@@ -15,6 +15,8 @@ class @Workspace
       @view = new Workspace.MapboxView(@, el)
       @layers = new Workspace.MapboxLayers(@, @view.map)
 
+    @ui.perspective_tool(@view.supports.perspective)
+
   runRemoteCommand: (data) =>
     @remote.runCommand(@, data)
 

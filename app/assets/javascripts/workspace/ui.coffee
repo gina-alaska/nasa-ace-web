@@ -7,6 +7,12 @@ class @Workspace.UI
 
     @initEvents()
 
+  perspective_tool: (enable = true) =>
+    if enable
+      $('[data-toggle="perspective"]').removeAttr('disabled')
+    else
+      $('[data-toggle="perspective"]').addClass('disabled', 'disabled')
+
   reset: () =>
     @loading_count = 0
 
@@ -62,6 +68,8 @@ class @Workspace.UI
       e.preventDefault();
 
     $('.map-container').on 'click', '[data-toggle="perspective"]', (e) ->
+      return if $(this).hasClass('disabled')
+
       if $(this).hasClass('active')
         ws.view.map.easeTo(pitch: 0)
         $(this).removeClass('active btn-success').addClass('btn-default')
