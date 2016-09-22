@@ -1,9 +1,9 @@
 class @Workspace.UI
-  constructor: (@ws, @el) ->
-    @workspaceEl = $(@el)
-    @sidebar = $(@workspaceEl.find('.map-sidebar'))
+  constructor: (@ws, el) ->
+    @el = @ws.el
+    @sidebar = @el.find('.map-sidebar')
     @collapseClass = @sidebar.data('class')
-    @overlayList = $(@workspaceEl.find('#overlay-layer-list'))
+    @overlayList = @el.find('#overlay-layer-list')
 
     @initEvents()
 
@@ -23,36 +23,36 @@ class @Workspace.UI
     @loading_count = 0
 
   expand_sidebar: =>
-    @workspaceEl.addClass('open')
+    @el.addClass('open')
 
   contract_sidebar: =>
-    @workspaceEl.removeClass('open')
+    @el.removeClass('open')
 
   initEvents: () =>
     ui = @
     ws = @ws
 
-    $('.map-container').on 'input', '[data-adjust="opacity"]', @handleOpacity
+    @el.on 'input', '[data-adjust="opacity"]', @handleOpacity
 
-    $('.map-container').on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
-    $('.map-container').on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
-    $('.map-container').on 'click', '[data-toggle="collapse"]', @rotateIcon
-    $('.map-container').on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
-    $('.map-container').on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
-    $('.map-container').on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
+    @el.on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
+    @el.on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
+    @el.on 'click', '[data-toggle="collapse"]', @rotateIcon
+    @el.on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
+    @el.on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
+    @el.on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
 
-    $('.map-container').on 'click', '[data-toggle="layer"]', (e) =>
+    @el.on 'click', '[data-toggle="layer"]', (e) =>
       @toggleLayer($(e.currentTarget).parents('.layer').data('name'))
       e.preventDefault()
 
-    $('.map-container').on 'dragstart', '.overlay-list .layer', @layerDragStart
-    $('.map-container').on 'dragend', '.overlay-list .layer', @layerDragEnd
-    $('.map-container').on 'dragover', '.overlay-list .layer', @layerDragOver
-    $('.map-container').on 'drop', '.overlay-list .layer,.drop', @layerDrop
+    @el.on 'dragstart', '.overlay-list .layer', @layerDragStart
+    @el.on 'dragend', '.overlay-list .layer', @layerDragEnd
+    @el.on 'dragover', '.overlay-list .layer', @layerDragOver
+    @el.on 'drop', '.overlay-list .layer,.drop', @layerDrop
 
-    $('.map-container').on 'click', '[data-toggle="presenter"]', @togglePresenter
+    @el.on 'click', '[data-toggle="presenter"]', @togglePresenter
 
-    $('.map-container').on 'click', '[data-toggle="workspace.sync"]', (e) ->
+    @el.on 'click', '[data-toggle="workspace.sync"]', (e) ->
       checkbox = $(this).find('.toggle-checkbox')
 
       if $(this).hasClass('active')
@@ -66,14 +66,14 @@ class @Workspace.UI
 
       return false
 
-    $('.map-container').on 'click', '[data-behavior="switch-base"]', (e) ->
+    @el.on 'click', '[data-behavior="switch-base"]', (e) ->
       ws.view.setBaseLayer($(this).data('name'))
       $('.map-style.active').removeClass('active')
       $(this).addClass('active')
 
       e.preventDefault();
 
-    $('.map-container').on 'click', '[data-toggle="perspective"]', (e) ->
+    @el.on 'click', '[data-toggle="perspective"]', (e) ->
       return if $(this).hasClass('disabled')
 
       if $(this).hasClass('active')
@@ -183,10 +183,10 @@ class @Workspace.UI
 
     if $(btn).hasClass('active')
       $(btn).removeClass('active btn-success')
-      @workspaceEl.addClass('auto-collapse')
+      @el.addClass('auto-collapse')
     else
       $(btn).addClass('active btn-success')
-      @workspaceEl.removeClass('auto-collapse')
+      @el.removeClass('auto-collapse')
 
 
   rotateIcon: () ->

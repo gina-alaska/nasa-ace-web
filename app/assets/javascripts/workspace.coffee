@@ -8,7 +8,8 @@ class @Workspace
   }
 
   constructor: (el, channel_key, view = 'cesium') ->
-    return unless $(el).length > 0
+    @el = $(el)
+    return unless @el.length > 0
 
     @remote = new Workspace.Remote(channel_key)
     @ui = new Workspace.UI(@, el)
