@@ -11,7 +11,19 @@
       .btn-group.btn-group-sm
         %button.btn.btn-default.navbar-btn{ title: 'Presenter', data: { toggle: 'presenter' } }
           %i.fa.fa-user
-          
+
+      .btn-group.btn-group-sm
+        %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown' } }
+          %i.fa.fa-fw{ class: params[:view] == '3d' ? 'fa-globe' : 'fa-map-o' }
+          %span.caret
+
+        %ul.dropdown-menu
+          %li
+            = link_to workspace_path(@workspace, {view: '2d'}) do
+              Web mercator
+          %li
+            = link_to workspace_path(@workspace, {view: '3d'}) do
+              Globe
       %i.fa.fa-spinner.loading.navbar-text{ style: 'font-size: 20px;'}
 
       .pull-right

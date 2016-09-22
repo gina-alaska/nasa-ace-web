@@ -4,14 +4,16 @@
 
 class @Workspace
   constructor: (el, channel_key, view = 'cesium') ->
+    return unless $(el).length > 0
+
     @remote = new Workspace.Remote(channel_key)
     @ui = new Workspace.UI(@, el)
-    if view == 'mapbox'
-      @view = new Workspace.MapboxView(@, el)
-      @layers = new Workspace.MapboxLayers(@, @view.map)
-    else
+    if view == '3d'
       @view = new Workspace.CesiumView(@, el)
       @layers = new Workspace.CesiumLayers(@, @view.map)
+    else
+      @view = new Workspace.MapboxView(@, el)
+      @layers = new Workspace.MapboxLayers(@, @view.map)
 
   runRemoteCommand: (data) =>
     @remote.runCommand(@, data)
@@ -20,4 +22,8 @@ class @Workspace
     @ui.reset()
 
 $(document).on 'turbolinks:load', ->
-  document.workspace = new Workspace('.map-container', $('meta[name="channel_key"]').attr('content'))
+  document.workspace = new Workspace(
+                              '.map-container',
+                              $('meta[name="channel_key"]').attr('content'),
+                              $('meta[name="map_view"]').attr('content')
+                           )
