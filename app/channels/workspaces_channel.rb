@@ -13,6 +13,7 @@ class WorkspacesChannel < ApplicationCable::Channel
     case data["command"]
     when 'reorderLayers'
       reorder_layers(data['layers'])
+      rebroadcast(data)
     when 'requestPresenter'
       request_presenter(data)
     else
