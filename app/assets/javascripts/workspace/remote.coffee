@@ -26,12 +26,12 @@ class @Workspace.Remote
       ws.layers.setPaintProperty(data.name, 'opacity', data.value)
 
     move: (ws, data) ->
-      ws.moveTo(data)
+      ws.view.moveTo(data)
       @prevRemoteHash = @lastRemoteHash
       @lastRemoteHash = data
 
     setStyle: (ws, data) ->
-      ws.setStyle(data.name)
+      ws.view.setStyle(data.name)
 
     presenter: (ws, data) ->
       if data.id == null
