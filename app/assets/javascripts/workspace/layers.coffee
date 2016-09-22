@@ -1,7 +1,9 @@
 class @Workspace.Layers
-  getConfig: (name, next = false) ->
-    return unless name?
+  setup: () =>
+    @map = @ws.view.map
 
+  getConfig: (name, next = false) =>
+    return unless name?
     el = @ws.ui.getLayer(name)
 
     config = $.extend({}, el.data()) # clone the data

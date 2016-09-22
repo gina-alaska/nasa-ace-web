@@ -1,5 +1,7 @@
 class @Workspace.CesiumLayers extends Workspace.Layers
-  constructor: (@ws, @map) ->
+  constructor: (@ws) ->
+    @setup(@ws)
+
     @_layerProviders = {}
     @_layers = {}
 

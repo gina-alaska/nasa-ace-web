@@ -99,6 +99,7 @@ class @Workspace.MapboxView
     @style = "mapbox://styles/mapbox/#{style}-v9"
 
     @map.setStyle(@style)
-    @map.style.once 'load', @ws.layers.reload
+    @map.style.once 'load', () =>
+      @ws.layers.reload()
 
     @ws.remote.broadcast('setStyle', { name: style })
