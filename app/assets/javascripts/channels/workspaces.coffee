@@ -7,7 +7,7 @@ $(document).on 'turbolinks:load', ->
     connected: () ->
       # Called when the subscription is ready for use on the server
       if document.workspace?
-        document.workspace.remote.getPresenterState()
+        document.workspace.remote.connected()
 
     disconnected: ->
       # Called when the subscription has been terminated by the server
@@ -15,4 +15,4 @@ $(document).on 'turbolinks:load', ->
     received: (data) ->
       # Called when there's incoming data on the websocket for this channel
       if document.workspace?
-        document.workspace.runRemoteCommand(data)
+        document.workspace.remote.received(data)

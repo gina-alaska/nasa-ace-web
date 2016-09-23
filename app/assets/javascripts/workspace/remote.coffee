@@ -8,7 +8,7 @@ class @Workspace.Remote
   commandTypes: {
     layers: ['ws.layers.show', 'ws.layers.hide', 'ws.basemap.show', 'ws.layers.reorder', 'ws.layers.adjust'],
     movement: ['ws.view.move'],
-    presenter: ['ws.presenter.request', 'ws.presenter.update']
+    presenter: ['ws.presenter.request', 'ws.presenter.update', 'ws.presenter.state']
   }
 
   rebroadcastEvents: [
@@ -37,22 +37,21 @@ class @Workspace.Remote
 
     @setupEvents()
 
+  connected: () =>
+    @broadcast('ws.presenter.state')
+
   rebroadcast: (from, to) =>
     @ws.on from, (e, data) =>
       @broadcast(to, data)
 
   setupEvents: () =>
-    for [listen, event] in @rebroadcastEvents
-      @rebroadcast(listen, event)
+    for [from, to] in @rebroadcastEvents
+      @rebroadcast(from, to)
 
     # special handling because we can't disable the map move event on programatic changes
     @ws.on 'ws.view.move', (e, data) =>
       @prevRemoteHash = @lastRemoteHash
       @lastRemoteHash = data
-
-
-  getPresenterState: () =>
-    @perform('presenter_state')
 
   ignoreBroadcasts: (callback) =>
     @ignore = 0 if @ignore < 0
@@ -70,7 +69,7 @@ class @Workspace.Remote
     else
       true
 
-  runCommand: (ws, data) =>
+  received: (data) =>
     return if @myMessage(data)
     return unless @commandEnabled(data.command)
     return unless @validateCommand(data)

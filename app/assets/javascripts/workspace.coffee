@@ -23,9 +23,6 @@ class @Workspace
     @ui.perspective_tool(@view.supports.perspective)
     @ui.map_view_picker(@supports.cesium)
 
-  runRemoteCommand: (data) =>
-    @remote.runCommand(@, data)
-
   reload: =>
     @ui.reset()
 

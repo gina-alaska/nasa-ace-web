@@ -16,6 +16,8 @@ class WorkspacesChannel < ApplicationCable::Channel
       rebroadcast(data)
     when 'ws.presenter.request'
       request_presenter(data)
+    when 'ws.presenter.state'
+      presenter_notification
     else
       rebroadcast(data)
     end
@@ -27,10 +29,6 @@ class WorkspacesChannel < ApplicationCable::Channel
     else
       clear_presenter(params[:key])
     end
-  end
-
-  def presenter_state
-    presenter_notification
   end
 
   protected
