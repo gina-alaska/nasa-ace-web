@@ -24,6 +24,10 @@ class @Workspace.MapboxView
   initEvents: () =>
     @map.on 'load', @onLoad
     @map.on 'click', @featurePopup
+
+    @ws.on 'ws.basemap.show', (e, data) =>
+      @setBaseLayer(data.name)
+
     @setMoveEndHandler()
 
   onLoad: =>
@@ -99,7 +103,7 @@ class @Workspace.MapboxView
     @style = "mapbox://styles/mapbox/#{style}-v9"
 
     @map.setStyle(@style)
-    @map.style.once 'load', () =>
-      @ws.layers.reload()
+    @ws.trigger('ws.basemap.shown', { name: style })
 
-    @ws.remote.broadcast('setStyle', { name: style })
+    @map.style.once 'load', () =>
+      @ws.trigger('ws.layers.reload')

@@ -14,7 +14,7 @@ class WorkspacesChannel < ApplicationCable::Channel
     when 'ws.layers.reorder'
       reorder_layers(data['layers'])
       rebroadcast(data)
-    when 'requestPresenter'
+    when 'ws.presenter.request'
       request_presenter(data)
     else
       rebroadcast(data)
@@ -59,7 +59,7 @@ class WorkspacesChannel < ApplicationCable::Channel
   end
 
   def presenter_notification
-    WorkspacesChannel.broadcast_to("workspace_#{current_workspace.id}", command: 'presenter', id: current_workspace.presenter_id)
+    WorkspacesChannel.broadcast_to("workspace_#{current_workspace.id}", command: 'ws.presenter.update', id: current_workspace.presenter_id)
   end
 
   def reorder_layers(layers)

@@ -45,6 +45,18 @@ class @Workspace.UI
       if data.property == 'opacity'
         @setOpacity(data.layer, data.value)
 
+    @ws.on 'ws.basemap.show', (e, data) =>
+      $('.map-style.active').removeClass('active')
+      $(".map-style[data-name='#{data.name}']").addClass('active')
+
+    @ws.on 'ws.presenter.update', (e, data) =>
+      if data.id == null
+        @clearPresenter()
+      else if data.id == @ws.remote.channel_key
+        @setPresenter(true)
+      else
+        @setPresenter(false)
+
     @el.on 'input', '[data-adjust="opacity"]', @handleOpacity
 
     @el.on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
@@ -79,11 +91,8 @@ class @Workspace.UI
 
       return false
 
-    @el.on 'click', '[data-behavior="switch-base"]', (e) ->
-      ws.view.setBaseLayer($(this).data('name'))
-      $('.map-style.active').removeClass('active')
-      $(this).addClass('active')
-
+    @el.on 'click', '[data-behavior="switch-base"]', (e) =>
+      @ws.trigger('ws.basemap.show', { name: $(e.currentTarget).data('name') })
       e.preventDefault();
 
     @el.on 'click', '[data-toggle="perspective"]', (e) ->
@@ -123,8 +132,7 @@ class @Workspace.UI
     @setPresenter(null)
 
   togglePresenter: (e) =>
-    @ws.remote.requestPresenter(!$(e.currentTarget).hasClass('active'))
-    # if $(e.currentTarget).hasClass('active')
+    @ws.trigger('ws.presenter.request', { state: !$(e.currentTarget).hasClass('active') })
 
   handleOpacity: (e) =>
     value = parseInt(e.currentTarget.value, 10)

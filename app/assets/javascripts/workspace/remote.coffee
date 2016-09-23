@@ -6,9 +6,9 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['ws.layers.show', 'ws.layers.hide', 'setStyle', 'ws.layers.reorder', 'ws.layers.adjust'],
+    layers: ['ws.layers.show', 'ws.layers.hide', 'ws.basemap.show', 'ws.layers.reorder', 'ws.layers.adjust'],
     movement: ['move'],
-    presenter: ['requestPresenter', 'presenter']
+    presenter: ['ws.presenter.request', 'ws.presenter.update']
   }
 
   commands: {
@@ -24,21 +24,23 @@ class @Workspace.Remote
     "ws.layers.adjust": (ws, data) ->
       ws.trigger('ws.layers.adjust', data)
 
+    "ws.basemap.show": (ws, data) ->
+      ws.trigger('ws.basemap.show', data)
+
     move: (ws, data) ->
       ws.view.moveTo(data)
       @prevRemoteHash = @lastRemoteHash
       @lastRemoteHash = data
 
-    setStyle: (ws, data) ->
-      ws.view.setStyle(data.name)
+    "ws.presenter.update": (ws, data) ->
+      ws.trigger('ws.presenter.update', data)
 
-    presenter: (ws, data) ->
-      if data.id == null
-        ws.ui.clearPresenter()
-      else if data.id == ws.remote.channel_key
-        ws.ui.setPresenter(true)
-      else
-        ws.ui.setPresenter(false)
+      # if data.id == null
+      #   ws.ui.clearPresenter()
+      # else if data.id == ws.remote.channel_key
+      #   ws.ui.setPresenter(true)
+      # else
+      #   ws.ui.setPresenter(false)
   }
 
   commandValidators: {
@@ -66,9 +68,11 @@ class @Workspace.Remote
     @ws.on 'ws.layers.adjusted', (e, data) =>
       @broadcast('ws.layers.adjust', data)
 
+    @ws.on 'ws.basemap.shown', (e, data) =>
+      @broadcast('ws.basemap.show', data)
 
-  requestPresenter: (state = true) =>
-    @broadcast('requestPresenter', { "state": state })
+    @ws.on 'ws.presenter.request', (e, data) =>
+      @broadcast('ws.presenter.request', data)
 
   getPresenterState: () =>
     @perform('presenter_state')
