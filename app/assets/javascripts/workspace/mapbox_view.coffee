@@ -28,6 +28,9 @@ class @Workspace.MapboxView
     @ws.on 'ws.basemap.show', (e, data) =>
       @setBaseLayer(data.name)
 
+    @ws.on 'ws.view.move', (e, data) =>
+      @moveTo(data)
+
     @setMoveEndHandler()
 
   onLoad: =>
@@ -87,7 +90,7 @@ class @Workspace.MapboxView
 
   setMoveEndHandler: () =>
     @map.on 'moveend', =>
-      @ws.remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
+      @ws.trigger('ws.view.moved', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
 
   moveTo: (data) =>
     @map.off('moveend')
