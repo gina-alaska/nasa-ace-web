@@ -6,7 +6,7 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['ws.layers.show', 'ws.layers.hide', 'setStyle', 'ws.layers.reorder', 'ws.layers.opacity'],
+    layers: ['ws.layers.show', 'ws.layers.hide', 'setStyle', 'ws.layers.reorder', 'ws.layers.adjust'],
     movement: ['move'],
     presenter: ['requestPresenter', 'presenter']
   }
@@ -20,10 +20,9 @@ class @Workspace.Remote
 
     "ws.layers.reorder": (ws, data) ->
       ws.trigger('ws.layers.reorder', data)
-      
-    "ws.layers.opacity": (ws, data) ->
-      ws.ui.setOpacity(data.name, data.value * 100)
-      ws.layers.setPaintProperty(data.name, 'opacity', data.value)
+
+    "ws.layers.adjust": (ws, data) ->
+      ws.trigger('ws.layers.adjust', data)
 
     move: (ws, data) ->
       ws.view.moveTo(data)
@@ -64,8 +63,8 @@ class @Workspace.Remote
     @ws.on 'ws.layers.reordered', (e, data) =>
       @broadcast('ws.layers.reorder', data)
 
-    @ws.on 'ws.layers.opacity', (e, data) =>
-      @broadcast('ws.layers.opacity', data)
+    @ws.on 'ws.layers.adjusted', (e, data) =>
+      @broadcast('ws.layers.adjust', data)
 
 
   requestPresenter: (state = true) =>

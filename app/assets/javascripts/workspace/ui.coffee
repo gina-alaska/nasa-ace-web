@@ -34,11 +34,16 @@ class @Workspace.UI
 
     @ws.on 'ws.layers.shown', (e, data) =>
       @getLayer(data.name).addClass('active')
+
     @ws.on 'ws.layers.hidden', (e, data) =>
       @getLayer(data.name).removeClass('active')
 
     @ws.on 'ws.layers.reorder', (e, data) =>
       @reorderLayerList(data.layers)
+
+    @ws.on 'ws.layers.adjust', (e, data) =>
+      if data.property == 'opacity'
+        @setOpacity(data.layer, data.value)
 
     @el.on 'input', '[data-adjust="opacity"]', @handleOpacity
 
@@ -122,9 +127,9 @@ class @Workspace.UI
     # if $(e.currentTarget).hasClass('active')
 
   handleOpacity: (e) =>
-    value = parseInt(e.currentTarget.value, 10) / 100
+    value = parseInt(e.currentTarget.value, 10)
     layer = $(e.currentTarget).data('layer')
-    @ws.trigger('ws.layers.opacity', { name: layer, value: value })
+    @ws.trigger('ws.layers.adjust', { layer: layer, property: 'opacity', value: value })
 
   reorderLayerList: (layers) =>
     layerList = (@getLayer(name)[0] for name in layers)
@@ -238,6 +243,7 @@ class @Workspace.UI
 
   setOpacity: (name, value) =>
     $(@getLayer(name).find('input[name="opacity"]')).val(value)
+    @ws.trigger('ws.layers.adjusted', { layer: name, property: 'opacity', value: value })
 
   stopLoading: () ->
     @loading_count ||= 0

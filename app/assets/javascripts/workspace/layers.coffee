@@ -2,11 +2,12 @@ class @Workspace.Layers
   setup: () =>
     @map = @ws.view.map
 
-    @ws.on 'ws.layers.reordered', (e, data) =>
+    @ws.on 'ws.layers.reorder', (e, data) =>
       @reload()
 
-    @ws.on 'ws.layers.opacity', (e, data) =>
-      @setPaintProperty(data.name, 'opacity', data.value)
+    @ws.on 'ws.layers.adjust', (e, data) =>
+      if data.property == 'opacity'
+        @setPaintProperty(data.layer, data.property, data.value / 100)
 
     @ws.on 'ws.layers.hide', (e, data) =>
       @hide(data.name)
