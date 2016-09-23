@@ -117,7 +117,12 @@ class @Workspace.UI
     value = parseInt(e.currentTarget.value, 10) / 100
     layer = $(e.currentTarget).data('layer')
     @ws.layers.setPaintProperty(layer, 'opacity', value)
-    @ws.remote.broadcast('opacity', { name: layer, value: value })
+    @ws.remote.broadcast('ws.layers.opacity', { name: layer, value: value })
+
+  reorderLayerList: (layers) =>
+    layerList = (@getLayer(name)[0] for name in layers)
+    @overlayList.html(layerList)
+    @ws.layers.reload()
 
   layerDragStart: (e) =>
     @dragSrc = $(e.currentTarget)
@@ -150,7 +155,7 @@ class @Workspace.UI
   layerDrop: (e) =>
     @dragTarget.removeClass('over')
     @insertLayerEl(@dragTarget, @dragSrc, { x: e.clientX, y: e.clientY })
-    @ws.remote.broadcast('reorderLayers', { layers: @ws.ui.getLayerList() })
+    @ws.remote.broadcast('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
 
   setLayerOrder: (first, second) =>
     $(second).insertAfter(first)
@@ -160,8 +165,7 @@ class @Workspace.UI
     prev = $(target).prev()
     if prev.length > 0
       $(target).insertBefore(prev)
-      @ws.layers.reload()
-      @ws.remote.broadcast('reorderLayers', { layers: @ws.ui.getLayerList() })
+      @ws.trigger('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()
@@ -172,8 +176,7 @@ class @Workspace.UI
 
     if next.length > 0
       $(target).insertAfter(next)
-      @ws.layers.reload()
-      @ws.remote.broadcast('reorderLayers', { layers: @ws.ui.getLayerList() })
+      @ws.trigger('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()

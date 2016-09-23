@@ -6,22 +6,22 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['hideLayer', 'showLayer', 'setStyle', 'reorderLayers', 'opacity'],
+    layers: ['ws.layers.show', 'ws.layers.hide', 'setStyle', 'ws.layers.reorder', 'ws.layers.opacity'],
     movement: ['move'],
     presenter: ['requestPresenter', 'presenter']
   }
 
   commands: {
-    hideLayer: (ws, data) ->
+    "ws.layers.hide": (ws, data) ->
       ws.layers.hide(data.name)
 
-    showLayer: (ws, data) ->
+    "ws.layers.show": (ws, data) ->
       ws.layers.show(data.name)
 
-    reorderLayers: (ws, data) ->
-      ws.layers.reorder(data.layers)
+    "ws.layers.reorder": (ws, data) ->
+      ws.ui.reorderLayerList(data.layers)
 
-    opacity: (ws, data) ->
+    "ws.layers.opacity": (ws, data) ->
       ws.ui.setOpacity(data.name, data.value * 100)
       ws.layers.setPaintProperty(data.name, 'opacity', data.value)
 
@@ -47,10 +47,26 @@ class @Workspace.Remote
       @diffLocation(@prevRemoteHash, data) && @diffLocation(@lastRemoteHash, data)
   }
 
-  constructor: (@channel_key) ->
+  constructor: (@ws, @channel_key) ->
     @presenter = false
     @timer = new Date()
     @ignore ||= 0
+
+    @setupEvents()
+
+  setupEvents: () =>
+    @ws.on 'ws.layers.show', (e, data) =>
+      @broadcast('ws.layers.show', data)
+
+    @ws.on 'ws.layers.hide', (e, data) =>
+      @broadcast('ws.layers.hide', data)
+
+    @ws.on 'ws.layers.reorder', (e, data) =>
+      @broadcast('ws.layers.reorder', data)
+
+    @ws.on 'ws.layers.opacity', (e, data) =>
+      @broadcast('ws.layers.opacity', data)
+
 
   requestPresenter: (state = true) =>
     @broadcast('requestPresenter', { "state": state })

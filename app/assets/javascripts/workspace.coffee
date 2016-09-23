@@ -11,7 +11,7 @@ class @Workspace
     @el = $(el)
     return unless @el.length > 0
 
-    @remote = new Workspace.Remote(channel_key)
+    @remote = new Workspace.Remote(@, channel_key)
     @ui = new Workspace.UI(@, el)
     if view == '3d' && @supports.cesium
       @view = new Workspace.CesiumView(@, el)
@@ -28,6 +28,12 @@ class @Workspace
 
   reload: =>
     @ui.reset()
+
+  on: (event, data) =>
+    @el.on(event, data)
+
+  trigger: (event, data) =>
+    @el.trigger(event, data)
 
 $(document).on 'turbolinks:load', ->
   document.workspace = new Workspace(

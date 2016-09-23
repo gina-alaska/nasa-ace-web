@@ -5,11 +5,6 @@ class @Workspace.MapboxLayers extends Workspace.Layers
     @clickable = []
     @_layerGroups = {}
 
-  reorder: (layers) =>
-    layerList = (@ws.ui.getLayer(name)[0] for name in layers)
-    @ws.ui.overlayList.html(layerList)
-    @reload()
-
   addSources: () =>
     for layer in @ws.ui.getAllLayers()
       @createSource $(layer).data('name')
@@ -18,12 +13,13 @@ class @Workspace.MapboxLayers extends Workspace.Layers
     @remove(name)
 
     @ws.ui.getLayer(name).removeClass('active')
-    @ws.remote.broadcast('hideLayer', { name: name })
+    @ws.trigger('ws.layers.hide', { name: name })
 
   show: (name) =>
     @create(name)
+
     @ws.ui.getLayer(name).addClass('active')
-    @ws.remote.broadcast('showLayer', { name: name })
+    @ws.trigger('ws.layers.show', { name: name })
 
   isActive: (name) =>
     if @_layerGroups[name]?

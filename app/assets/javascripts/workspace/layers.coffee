@@ -2,6 +2,10 @@ class @Workspace.Layers
   setup: () =>
     @map = @ws.view.map
 
+    @ws.on 'ws.layers.reorder', (e, data) =>
+      @reload()
+
+
   getConfig: (name, next = false) =>
     return unless name?
     el = @ws.ui.getLayer(name)

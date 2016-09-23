@@ -11,7 +11,7 @@ class WorkspacesChannel < ApplicationCable::Channel
 
   def receive(data)
     case data["command"]
-    when 'reorderLayers'
+    when 'ws.layers.reorder'
       reorder_layers(data['layers'])
       rebroadcast(data)
     when 'requestPresenter'
