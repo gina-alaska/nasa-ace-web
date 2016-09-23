@@ -11,15 +11,11 @@ class @Workspace.MapboxLayers extends Workspace.Layers
 
   hide: (name) =>
     @remove(name)
-
-    @ws.ui.getLayer(name).removeClass('active')
-    @ws.trigger('ws.layers.hide', { name: name })
+    @ws.trigger('ws.layers.hidden', { name: name })
 
   show: (name) =>
     @create(name)
-
-    @ws.ui.getLayer(name).addClass('active')
-    @ws.trigger('ws.layers.show', { name: name })
+    @ws.trigger('ws.layers.shown', { name: name })
 
   isActive: (name) =>
     if @_layerGroups[name]?

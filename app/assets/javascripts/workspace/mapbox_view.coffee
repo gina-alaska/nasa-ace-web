@@ -24,6 +24,13 @@ class @Workspace.MapboxView
   initEvents: () =>
     @map.on 'load', @onLoad
     @map.on 'click', @featurePopup
+
+    @ws.on 'ws.basemap.show', (e, data) =>
+      @setBaseLayer(data.name)
+
+    @ws.on 'ws.view.move', (e, data) =>
+      @moveTo(data)
+
     @setMoveEndHandler()
 
   onLoad: =>
@@ -83,7 +90,7 @@ class @Workspace.MapboxView
 
   setMoveEndHandler: () =>
     @map.on 'moveend', =>
-      @ws.remote.broadcast('move', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
+      @ws.trigger('ws.view.moved', { center: @map.getCenter(), zoom: @map.getZoom(), bearing: @map.getBearing() })
 
   moveTo: (data) =>
     @map.off('moveend')
@@ -99,7 +106,7 @@ class @Workspace.MapboxView
     @style = "mapbox://styles/mapbox/#{style}-v9"
 
     @map.setStyle(@style)
-    @map.style.once 'load', () =>
-      @ws.layers.reload()
+    @ws.trigger('ws.basemap.shown', { name: style })
 
-    @ws.remote.broadcast('setStyle', { name: style })
+    @map.style.once 'load', () =>
+      @ws.trigger('ws.layers.reload')

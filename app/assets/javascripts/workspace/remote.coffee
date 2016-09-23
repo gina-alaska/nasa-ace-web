@@ -6,40 +6,23 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['ws.layers.show', 'ws.layers.hide', 'setStyle', 'ws.layers.reorder', 'ws.layers.opacity'],
-    movement: ['move'],
-    presenter: ['requestPresenter', 'presenter']
+    layers: ['ws.layers.show', 'ws.layers.hide', 'ws.basemap.show', 'ws.layers.reorder', 'ws.layers.adjust'],
+    movement: ['ws.view.move'],
+    presenter: ['ws.presenter.request', 'ws.presenter.update', 'ws.presenter.state']
   }
 
+  rebroadcastEvents: [
+    ['ws.layers.shown', 'ws.layers.show'],
+    ['ws.layers.hidden', 'ws.layers.hide'],
+    ['ws.layers.reordered', 'ws.layers.reorder'],
+    ['ws.layers.adjusted', 'ws.layers.adjust'],
+    ['ws.basemap.shown', 'ws.basemap.show'],
+    ['ws.presenter.requested', 'ws.presenter.request'],
+    ['ws.view.moved', 'ws.view.move']
+  ]
+
   commands: {
-    "ws.layers.hide": (ws, data) ->
-      ws.layers.hide(data.name)
-
-    "ws.layers.show": (ws, data) ->
-      ws.layers.show(data.name)
-
-    "ws.layers.reorder": (ws, data) ->
-      ws.ui.reorderLayerList(data.layers)
-
-    "ws.layers.opacity": (ws, data) ->
-      ws.ui.setOpacity(data.name, data.value * 100)
-      ws.layers.setPaintProperty(data.name, 'opacity', data.value)
-
     move: (ws, data) ->
-      ws.view.moveTo(data)
-      @prevRemoteHash = @lastRemoteHash
-      @lastRemoteHash = data
-
-    setStyle: (ws, data) ->
-      ws.view.setStyle(data.name)
-
-    presenter: (ws, data) ->
-      if data.id == null
-        ws.ui.clearPresenter()
-      else if data.id == ws.remote.channel_key
-        ws.ui.setPresenter(true)
-      else
-        ws.ui.setPresenter(false)
   }
 
   commandValidators: {
@@ -54,25 +37,21 @@ class @Workspace.Remote
 
     @setupEvents()
 
+  connected: () =>
+    @broadcast('ws.presenter.state')
+
+  rebroadcast: (from, to) =>
+    @ws.on from, (e, data) =>
+      @broadcast(to, data)
+
   setupEvents: () =>
-    @ws.on 'ws.layers.show', (e, data) =>
-      @broadcast('ws.layers.show', data)
+    for [from, to] in @rebroadcastEvents
+      @rebroadcast(from, to)
 
-    @ws.on 'ws.layers.hide', (e, data) =>
-      @broadcast('ws.layers.hide', data)
-
-    @ws.on 'ws.layers.reorder', (e, data) =>
-      @broadcast('ws.layers.reorder', data)
-
-    @ws.on 'ws.layers.opacity', (e, data) =>
-      @broadcast('ws.layers.opacity', data)
-
-
-  requestPresenter: (state = true) =>
-    @broadcast('requestPresenter', { "state": state })
-
-  getPresenterState: () =>
-    @perform('presenter_state')
+    # special handling because we can't disable the map move event on programatic changes
+    @ws.on 'ws.view.move', (e, data) =>
+      @prevRemoteHash = @lastRemoteHash
+      @lastRemoteHash = data
 
   ignoreBroadcasts: (callback) =>
     @ignore = 0 if @ignore < 0
@@ -90,16 +69,13 @@ class @Workspace.Remote
     else
       true
 
-  runCommand: (ws, data) =>
+  received: (data) =>
     return if @myMessage(data)
     return unless @commandEnabled(data.command)
     return unless @validateCommand(data)
 
-    if @commands[data.command]?
-      @ignoreBroadcasts =>
-        @commands[data.command].call(@, ws, data)
-    else
-      console.log "Unknown command: #{data.command}"
+    @ignoreBroadcasts =>
+      @ws.trigger(data.command, data)
 
 
   myMessage: (data) =>
@@ -107,6 +83,8 @@ class @Workspace.Remote
 
   broadcast: (name, data = {}) =>
     return if @ignore > 0
+    return unless @commandEnabled(name)
+
     data.command = name
     data.sentBy ||= @channel_key
 

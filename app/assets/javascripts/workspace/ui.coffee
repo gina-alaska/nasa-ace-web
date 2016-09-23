@@ -32,6 +32,31 @@ class @Workspace.UI
     ui = @
     ws = @ws
 
+    @ws.on 'ws.layers.shown', (e, data) =>
+      @getLayer(data.name).addClass('active')
+
+    @ws.on 'ws.layers.hidden', (e, data) =>
+      @getLayer(data.name).removeClass('active')
+
+    @ws.on 'ws.layers.reorder', (e, data) =>
+      @reorderLayerList(data.layers)
+
+    @ws.on 'ws.layers.adjust', (e, data) =>
+      if data.property == 'opacity'
+        @setOpacity(data.layer, data.value)
+
+    @ws.on 'ws.basemap.show', (e, data) =>
+      $('.map-style.active').removeClass('active')
+      $(".map-style[data-name='#{data.name}']").addClass('active')
+
+    @ws.on 'ws.presenter.update', (e, data) =>
+      if data.id == null
+        @clearPresenter()
+      else if data.id == @ws.remote.channel_key
+        @setPresenter(true)
+      else
+        @setPresenter(false)
+
     @el.on 'input', '[data-adjust="opacity"]', @handleOpacity
 
     @el.on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
@@ -66,11 +91,8 @@ class @Workspace.UI
 
       return false
 
-    @el.on 'click', '[data-behavior="switch-base"]', (e) ->
-      ws.view.setBaseLayer($(this).data('name'))
-      $('.map-style.active').removeClass('active')
-      $(this).addClass('active')
-
+    @el.on 'click', '[data-behavior="switch-base"]', (e) =>
+      @ws.trigger('ws.basemap.show', { name: $(e.currentTarget).data('name') })
       e.preventDefault();
 
     @el.on 'click', '[data-toggle="perspective"]', (e) ->
@@ -110,14 +132,12 @@ class @Workspace.UI
     @setPresenter(null)
 
   togglePresenter: (e) =>
-    @ws.remote.requestPresenter(!$(e.currentTarget).hasClass('active'))
-    # if $(e.currentTarget).hasClass('active')
+    @ws.trigger('ws.presenter.requested', { state: !$(e.currentTarget).hasClass('active') })
 
   handleOpacity: (e) =>
-    value = parseInt(e.currentTarget.value, 10) / 100
+    value = parseInt(e.currentTarget.value, 10)
     layer = $(e.currentTarget).data('layer')
-    @ws.layers.setPaintProperty(layer, 'opacity', value)
-    @ws.remote.broadcast('ws.layers.opacity', { name: layer, value: value })
+    @ws.trigger('ws.layers.adjust', { layer: layer, property: 'opacity', value: value })
 
   reorderLayerList: (layers) =>
     layerList = (@getLayer(name)[0] for name in layers)
@@ -155,7 +175,7 @@ class @Workspace.UI
   layerDrop: (e) =>
     @dragTarget.removeClass('over')
     @insertLayerEl(@dragTarget, @dragSrc, { x: e.clientX, y: e.clientY })
-    @ws.remote.broadcast('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
+    @ws.trigger('ws.layers.reordered', { layers: @ws.ui.getLayerList() })
 
   setLayerOrder: (first, second) =>
     $(second).insertAfter(first)
@@ -165,7 +185,7 @@ class @Workspace.UI
     prev = $(target).prev()
     if prev.length > 0
       $(target).insertBefore(prev)
-      @ws.trigger('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
+      @ws.trigger('ws.layers.reordered', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()
@@ -176,7 +196,7 @@ class @Workspace.UI
 
     if next.length > 0
       $(target).insertAfter(next)
-      @ws.trigger('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
+      @ws.trigger('ws.layers.reordered', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()
@@ -231,6 +251,7 @@ class @Workspace.UI
 
   setOpacity: (name, value) =>
     $(@getLayer(name).find('input[name="opacity"]')).val(value)
+    @ws.trigger('ws.layers.adjusted', { layer: name, property: 'opacity', value: value })
 
   stopLoading: () ->
     @loading_count ||= 0
