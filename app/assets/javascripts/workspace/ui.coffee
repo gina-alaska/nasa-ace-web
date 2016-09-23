@@ -88,7 +88,7 @@ class @Workspace.UI
         $(this).addClass('active')
         $(checkbox).addClass('fa-check-square-o').removeClass('fa-square-o')
         ws.remote.enable($(this).data('type'))
-
+        
       return false
 
     @el.on 'click', '[data-behavior="switch-base"]', (e) =>

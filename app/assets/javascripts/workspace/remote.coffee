@@ -110,6 +110,8 @@ class @Workspace.Remote
 
   broadcast: (name, data = {}) =>
     return if @ignore > 0
+    return unless @commandEnabled(name)
+
     data.command = name
     data.sentBy ||= @channel_key
 
