@@ -13,14 +13,14 @@ class @Workspace.Remote
 
   commands: {
     "ws.layers.hide": (ws, data) ->
-      ws.layers.hide(data.name)
+      ws.trigger('ws.layers.hide', data)
 
     "ws.layers.show": (ws, data) ->
-      ws.layers.show(data.name)
+      ws.trigger('ws.layers.show', data)
 
     "ws.layers.reorder": (ws, data) ->
-      ws.ui.reorderLayerList(data.layers)
-
+      ws.trigger('ws.layers.reorder', data)
+      
     "ws.layers.opacity": (ws, data) ->
       ws.ui.setOpacity(data.name, data.value * 100)
       ws.layers.setPaintProperty(data.name, 'opacity', data.value)
@@ -55,13 +55,13 @@ class @Workspace.Remote
     @setupEvents()
 
   setupEvents: () =>
-    @ws.on 'ws.layers.show', (e, data) =>
+    @ws.on 'ws.layers.shown', (e, data) =>
       @broadcast('ws.layers.show', data)
 
-    @ws.on 'ws.layers.hide', (e, data) =>
+    @ws.on 'ws.layers.hidden', (e, data) =>
       @broadcast('ws.layers.hide', data)
 
-    @ws.on 'ws.layers.reorder', (e, data) =>
+    @ws.on 'ws.layers.reordered', (e, data) =>
       @broadcast('ws.layers.reorder', data)
 
     @ws.on 'ws.layers.opacity', (e, data) =>
