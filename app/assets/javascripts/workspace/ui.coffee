@@ -223,10 +223,8 @@ class @Workspace.UI
     el = @getLayer(name)
     if $(el).hasClass('active')
       @ws.layers.hide(name)
-      $(el).removeClass('active')
     else
       @ws.layers.show(name)
-      $(el).addClass('active')
 
   getLayer: (name) ->
     $(".overlay-list .layer[data-name='#{name}']")
