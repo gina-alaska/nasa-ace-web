@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915165704) do
+ActiveRecord::Schema.define(version: 20160927222432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,8 +47,9 @@ ActiveRecord::Schema.define(version: 20160915165704) do
     t.integer  "workspace_id"
     t.integer  "layer_id"
     t.integer  "position"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "active",       default: false
     t.index ["layer_id"], name: "index_workspace_layers_on_layer_id", using: :btree
     t.index ["workspace_id"], name: "index_workspace_layers_on_workspace_id", using: :btree
   end
