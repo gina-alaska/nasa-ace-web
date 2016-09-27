@@ -4,7 +4,7 @@
 
 class @Workspace
   supports: {
-    'cesium': false
+    'cesium': true
   }
 
   constructor: (el, channel_key, view = 'cesium') ->
