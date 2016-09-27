@@ -59,7 +59,6 @@ class @Workspace.CesiumLayers extends Workspace.Layers
       outlineColor = Cesium.Color.BLACK.withAlpha(value)
 
       for entity in @_layers[name].entities.values
-        # console.log(entity.point.color)
         entity.point.color = color
         entity.point.outlineColor = outlineColor
 
