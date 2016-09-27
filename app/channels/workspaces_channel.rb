@@ -11,14 +11,17 @@ class WorkspacesChannel < ApplicationCable::Channel
 
   def receive(data)
     case data["command"]
+    when 'ws.basemap.show'
+      update_workspace_state(basemap: data['name'])
+      rebroadcast(data)
     when 'ws.layers.reorder'
       reorder_layers(data['layers'])
       rebroadcast(data)
     when 'ws.layers.show'
-      update_layer_state(data['name'], { active: true })
+      update_layer_state(data['name'], active: true)
       rebroadcast(data)
     when 'ws.layers.hide'
-      update_layer_state(data['name'], { active: false })
+      update_layer_state(data['name'], active: false)
       rebroadcast(data)
     when 'ws.presenter.request'
       request_presenter(data)
@@ -66,10 +69,14 @@ class WorkspacesChannel < ApplicationCable::Channel
     WorkspacesChannel.broadcast_to("workspace_#{current_workspace.id}", command: 'ws.presenter.update', id: current_workspace.presenter_id)
   end
 
-  def update_layer_state(name, state)
+  def update_layer_state(name, state = {})
     layer = current_workspace.layers.where(name: name)
     wl = current_workspace.workspace_layers.where(layer: layer).first
     wl.update_attributes(state) unless wl.nil?
+  end
+
+  def update_workspace_state(state = {})
+    current_workspace.update_attributes(state)
   end
 
   def reorder_layers(layers)

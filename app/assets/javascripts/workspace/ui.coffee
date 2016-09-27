@@ -238,6 +238,9 @@ class @Workspace.UI
   getActiveLayers: () ->
     $('.overlay-list .layer.active').toArray()
 
+  getActiveBasemap: () ->
+    $('#style-list .active').data('name')
+
   startLoading: () ->
     @loading_count ||= 0
     @loading_count += 1

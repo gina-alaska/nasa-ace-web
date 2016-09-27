@@ -5,7 +5,7 @@ class @Workspace.MapboxView
 
   constructor: (@ws, el) ->
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
-    @style = "mapbox://styles/mapbox/satellite-streets-v9"
+    @style = "mapbox://styles/mapbox/#{@ws.ui.getActiveBasemap()}-v9"
     center = $(el).find('.map').data('center')
     zoom = $(el).find('.map').data('zoom')
 

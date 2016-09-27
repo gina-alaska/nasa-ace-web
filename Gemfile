@@ -55,6 +55,7 @@ gem 'simple_form'
 gem 'font-awesome-rails'
 gem 'metamagic'
 gem 'acts_as_list'
+gem 'active_link_to'
 gem 'sprockets-es6', require: 'sprockets/es6'
 
 source 'https://rails-assets.org' do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927222432) do
+ActiveRecord::Schema.define(version: 20160927223440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20160927222432) do
     t.decimal  "center_lng",   precision: 12, scale: 8
     t.decimal  "zoom",         precision: 12, scale: 8
     t.string   "presenter_id"
+    t.string   "basemap"
   end
 
   add_foreign_key "layers", "categories"
