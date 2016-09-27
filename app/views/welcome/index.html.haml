@@ -1,29 +1,29 @@
 = render "carousel"
 .search-buttons.btn-group.btn-group-lg.btn-group-justified{ role: 'group' }
+  = link_to ckan_url('dataset?q=Storm'), class: 'btn btn-default' do
+    = image_tag image_path('Storm.png'), class: 'img-responsive'
+    Weather
+  = link_to ckan_url('dataset?q=Oceans'), class: 'btn btn-default' do
+    = image_tag image_path('oceans.png'), class: 'img-responsive'
+    Oceans
   = link_to ckan_url('dataset?q=Sea+Ice'), class: 'btn btn-default' do
     = image_tag image_path('Sea_Ice.png'), class: 'img-responsive'
     Sea Ice
-  = link_to ckan_url('dataset?q=Oceans'), class: 'btn btn-default' do
-    = image_tag image_path('Whale.png'), class: 'img-responsive'
-    Oceans
-  = link_to ckan_url('dataset?q=Basemaps'), class: 'btn btn-default' do
-    = image_tag image_path('Arctic_Sanctuary.png'), class: 'img-responsive'
-    Basemaps
-  = link_to ckan_url('dataset?q=Wind'), class: 'btn btn-default' do
+  = link_to ckan_url('dataset?q=Snow'), class: 'btn btn-default' do
     = image_tag image_path('Renewable_Energy.png'), class: 'img-responsive'
-    Wind
-  = link_to ckan_url('dataset?q=Permafrost'), class: 'btn btn-default' do
+    Snow
+  = link_to ckan_url('dataset?q=Terrestrial'), class: 'btn btn-default' do
     = image_tag image_path('Sea_Ice.png'), class: 'img-responsive'
-    Permafrost
-  = link_to ckan_url('dataset?q=Vegetation'), class: 'btn btn-default' do
-    = image_tag image_path('Sea_Ice.png'), class: 'img-responsive'
-    Vegetation
-  = link_to ckan_url('dataset?q=Airports'), class: 'btn btn-default' do
-    = image_tag image_path('Sea_Ice.png'), class: 'img-responsive'
-    Airports
-  = link_to ckan_url('dataset?q=Migration'), class: 'btn btn-default' do
-    = image_tag image_path('Sea_Ice.png'), class: 'img-responsive'
-    Migration
+    Terrestrial
+  = link_to ckan_url('dataset?q=Hydrology'), class: 'btn btn-default' do
+    = image_tag image_path('hydrology.png'), class: 'img-responsive'
+    Hydrology
+  = link_to ckan_url('dataset?q=Hazards'), class: 'btn btn-default' do
+    = image_tag image_path('hazards.png'), class: 'img-responsive'
+    Hazards
+  = link_to ckan_url('dataset?q=Infrastructure'), class: 'btn btn-default' do
+    = image_tag image_path('infrastructure1.png'), class: 'img-responsive'
+    Infrastructure
 .container-fluid
   .row
     .col-sm-9
