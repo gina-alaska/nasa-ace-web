@@ -41,18 +41,6 @@ class @Workspace.CesiumLayers extends Workspace.Layers
       layer.otherwise (error) =>
         @ws.ui.stopLoading()
         $.notify(error)
-
-      # callback.call(@, config, layer)
-      # promise.then((dataSource) ->
-      #   layer = @map.dataSources.add(dataSource)
-      #   console.log layer
-      #   @ws.ui.stopLoading()
-      #   callback.call(@, config, layer)
-      # ).otherwise((error) ->
-      #   @ws.ui.stopLoading()
-      #   console.log error
-      #   $.notify(error)
-      # )
   }
 
   setPaintProperty: (name, property, value) =>
