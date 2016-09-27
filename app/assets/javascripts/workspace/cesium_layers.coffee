@@ -75,9 +75,11 @@ class @Workspace.CesiumLayers extends Workspace.Layers
       if !@isActive(name)
         @add(name)
 
+    @ws.trigger('ws.layers.shown', { name: name })
 
   hide: (name) =>
     @remove(name, false)
+    @ws.trigger('ws.layers.hidden', { name: name })
 
   layerDefined: (name) =>
     @getLayer(name)?
