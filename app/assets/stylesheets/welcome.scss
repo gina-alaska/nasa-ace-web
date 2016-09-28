@@ -77,12 +77,12 @@ html, body {
 }
 
 .carousel-inner {
-  height: 340px;
+  height: 400px;
 }
 
 .carousel-caption{
   position: absolute;
-  top: 310px;
+  top: 370px;
   right: 0px;
   bottom: 0px;
   left: 0px;
@@ -93,10 +93,6 @@ html, body {
   padding: 5px;
   color: #0c0c0c;
   font-weight: bold;
-}
-
-.carousel-control {
-  padding-top: 140px;
 }
 
 .quick-buttons {
