@@ -1,5 +1,5 @@
 -images = %w(AAR-15-4456-291.jpg AAR-15-4565-160.jpg AKA-13-3929-68.jpg AKA-13-3942-186.jpg AKA-15-4565-306.jpg TP-16-4865-276.jpg TP-16-4866-33.jpg mountains.jpg)
-#nasa-ace-carousel.carousel.slide{ data: { ride: 'carousel', interval: 20000 } }
+#nasa-ace-carousel.carousel.slide{ data: { ride: 'carousel', interval: 10000 } }
   .carousel-inner
     -images.each do |image|
       -if image == images.first
@@ -7,4 +7,8 @@
       -else
         .item{ style: "background-image: url(#{image_path(image)});" }
     .carousel-caption-static
-      = render 'introduction'
+      .row-fluid
+        .col-sm-8
+          = render 'introduction'
+        .col-sm-4.logo
+          = image_tag 'ace_logo.png'

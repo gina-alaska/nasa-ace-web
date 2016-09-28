@@ -77,7 +77,7 @@ html, body {
 }
 
 .carousel-inner {
-  height: 500px;
+  height: 450px;
 }
 
 .carousel .item {
@@ -129,13 +129,24 @@ html, body {
 }
 
 .carousel-caption-static {
+  text-align: left;
   position: absolute;
   top: 0px;
   bottom: 0px;
   left: 0px;
-  width: 50%;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.85);
-  font-size: 1.3em;
+  width: 100%;
+  padding: 40px 40px;
+  background-color: rgba(0, 89, 116, 0.8);
+  color: #fff;
   min-width: 500px;
+
+  h1 { font-size: 2em; margin-bottom: 40px; }
+  p { font-size: 1.1em; }
+
+  .logo {
+    text-align: center;
+    vertical-align: middle;
+    padding: 20px 20px;
+    img { width: 100%; }
+  }
 }
