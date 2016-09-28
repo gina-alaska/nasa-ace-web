@@ -15,33 +15,9 @@
     %span.hide-collapsed Base Layer
     .pull-right.hide-collapsed
       %i.fa.fa-caret-left.rotatable
-  #style-list.list-group.sub.collapse
-    = link_to '#', class: 'list-group-item map-style active layer', data: { behavior: 'switch-base', name: 'satellite-streets' } do
-      .layer-handle
-        &nbsp;
-      .layer-controls
-        .layer-label Mapbox Satellite
-    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'streets' } do
-      .layer-handle
-        &nbsp;
-      .layer-controls
-        .layer-label Mapbox Streets
-    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'outdoors' } do
-      .layer-handle
-        &nbsp;
-      .layer-controls
-        .layer-label Mapbox Outdoors
-    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'light' } do
-      .layer-handle
-        &nbsp;
-      .layer-controls
-        .layer-label Mapbox Light
-    = link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'dark' } do
-      .layer-handle
-        &nbsp;
-      .layer-controls
-        .layer-label Mapbox Dark
 
+  #style-list.list-group.sub.collapse
+    = render 'map_baselayers'
 
   = link_to '#overlay-layer-list', class: 'list-group-item', data: { toggle: 'collapse' } do
     %i.fa.fa-fw.fa-map-o

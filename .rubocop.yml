@@ -9,6 +9,9 @@ AllCops:
     - 'bin/*'
     - 'vendor/**/*'
 
+Metrics/CyclomaticComplexity:
+  Max: 10
+
 # Offense count: 124
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes.
 # URISchemes: http, https

@@ -1,0 +1,26 @@
+- %w{ satellite-streets streets outdoors light dark }.each do |style|
+  = active_link_to '#', class: 'list-group-item map-style', active: @workspace.basemap == style, data: { behavior: 'switch-base', name: style } do
+    .layer-handle
+      &nbsp;
+    .layer-controls
+      .layer-label Mapbox #{style.humanize}
+-# = active_link_to '#', class: 'list-group-item map-style', active: current_workspace.basemap == 'streets', data: { behavior: 'switch-base', name: 'streets' } do
+-#   .layer-handle
+-#     &nbsp;
+-#   .layer-controls
+-#     .layer-label Mapbox Streets
+-# = active_link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'outdoors' } do
+-#   .layer-handle
+-#     &nbsp;
+-#   .layer-controls
+-#     .layer-label Mapbox Outdoors
+-# = active_link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'light' } do
+-#   .layer-handle
+-#     &nbsp;
+-#   .layer-controls
+-#     .layer-label Mapbox Light
+-# = active_link_to '#', class: 'list-group-item map-style', data: { behavior: 'switch-base', name: 'dark' } do
+-#   .layer-handle
+-#     &nbsp;
+-#   .layer-controls
+-#     .layer-label Mapbox Dark

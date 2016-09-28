@@ -1,4 +1,5 @@
-.layer.list-group-item{ data: { name: layer.name, type: layer.maptype, url: layer.full_url, color: layer.style.try(:[], 'color') } }
+- active ||= false
+.layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, url: layer.full_url, color: layer.style.try(:[], 'color') } }
   .layer-handle{ draggable: "true", data: { toggle: 'layer' } }
     &nbsp;
 
