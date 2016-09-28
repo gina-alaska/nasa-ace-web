@@ -109,6 +109,7 @@ html, body {
 .quick-buttons {
   margin-top: 50px;
   text-align: center;
+
   .btn-default {
     text-align: center;
     line-height: normal;
@@ -130,7 +131,10 @@ html, body {
 
 .search-buttons.btn-group-lg > .btn {
   border-radius: 0px;
-  height: 100px;
+  border: none;
+  font-size: 1.2vw;
+  padding: 5px 5px;
+  max-height: 100px;
 }
 
 .carousel-caption-static {
