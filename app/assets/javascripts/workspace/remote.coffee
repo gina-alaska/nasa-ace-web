@@ -14,7 +14,7 @@ class @Workspace.Remote
   rebroadcastEvents: [
     ['ws.layers.shown', 'ws.layers.show'],
     ['ws.layers.hidden', 'ws.layers.hide'],
-    ['ws.layers.reordered', 'ws.layers.reorder'],
+    ['ws.layers.reorder', 'ws.layers.reorder'],
     ['ws.layers.adjusted', 'ws.layers.adjust'],
     ['ws.basemap.shown', 'ws.basemap.show'],
     ['ws.presenter.requested', 'ws.presenter.request'],

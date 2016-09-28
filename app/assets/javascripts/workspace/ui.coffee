@@ -32,10 +32,10 @@ class @Workspace.UI
     ui = @
     ws = @ws
 
-    @ws.on 'ws.layers.shown', (e, data) =>
+    @ws.on 'ws.layers.show', (e, data) =>
       @getLayer(data.name).addClass('active')
 
-    @ws.on 'ws.layers.hidden', (e, data) =>
+    @ws.on 'ws.layers.hide', (e, data) =>
       @getLayer(data.name).removeClass('active')
 
     @ws.on 'ws.layers.reorder', (e, data) =>
@@ -175,7 +175,7 @@ class @Workspace.UI
   layerDrop: (e) =>
     @dragTarget.removeClass('over')
     @insertLayerEl(@dragTarget, @dragSrc, { x: e.clientX, y: e.clientY })
-    @ws.trigger('ws.layers.reordered', { layers: @ws.ui.getLayerList() })
+    @ws.trigger('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
 
   setLayerOrder: (first, second) =>
     $(second).insertAfter(first)
@@ -185,7 +185,7 @@ class @Workspace.UI
     prev = $(target).prev()
     if prev.length > 0
       $(target).insertBefore(prev)
-      @ws.trigger('ws.layers.reordered', { layers: @ws.ui.getLayerList() })
+      @ws.trigger('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()
@@ -196,7 +196,7 @@ class @Workspace.UI
 
     if next.length > 0
       $(target).insertAfter(next)
-      @ws.trigger('ws.layers.reordered', { layers: @ws.ui.getLayerList() })
+      @ws.trigger('ws.layers.reorder', { layers: @ws.ui.getLayerList() })
 
     e.preventDefault()
     e.stopPropagation()
@@ -222,9 +222,9 @@ class @Workspace.UI
   toggleLayer: (name) ->
     el = @getLayer(name)
     if $(el).hasClass('active')
-      @ws.layers.hide(name)
+      @ws.trigger('ws.layers.hide', { name: name })
     else
-      @ws.layers.show(name)
+      @ws.trigger('ws.layers.show', { name: name })
 
   getLayer: (name) ->
     $(".overlay-list .layer[data-name='#{name}']")
@@ -245,7 +245,7 @@ class @Workspace.UI
     $('.loading').addClass('fa-pulse')
 
   getOpacity: (name) =>
-    parseInt(@getLayer(name).find('input[name="opacity"]')[0].value, 10) / 100
+    parseInt(@getLayer(name).find('input[name="opacity"]')[0].value, 10)
 
   setOpacity: (name, value) =>
     $(@getLayer(name).find('input[name="opacity"]')).val(value)

@@ -1,4 +1,5 @@
 $(document).on 'turbolinks:load', ->
+  return unless $('meta[name="workspace"]').attr('content')?
   App.workspaces = App.cable.subscriptions.create {
       channel: "WorkspacesChannel",
       id: $('meta[name="workspace"]').attr('content'),

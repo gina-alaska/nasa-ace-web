@@ -20,12 +20,13 @@ class @Workspace.Layers
 
     config = $.extend({}, el.data()) # clone the data
     config.layer_name = "#{name}-layer"
+    config.opacity = @ws.ui.getOpacity(name) / 100
 
     if next
       item = el.next('.layer')
       while item.length > 0
         if $(item).hasClass('active')
-          config.before = @_layerGroups[item.data('name')][0]
+          config.before = @getLayer(item.data('name'))
           item = []
         else
           item = $(item).next('.layer')
@@ -38,5 +39,5 @@ class @Workspace.Layers
     for layer in activeLayers
       name = $(layer).data('name')
       @ws.remote.ignoreBroadcasts =>
-        @hide(name)
+        @remove(name, false)
         @show(name)

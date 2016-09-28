@@ -1,28 +1,10 @@
 -images = %w(AAR-15-4456-291.jpg AAR-15-4565-160.jpg AKA-13-3929-68.jpg AKA-13-3942-186.jpg AKA-15-4565-306.jpg TP-16-4865-276.jpg TP-16-4866-33.jpg mountains.jpg)
-#nasa-ace-carousel.carousel.slide{ data: { ride: 'carousel' } }
-  %ol.carousel-indicators
-    -images.each_with_index do |image, index|
-      -if image == images.first
-        %li.active{ data: { target: '#nasa-ace-carousel', slide_to: index.to_s } }
-      -else
-        %li{ data: { target: '#nasa-ace-carousel', slide_to: index.to_s } }
-
+#nasa-ace-carousel.carousel.slide{ data: { ride: 'carousel', interval: 20000 } }
   .carousel-inner
     -images.each do |image|
       -if image == images.first
-        .item.active
-          = image_tag image_path(image)
-          .carousel-caption
-            %p "Image #{image}"
+        .item.active{ style: "background-image: url(#{image_path(image)});" }
       -else
-        .item
-          = image_tag image_path(image)
-          .carousel-caption
-            %p "Image #{image}"
-
-  =link_to '#nasa-ace-carousel', class: 'left carousel-control', role: 'button', data: { slide: 'prev' } do
-    %i.fa.fa-chevron-left
-    Previous
-  =link_to '#nasa-ace-carousel', class: 'right carousel-control', role: 'button', data: { slide: 'next' } do
-    Next
-    %i.fa.fa-chevron-right
+        .item{ style: "background-image: url(#{image_path(image)});" }
+    .carousel-caption-static
+      = render 'introduction'

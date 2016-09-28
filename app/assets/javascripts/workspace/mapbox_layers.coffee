@@ -23,6 +23,9 @@ class @Workspace.MapboxLayers extends Workspace.Layers
     else
       @map.getLayer(name)?
 
+  getLayer: (name, index = 0) =>
+    @_layerGroups[name][index]
+
   setPaintProperty: (name, property, value) =>
     return unless @_layerGroups[name]
     for layer in @_layerGroups[name]
@@ -37,7 +40,7 @@ class @Workspace.MapboxLayers extends Workspace.Layers
       type: type,
       source: config.name,
       layout: { 'visibility': 'visible' },
-      paint: { "#{type}-opacity": @ws.ui.getOpacity(config.name)  }
+      paint: { "#{type}-opacity": config.opacity  }
     }, beforeLayer)
 
   addTile: (config) =>
@@ -48,7 +51,7 @@ class @Workspace.MapboxLayers extends Workspace.Layers
       type: type,
       source: config.name,
       layout: { 'visibility': 'visible' },
-      paint: { "#{type}-opacity": @ws.ui.getOpacity(config.name)  }
+      paint: { "#{type}-opacity": config.opacity  }
     }, beforeLayer)
 
   addGeoJSON: (config) =>
@@ -62,7 +65,7 @@ class @Workspace.MapboxLayers extends Workspace.Layers
         layout: { 'visibility': 'visible' }
         paint: {
           "#{type}-color": color,
-          "#{type}-opacity": @ws.ui.getOpacity(config.name)
+          "#{type}-opacity": config.opacity
         }
       }, beforeLayer, true)
 
@@ -85,15 +88,15 @@ class @Workspace.MapboxLayers extends Workspace.Layers
     @addTile(config) if config.type == 'tile'
     @addGeoJSON(config) if config.type == 'geojson' || config.type == 'kml'
 
-  remove: (name) =>
+  remove: (name, destroy = true) =>
     return unless @_layerGroups[name]?
 
     for layer, index in @_layerGroups[name]
       if @isActive(layer)
-        @map.removeLayer(layer)
+        @map.removeLayer(layer, destroy)
       ci = @clickable.indexOf(layer)
       @clickable.splice(ci, 1) if ci >= 0
-    delete @_layerGroups[name]
+    delete @_layerGroups[name] if destroy
 
   createSource: (name) =>
     return if @map.getSource(name)?
