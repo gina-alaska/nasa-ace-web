@@ -124,7 +124,8 @@ html, body {
 
 .search-buttons.btn-group-lg > .btn {
   border-radius: 0px;
-  height: 100px;
-  font-size: 14px;
-  min-width: 118px;
+  border: none;
+  font-size: 1.2vw;
+  padding: 5px 5px;
+  max-height: 100px;
 }
