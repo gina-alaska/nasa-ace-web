@@ -3,26 +3,41 @@
     .col-xs-3
       %ul.nav.nav-default.nav-stacked
         %li
-          %strong <a href="#user">User</a>
-        %li <a href="#create-user">Create User ID</a>
-        %li <a href="#delete-user">Delete User Account</a>
-        %li <a href="#logging-in">Logging In</a>
+          %strong
+            %a{ href: '#user' } User
         %li
-          %strong <a href="#organizations">Organizations</a>
-        %li <a href="#join-org">Join an Organization</a>
-        %li <a href="#create-org">Create an Organization</a>
-        %li <a href="#data-org">Add data to an Organization</a>
-        %li <a href="#manage-org">Manage an Organization</a>
+          %a{ href: '#create-user' } Create User ID
         %li
-          %strong <a href="#data">Data</a>
-        %li <a href="#add-data">Add Data</a>
-        %li <a href="#search-data">Search for Data</a>
+          %a{ href: '#delete-user' } Delete User Account
         %li
-          %strong <a href='#workspace-data'>Workspace</a>
+          %a{ href: '#logging-in' } Logging In
         %li
-          %strong <a href='#chat'>Chat</a>
+          %strong
+            %a{ href: '#organizations' } Organizations
         %li
-          %strong <a href='#groups'>Groups</a>
+          %a{ href: '#join-org' } Join an Organization
+        %li
+          %a{ href: '#create-org' } Create an Organization
+        %li
+          %a{ href: '#data-org' } Add data to an Organization
+        %li
+          %a{ href: '#manage-org' } Manage an Organization
+        %li
+          %strong
+            %a{ href: '#data' } Data
+        %li
+          %a{ href: '#add-data' } Add Data
+        %li
+          %a{ href: '#search-data' } Search for Data
+        %li
+          %strong
+            %a{ href: '#workspace-data' } Workspace
+        %li
+          %strong
+            %a{ href: '#chat' } Chat
+        %li
+          %strong
+            %a{ href: '#groups' } Groups
     .col-xs-9
       %h2 HELP page
       %h3{ id: 'user' } USER
