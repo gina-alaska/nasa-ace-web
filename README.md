@@ -1,24 +1,29 @@
-# README
+# NASA ACE Website
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application is the main landing page and rails application hosting the workspace functionality.
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+* ruby 2.3.0+
+* bundler (gem install bundler)
 
-* System dependencies
+## Installation
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Clone the repository
+```
+$ git clone REPO_URL
+```
+2. Change directory to the application
+```
+$ cd nasa-ace-web
+```
+3. Update dependencies and data schema
+```
+$ bundle
+$ rake db:migrate
+```
+4. Run the server and view in the browser
+```
+$ rails server
+# open browser and point to url the above command prints.  (Defaults to http://localhost:3000)
+```
