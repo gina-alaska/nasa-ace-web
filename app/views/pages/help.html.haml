@@ -1,55 +1,28 @@
 .content
   .row-fluid
     .col-xs-3
-      %ul
+      %ul.nav.nav-default.nav-stacked
         %li
-          %h4
-            <a href="#user">User</a>
-          %ul
-            %li
-              %h5
-                <a href="#create-user">Create User ID</a>
-            %li
-              %h5
-                <a href="#delete-user">Delete User Account</a>
-            %li
-              %h5
-                <a href="#logging-in">Logging In</a>
-        %li 
-          %h4
-            <a href="#organizations">Organizations</a>
-          %ul
-            %li
-              %h5
-                <a href="#join-org">Join an Organization</a>
-            %li
-              %h5
-                <a href="#create-org">Create an Organization</a>
-            %li
-              %h5
-                <a href="#data-org">Add data to an Organization</a>
-            %li
-              %h5
-                <a href="#manage-org">Manage an Organization</a>
-        %li 
-          %h4
-            <a href="#data">Data</a>
-          %ul
-            %li
-              %h5
-                <a href="#add-data">Add Data</a>
-            %li
-              %h5
-                <a href="#search-data">Search for Data</a>
+          %strong <a href="#user">User</a>
+        %li <a href="#create-user">Create User ID</a>
+        %li <a href="#delete-user">Delete User Account</a>
+        %li <a href="#logging-in">Logging In</a>
         %li
-          %h4
-            <a href='#workspace-data'>Workspace</a>
+          %strong <a href="#organizations">Organizations</a>
+        %li <a href="#join-org">Join an Organization</a>
+        %li <a href="#create-org">Create an Organization</a>
+        %li <a href="#data-org">Add data to an Organization</a>
+        %li <a href="#manage-org">Manage an Organization</a>
         %li
-          %h4
-            <a href='#chat'>Chat</a>
+          %strong <a href="#data">Data</a>
+        %li <a href="#add-data">Add Data</a>
+        %li <a href="#search-data">Search for Data</a>
         %li
-          %h4
-            <a href='#groups'>Groups</a>
+          %strong <a href='#workspace-data'>Workspace</a>
+        %li
+          %strong <a href='#chat'>Chat</a>
+        %li
+          %strong <a href='#groups'>Groups</a>
     .col-xs-9
       %h2 HELP page
       %h3{ id: 'user' } USER
