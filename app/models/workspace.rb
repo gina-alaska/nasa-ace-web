@@ -4,7 +4,7 @@ class Workspace < ApplicationRecord
 
   validates :name, uniqueness: true
 
-  BASEMAP_LAYERS = %w{ satellite-streets streets outdoors light dark }
+  BASEMAP_LAYERS = %w( satellite-streets streets outdoors light dark )
 
   def to_s
     name
