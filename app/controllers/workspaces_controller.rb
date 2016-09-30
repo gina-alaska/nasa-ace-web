@@ -29,6 +29,7 @@ class WorkspacesController < ApplicationController
 
     respond_to do |format|
       if @workspace.save
+        @workspace.layers = Layer.all
         format.html { redirect_to @workspace, notice: 'Workspace was successfully created.' }
         format.json { render :show, status: :created, location: @workspace }
       else
@@ -71,6 +72,6 @@ class WorkspacesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def workspace_params
-    params.require(:workspace).permit(:name, :center_lat, :center_lng, :zoom, :presenter_id)
+    params.require(:workspace).permit(:name, :center_lat, :center_lng, :zoom, :presenter_id, :basemap)
   end
 end

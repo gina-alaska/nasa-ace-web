@@ -1,4 +1,4 @@
-- %w{ satellite-streets streets outdoors light dark }.each do |style|
+- Workspace::BASEMAP_LAYERS.each do |style|
   = active_link_to '#', class: 'list-group-item map-style', active: @workspace.basemap == style, data: { behavior: 'switch-base', name: style } do
     .layer-handle
       &nbsp;
