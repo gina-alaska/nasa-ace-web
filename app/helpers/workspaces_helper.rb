@@ -1,4 +1,4 @@
-module WorkspacesHelper
+module WorkspacesHelper  
   def overlay_icon(layer)
     case layer.maptype
     when 'wms'

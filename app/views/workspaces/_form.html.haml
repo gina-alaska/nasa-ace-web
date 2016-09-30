@@ -4,11 +4,20 @@
   .form-inputs
     = f.input :name
 
-    = f.input :center_lat
-    = f.input :center_lng
-    = f.input :zoom
+    = f.input :basemap, collection: Workspace::BASEMAP_LAYERS, label_method: :humanize, label: 'Default basemap layer'
 
-    = f.input :presenter_id
+    .row
+      .col-sm-4
+        = f.input :center_lng
+      .col-sm-4
+        = f.input :center_lat
+      .col-sm-4
+        = f.input :zoom
 
   .form-actions
-    = f.button :submit
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.button :submit, class: 'btn btn-primary'
