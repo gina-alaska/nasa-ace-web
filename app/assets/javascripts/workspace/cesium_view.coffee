@@ -32,6 +32,9 @@ class @Workspace.CesiumView
     @ws.on 'ws.view.move', (e, data) =>
       @moveTo(data)
 
+    @ws.on 'ws.basemap.show', (e, data) =>
+      @setBaseLayer(data.name)
+
   registerMoveEndHandler: () =>
     if @clearRegisterMoveEnd?
       @clearRegisterMoveEnd()
@@ -76,7 +79,7 @@ class @Workspace.CesiumView
     @ws.layers.removeAll()
     layers.addImageryProvider(@getLayerProvider(name))
     @activeBaseLayer = name
-    @ws.layers.reload()
+    @ws.trigger('ws.layers.reload')
 
   getLayerProvider: (name) =>
     if name == 'satellite-streets'
