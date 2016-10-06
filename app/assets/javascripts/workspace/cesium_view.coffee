@@ -1,4 +1,4 @@
-@CESIUM_BASE_URL = 'http://nasa-ace-web.dev/cesium'
+@CESIUM_BASE_URL = "http://#{document.location.host}/cesium"
 
 class @Workspace.CesiumView
   BASE_HEIGHT: 554678932
