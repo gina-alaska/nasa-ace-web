@@ -2,7 +2,11 @@ class @Workspace.Layers
   setup: () =>
     @map = @ws.view.map
 
-    @ws.on 'ws.layers.reorder, ws.layers.reload', (e, data) =>
+    @ws.on 'ws.view.loaded', (e, data) =>
+      @reload()
+    @ws.on 'ws.layers.reorder', (e, data) =>
+      @reload()
+    @ws.on 'ws.layers.reload', (e, data) =>
       @reload()
 
     @ws.on 'ws.layers.adjust', (e, data) =>

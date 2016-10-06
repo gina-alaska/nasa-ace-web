@@ -26,6 +26,9 @@ class @Workspace.CesiumView
     })
     @initializeCamera()
     @initializeEvents()
+    setTimeout =>
+      @ws.trigger('ws.view.loaded')
+    , 100
 
   initializeEvents: () =>
     @registerMoveEndHandler()
@@ -79,7 +82,7 @@ class @Workspace.CesiumView
     @ws.layers.removeAll()
     layers.addImageryProvider(@getLayerProvider(name))
     @activeBaseLayer = name
-    @ws.trigger('ws.layers.reload')
+    @ws.trigger('ws.basemap.shown', { name: name })
 
   getLayerProvider: (name) =>
     if name == 'satellite-streets'
