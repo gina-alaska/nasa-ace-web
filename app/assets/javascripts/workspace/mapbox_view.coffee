@@ -21,6 +21,9 @@ class @Workspace.MapboxView
     nav = new mapboxgl.Navigation({position: 'top-right'});
     @map.addControl(nav)
 
+    draw = mapboxgl.Draw({ position: 'top-right' })
+    @map.addControl(draw)
+
   initEvents: () =>
     @map.on 'load', @onLoad
     @map.on 'click', @featurePopup
