@@ -29,8 +29,10 @@ namespace 'graticles' do
  
     parser = RGeo::WKRep::WKTParser.new(default_srid: 4326, strict_wkt11: true)
     geojson = parser.parse(simple_features)
-    filename = "graticle_step_by_#{step}.geojson"
 
-    File.open(filename, "w"){ |file| file.puts RGeo::GeoJSON.encode(geojson).to_json }    
+    #filename = "graticle_step_by_#{step}.geojson"
+    #File.open(filename, "w"){ |file| file.puts RGeo::GeoJSON.encode(geojson).to_json }    
+    
+    print RGeo::GeoJSON.encode(geojson).to_json
   end
 end
