@@ -3,6 +3,8 @@ namespace 'graticles' do
   task :build, [:step] => :environment do |_t, args|
     step = args[:step].to_f
 
+    abort "Bad step #{step}, it must be greater than 0 and not larger than 90" if step < 0.0 || step > 90.0
+
     simple_features = "MULTILINESTRING("
 
     long_save = -180.0
@@ -25,7 +27,7 @@ namespace 'graticles' do
     simple_features = simple_features.chop.chop
     simple_features += ')'
  
-    parser = RGeo::WKRep::WKTParser.new(default_srid: '4326', strict_wkt11: true)
+    parser = RGeo::WKRep::WKTParser.new(default_srid: 4326, strict_wkt11: true)
     geojson = parser.parse(simple_features)
     filename = "graticle_step_by_#{step}.geojson"
 
