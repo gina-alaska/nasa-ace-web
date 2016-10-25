@@ -26,7 +26,7 @@ namespace 'graticles' do
 
     simple_features = simple_features.chop.chop
     simple_features += ')'
- 
+
     parser = RGeo::WKRep::WKTParser.new(default_srid: 4326, strict_wkt11: true)
     geojson = parser.parse(simple_features)
 
