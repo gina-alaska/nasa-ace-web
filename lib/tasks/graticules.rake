@@ -3,9 +3,7 @@ namespace 'graticles' do
   task :build, [:step] => :environment do |_t, args|
     step = args[:step].to_f
 
-    abort "Bad step #{step}, divide evenly into 360" if (360 % step) > 0 && (360 / step) > 2
-
-    simple_features = "MULTILINESTRING("
+    abort "Bad step #{step}, divide evenly into 180" if (180 % step) > 0 && (180 / step) > 2
 
     lines = []
     (-180..180).step(step) do |long|
