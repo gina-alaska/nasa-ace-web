@@ -13,6 +13,10 @@
           %i.fa.fa-user
 
       .btn-group.btn-group-sm
+        %button.btn.btn-default.navbar-btn{ title: 'Graticule', data: { toggle: 'graticule' } }
+          %i.fa.fa-table
+
+      .btn-group.btn-group-sm
         %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown', behavior: 'map-view-picker' } }
           %i.fa.fa-fw{ class: params[:view] == '3d' ? 'fa-globe' : 'fa-map-o' }
           %span.caret
