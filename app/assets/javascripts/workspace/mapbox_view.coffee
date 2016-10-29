@@ -20,6 +20,7 @@ class @Workspace.MapboxView
 
     nav = new mapboxgl.Navigation({position: 'top-right'});
     @map.addControl(nav)
+    @graticule = new Workspace.MapboxGraticule(@ws)
 
   initEvents: () =>
     @map.on 'load', @onLoad
