@@ -1,25 +1,57 @@
 class @Workspace.MapboxGraticule
-  constructor: (@ws) ->
+  constructor: (@ws, @map) ->
     @ws.on('ws.graticule.toggle', @toggle)
 
-    @graticule_files = ['graticule-10.geojson']
+    @graticule_files = [
+      {
+      name: 'graticule-10.geojson'
+      minzoom: 0
+      maxzoom: 4
+      },
+      {
+      name: 'graticule-5.geojson'
+      minzoom: 4
+      maxzoom: 6
+      },
+      {
+      name: 'graticule-1.geojson'
+      minzoom: 6
+      maxzoom: 8
+      },
+      {
+      name: 'graticule-02.geojson'
+      minzoom: 8
+      maxzoom: 10
+      }
+    ]
+
     for gratFile in @graticule_files
-      @ws.view.map.addSource(gratFile, {
+      @map.addSource(gratFile['name'], {
         type: 'geojson',
-        data: "/graticules/#{gratFile}"
+        data: "/graticules/#{gratFile['name']}"
       })
 
-  addGraticule: () =>
+  add: (map) =>
     for gratFile in @graticule_files
-      @ws.view.map.addLayer({
-        id: "#{gratFile}-layer",
+      map.addLayer({
+        id: "#{gratFile['name']}-layer",
         type: 'line',
-        maxzoom: 3.5,
-        source: gratFile, 
+        minzoom: gratFile['minzoom'],
+        maxzoom: gratFile['maxzoom'],
+        source: gratFile['name'], 
         layout: { 'visibility': 'visible' },
         paint: { 'line-color': '#aaa' }
       })
+    @ws.trigger('ws.graticule.shown')
   
   toggle: () =>
-    if !@ws.layers.isActive('graticule')
-      @addGraticule()
+    if !@ws.layers.isActive("#{@graticule_files[0]['name']}-layer")
+      @add(@map)
+    else
+      @remove(@map)
+
+  remove: (map) =>
+    for gratFile in @graticule_files
+      map.removeLayer("#{gratFile['name']}-layer")
+    @ws.trigger('ws.graticule.hidden')
+    

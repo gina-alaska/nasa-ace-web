@@ -20,7 +20,6 @@ class @Workspace.MapboxView
 
     nav = new mapboxgl.Navigation({position: 'top-right'});
     @map.addControl(nav)
-    @graticule = new Workspace.MapboxGraticule(@ws)
 
   initEvents: () =>
     @map.on 'load', @onLoad
@@ -37,6 +36,7 @@ class @Workspace.MapboxView
   onLoad: =>
     @ws.layers.addSources()
     @ws.layers.reload()
+    @graticule = new Workspace.MapboxGraticule(@ws, @map)
 
   featurePopup: (e) =>
     return if !@ws.layers.clickable.length
