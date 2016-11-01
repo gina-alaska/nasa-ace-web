@@ -6,21 +6,21 @@ class @Workspace.MapboxGraticule
       {
       name: 'graticule-10.geojson'
       minzoom: 0
-      maxzoom: 4
+      maxzoom: 3
       },
       {
       name: 'graticule-5.geojson'
-      minzoom: 4
-      maxzoom: 6
+      minzoom: 3
+      maxzoom: 5
       },
       {
       name: 'graticule-1.geojson'
-      minzoom: 6
-      maxzoom: 8
+      minzoom: 5
+      maxzoom: 7
       },
       {
       name: 'graticule-02.geojson'
-      minzoom: 8
+      minzoom: 7
       maxzoom: 10
       }
     ]
@@ -42,6 +42,16 @@ class @Workspace.MapboxGraticule
         layout: { 'visibility': 'visible' },
         paint: { 'line-color': '#aaa' }
       })
+      map.addLayer({
+        id: "#{gratFile['name']}-label",
+        type: 'symbol',
+        minzoom: gratFile['minzoom'],
+        maxzoom: gratFile['maxzoom'],
+        source: gratFile['name'], 
+        layout: { 'text-field': '{label}', 'symbol-placement': 'line', 'text-anchor': 'bottom', 'text-size': 12 },
+        paint: { 'text-color': 'rgba(255,255,255,0.8)', 'text-halo-color': 'rgba(0,0,0,0.5)', 'text-halo-width': 2 }
+      })
+       
     @ws.trigger('ws.graticule.shown')
   
   toggle: () =>
