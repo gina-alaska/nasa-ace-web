@@ -21,7 +21,17 @@ class @Workspace.MapboxGraticule
       {
       name: 'graticule-02.geojson'
       minzoom: 7
-      maxzoom: 10
+      maxzoom: 9
+      },
+      {
+      name: 'graticule-04.geojson'
+      minzoom: 9
+      maxzoom: 11
+      },
+      {
+      name: 'graticule-08.geojson'
+      minzoom: 11
+      maxzoom: 15
       }
     ]
 
@@ -63,5 +73,6 @@ class @Workspace.MapboxGraticule
   remove: (map) =>
     for gratFile in @graticule_files
       map.removeLayer("#{gratFile['name']}-layer")
+      map.removeLayer("#{gratFile['name']}-label")
     @ws.trigger('ws.graticule.hidden')
     
