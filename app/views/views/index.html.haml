@@ -8,7 +8,7 @@
       .panel.panel-default
         .panel-body
           %h1.panel-title View List
-        - if @views.empty?
+        - if @views.blank?
           .text-center
             %h1 No views found
             = link_to 'Create a new view', new_view_path, class: 'btn btn-success btn-lg navbar-btn'

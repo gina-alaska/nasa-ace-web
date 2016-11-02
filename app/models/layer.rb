@@ -1,7 +1,7 @@
 class Layer < ApplicationRecord
   belongs_to :category
-  has_many :workspace_layers, dependent: :destroy
-  has_many :workspaces, through: :workspace_layers
+  has_many :view_layers, dependent: :destroy
+  has_many :views, through: :view_layers
 
   validates :name, presence: true, uniqueness: true
   validates :url, presence: true

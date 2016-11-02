@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class WorkspaceLayerTest < ActiveSupport::TestCase
+class ViewLayerTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

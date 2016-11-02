@@ -43,7 +43,7 @@ class ViewsController < ApplicationController
   # PATCH/PUT /workspaces/1.json
   def update
     respond_to do |format|
-      if @view.update(workspace_params)
+      if @view.update(view_params)
         format.html { redirect_to @view, notice: 'View was successfully updated.' }
         format.json { render :show, status: :ok, location: @view }
       else
@@ -58,7 +58,7 @@ class ViewsController < ApplicationController
   def destroy
     @view.destroy
     respond_to do |format|
-      format.html { redirect_to workspaces_url, notice: 'View was successfully destroyed.' }
+      format.html { redirect_to views_url, notice: 'View was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
