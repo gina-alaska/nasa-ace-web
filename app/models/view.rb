@@ -1,4 +1,7 @@
 class View < ApplicationRecord
+  has_one :workspace_view
+  has_one :view through: :workspace_view
+  
   has_many :view_layers, -> { order(position: :asc) }, dependent: :destroy
   has_many :layers, through: :view_layers
 
