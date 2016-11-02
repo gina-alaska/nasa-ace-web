@@ -1,10 +1,10 @@
-= simple_form_for(@workspace) do |f|
+= simple_form_for(@view) do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :name
 
-    = f.input :basemap, collection: Workspace::BASEMAP_LAYERS, label_method: :humanize, label: 'Default basemap layer'
+    = f.input :basemap, collection: View::BASEMAP_LAYERS, label_method: :humanize, label: 'Default basemap layer'
 
     .row
       .col-sm-4

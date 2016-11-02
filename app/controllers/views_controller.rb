@@ -4,7 +4,7 @@ class ViewsController < ApplicationController
   # GET /workspaces
   # GET /workspaces.json
   def index
-    @view = View.all
+    @views = View.all
   end
 
   # GET /workspaces/1

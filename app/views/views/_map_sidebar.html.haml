@@ -1,9 +1,9 @@
 .list-group
-  = link_to workspaces_path, class: 'list-group-item' do
+  = link_to views_path, class: 'list-group-item' do
     %i.fa.fa-fw.fa-arrow-left
     %span.hide-collapsed Close
 
-  = link_to edit_workspace_path(@workspace), class: 'list-group-item' do
+  = link_to edit_view_path(@view), class: 'list-group-item' do
     %i.fa.fa-fw.fa-gear.loading
     %span.hide-collapsed Settings
 
