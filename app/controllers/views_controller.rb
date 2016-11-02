@@ -1,0 +1,77 @@
+class ViewsController < ApplicationController
+  before_action :set_view, only: [:show, :edit, :update, :destroy]
+
+  # GET /workspaces
+  # GET /workspaces.json
+  def index
+    @view = View.all
+  end
+
+  # GET /workspaces/1
+  # GET /workspaces/1.json
+  def show
+    # WorkspacesChannel.broadcast_to "workspace_#{@workspace.id}", { test: 'testing' }
+  end
+
+  # GET /workspaces/new
+  def new
+    @view = View.new
+  end
+
+  # GET /workspaces/1/edit
+  def edit
+  end
+
+  # POST /workspaces
+  # POST /workspaces.json
+  def create
+    @view = View.new(view_params)
+
+    respond_to do |format|
+      if @view.save
+        @view.layers = Layer.all
+        format.html { redirect_to @view, notice: 'View was successfully created.' }
+        format.json { render :show, status: :created, location: @view }
+      else
+        format.html { render :new }
+        format.json { render json: @view.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /workspaces/1
+  # PATCH/PUT /workspaces/1.json
+  def update
+    respond_to do |format|
+      if @view.update(workspace_params)
+        format.html { redirect_to @view, notice: 'View was successfully updated.' }
+        format.json { render :show, status: :ok, location: @view }
+      else
+        format.html { render :edit }
+        format.json { render json: @view.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /workspaces/1
+  # DELETE /workspaces/1.json
+  def destroy
+    @view.destroy
+    respond_to do |format|
+      format.html { redirect_to workspaces_url, notice: 'View was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_view
+    @view = View.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def view_params
+    params.require(:view).permit(:name, :center_lat, :center_lng, :zoom, :presenter_id, :basemap)
+  end
+end
