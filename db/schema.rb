@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927223440) do
+ActiveRecord::Schema.define(version: 20161102185101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,18 +43,18 @@ ActiveRecord::Schema.define(version: 20160927223440) do
     t.index ["category_id"], name: "index_layers_on_category_id", using: :btree
   end
 
-  create_table "workspace_layers", force: :cascade do |t|
-    t.integer  "workspace_id"
+  create_table "view_layers", force: :cascade do |t|
+    t.integer  "view_id"
     t.integer  "layer_id"
     t.integer  "position"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.boolean  "active",       default: false
-    t.index ["layer_id"], name: "index_workspace_layers_on_layer_id", using: :btree
-    t.index ["workspace_id"], name: "index_workspace_layers_on_workspace_id", using: :btree
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "active",     default: false
+    t.index ["layer_id"], name: "index_view_layers_on_layer_id", using: :btree
+    t.index ["view_id"], name: "index_view_layers_on_view_id", using: :btree
   end
 
-  create_table "workspaces", force: :cascade do |t|
+  create_table "views", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
@@ -66,6 +66,6 @@ ActiveRecord::Schema.define(version: 20160927223440) do
   end
 
   add_foreign_key "layers", "categories"
-  add_foreign_key "workspace_layers", "layers"
-  add_foreign_key "workspace_layers", "workspaces"
+  add_foreign_key "view_layers", "layers"
+  add_foreign_key "view_layers", "views"
 end
