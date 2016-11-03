@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class WorkspacesHelperTest < ActionView::TestCase
+class ViewsHelperTest < ActionView::TestCase
   test "overlay_icon should return for kml" do
     layer = layers(:kml)
     assert_dom_equal %{<i class="fa fa-fw fa-circle" style="color: rgba(255,0,0,0.8)"></i>}, overlay_icon(layer)

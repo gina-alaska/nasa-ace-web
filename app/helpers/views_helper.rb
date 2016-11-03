@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-module WorkspacesHelper
+module ViewsHelper
   def overlay_icon(layer)
     case layer.maptype
     when 'wms'
