@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ViewLayer < ApplicationRecord
   belongs_to :view
   belongs_to :layer

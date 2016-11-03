@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ViewLayersController < ApplicationController
   before_action :set_view_layer, only: [:show, :edit, :update, :destroy]
 

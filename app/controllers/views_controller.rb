@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ViewsController < ApplicationController
   before_action :set_view, only: [:show, :edit, :update, :destroy]
 
