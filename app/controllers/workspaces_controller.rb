@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class WorkspacesController < ApplicationController
   before_action :set_workspace, only: [:show, :edit, :update, :destroy]
 

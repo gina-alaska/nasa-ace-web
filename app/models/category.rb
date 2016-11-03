@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Category < ApplicationRecord
   has_many :layers, dependent: :nullify
   def pretty_name
