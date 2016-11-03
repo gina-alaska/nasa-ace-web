@@ -59,6 +59,7 @@ gem 'metamagic'
 gem 'acts_as_list'
 gem 'active_link_to'
 gem 'sprockets-es6', require: 'sprockets/es6'
+gem 'georuby', require: ['georuby', 'geo_ruby/geojson']
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '3.3.7'

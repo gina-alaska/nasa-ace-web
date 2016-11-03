@@ -69,6 +69,7 @@ GEM
     ffi (1.9.14)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
+    georuby (2.5.2)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -229,6 +230,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   font-awesome-rails
+  georuby
   haml-rails (~> 0.9)
   high_voltage (~> 3.0.0)
   jbuilder (~> 2.5)
@@ -258,4 +260,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.0
+   1.13.5
