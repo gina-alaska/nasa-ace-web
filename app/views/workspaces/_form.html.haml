@@ -1,0 +1,13 @@
+= simple_form_for(@workspace) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+
+  .form-actions
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.button :submit, class: 'btn btn-primary'
