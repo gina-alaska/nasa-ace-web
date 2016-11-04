@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 class ViewsController < ApplicationController
+  before_action :set_workspace
   before_action :set_view, only: [:show, :edit, :update, :destroy]
 
   # GET /workspaces
   # GET /workspaces.json
   def index
-    @views = View.all
+    @views = @workspace.views.all
   end
 
   # GET /workspaces/1
@@ -16,7 +17,7 @@ class ViewsController < ApplicationController
 
   # GET /workspaces/new
   def new
-    @view = View.new
+    @view = @workspace.views.build
   end
 
   # GET /workspaces/1/edit
@@ -26,7 +27,7 @@ class ViewsController < ApplicationController
   # POST /workspaces
   # POST /workspaces.json
   def create
-    @view = View.new(view_params)
+    @view = @workspace.views.build(view_params)
 
     respond_to do |format|
       if @view.save
@@ -67,8 +68,12 @@ class ViewsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def set_workspace
+    @workspace = Workspace.find(params[:workspace_id])
+  end
+
   def set_view
-    @view = View.find(params[:id])
+    @view = @workspace.views.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

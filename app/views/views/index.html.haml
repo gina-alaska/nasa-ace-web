@@ -3,7 +3,7 @@
     .col-sm-3
       .panel.panel-default
         .panel-body
-          = link_to 'New View', new_view_path, class: 'btn btn-success btn-block'
+          = link_to 'New View', new_workspace_view_path(@workspace), class: 'btn btn-success btn-block'
     .col-sm-9
       .panel.panel-default
         .panel-body
@@ -11,7 +11,7 @@
         - if @views.blank?
           .text-center
             %h1 No views found
-            = link_to 'Create a new view', new_view_path, class: 'btn btn-success btn-lg navbar-btn'
+            = link_to 'Create a new view', new_workspace_view_path(@workspace), class: 'btn btn-success btn-lg navbar-btn'
 
         - else
           %table.table.table-striped
@@ -26,4 +26,4 @@
                   %td= view.name
                   %td.text-right
                     .btn-groups
-                      = link_to 'View', view, class: 'btn btn-default'
+                      = link_to 'View', workspace_view_path(@workspace, view), class: 'btn btn-default'
