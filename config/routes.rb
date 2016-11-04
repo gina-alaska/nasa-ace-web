@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :categories
   mount ActionCable.server => '/cable'
 
-  resources :views
+  resources :workspaces do
+    resources :views
+  end
   resources :datasets
   get 'welcome/index'
 
