@@ -1,29 +1,29 @@
-.container.workspaces.site-content
+.container.site-content
   .row
     .col-sm-3
       .panel.panel-default
         .panel-body
-          = link_to 'New Workspace', new_workspace_path, class: 'btn btn-success btn-block'
+          = link_to 'new workspace', new_workspace_path, class: 'btn btn-success btn-block'
     .col-sm-9
       .panel.panel-default
         .panel-body
-          %h1.panel-title Workspace List
-        - if @workspaces.blank?
-          .text-center
-            %h1 No workspaces found
-            = link_to 'Create a new workspace', new_workspace_path, class: 'btn btn-success btn-lg navbar-btn'
+          %h1.panel-title workspace list
+          - if @workspaces.blank?
+            .text-center
+              %h1 no workspaces found
+              = link_to 'create a new workspace', new_workspace_path, class: 'btn btn-success btn-lg navbar-btn'
 
-        - else
-          %table.table.table-striped
-            %thead
-              %tr
-                %th Name
-                %th.text-right Actions
-
-            %tbody
-              - @workspaces.each do |workspace|
+          - else
+            %table.table.table-striped
+              %thead
                 %tr
-                  %td= workspace.name
-                  %td.text-right
-                    .btn-groups
-                      = link_to 'View', workspace, class: 'btn btn-default'
+                  %th name
+                  %th.text-right actions
+
+              %tbody
+                - @workspaces.each do |workspace|
+                  %tr
+                    %td= workspace.name
+                    %td.text-right
+                      .btn-groups
+                        = link_to 'view', workspace, class: 'btn btn-default'
