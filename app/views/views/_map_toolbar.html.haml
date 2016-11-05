@@ -29,6 +29,19 @@
             = link_to workspace_view_path(@workspace, @view, {view: '3d'}) do
               Globe
               
+      .btn-group.btn-group-sm
+        %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown' }, title: 'View Menu' }
+          %i.fa.fa-sticky-note-o
+          %span.caret
+
+        %ul.dropdown-menu
+          %li
+            = link_to new_workspace_view_path(@workspace) do
+              Create a new view
+          - @workspace.views.each do |view|
+            %li
+              = link_to view.name, workspace_view_path(@workspace, view)
+
       %i.fa.fa-spinner.loading.navbar-text{ style: 'font-size: 20px;'}
 
       .pull-right
