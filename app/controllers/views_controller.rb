@@ -32,7 +32,7 @@ class ViewsController < ApplicationController
     respond_to do |format|
       if @view.save
         @view.layers = Layer.all
-        format.html { redirect_to @view, notice: 'View was successfully created.' }
+        format.html { redirect_to workspace_view_path(@workspace, @view), notice: 'View was successfully created.' }
         format.json { render :show, status: :created, location: @view }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class ViewsController < ApplicationController
   def update
     respond_to do |format|
       if @view.update(view_params)
-        format.html { redirect_to @view, notice: 'View was successfully updated.' }
+        format.html { redirect_to workspace_view_path(@workspace, @view), notice: 'View was successfully updated.' }
         format.json { render :show, status: :ok, location: @view }
       else
         format.html { render :edit }
