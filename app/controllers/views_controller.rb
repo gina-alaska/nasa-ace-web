@@ -60,7 +60,7 @@ class ViewsController < ApplicationController
   def destroy
     @view.destroy
     respond_to do |format|
-      format.html { redirect_to views_url, notice: 'View was successfully destroyed.' }
+      format.html { redirect_to workspaces_url, notice: 'View was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

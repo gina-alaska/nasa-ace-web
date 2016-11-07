@@ -1,4 +1,4 @@
-- meta view: @view.id, channel_key: SecureRandom.hex(10), map_view: params[:view] || 'mapbox'
+- meta workspace: @workspace.id, view: @view.id, channel_key: SecureRandom.hex(10), map_view: params[:view] || 'mapbox'
 #workspace-map.map-container.auto-collapse
   .map-toolbar
     = render 'map_toolbar'
