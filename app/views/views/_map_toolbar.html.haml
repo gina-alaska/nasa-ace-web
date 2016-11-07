@@ -38,6 +38,8 @@
           %li
             = link_to new_workspace_view_path(@workspace) do
               Create a new view
+          %li.divider{ role: 'separator' }
+
           - @workspace.views.each do |view|
             %li
               = link_to view.name, workspace_view_path(@workspace, view)
