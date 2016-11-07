@@ -26,26 +26,25 @@ class ViewsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show view" do
-    get view_url(@view)
+    get workspace_view_url(@workspace, @view)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_view_url(@view)
+    get edit_workspace_view_url(@workspace, @view)
     assert_response :success
   end
 
   test "should update view" do
-    patch view_url(@view), params: { view: { name: @view.name } }
-    assert_response :success
-    #assert_redirected_to view_url(@view)
+    patch workspace_view_url(@workspace, @view), params: { view: { name: @view.name } }
+    assert_redirected_to workspace_view_url(@workspace, @view)
   end
 
   test "should destroy view" do
-    assert_difference('View.count', -1) do
-      delete view_url(@view)
+    assert_difference('@workspace.views.count', -1) do
+      delete workspace_view_url(@workspace, @view)
     end
 
-    assert_redirected_to views_url
+    assert_redirected_to workspaces_url
   end
 end

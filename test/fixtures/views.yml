@@ -2,8 +2,8 @@
 
 one:
   name: View1
-  workspace: workspaces(:one)
+  workspace: one
 
 two:
   name: View2
-  workspace: workspaces(:two)
+  workspace: two
