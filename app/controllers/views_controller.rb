@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ViewsController < ApplicationController
   before_action :set_workspace
-  before_action :set_view, only: [:show, :edit, :update, :destroy]
+  before_action :set_view, only: [:show, :edit, :update, :destroy, :duplicate]
 
   # GET /workspaces
   # GET /workspaces.json
@@ -62,6 +62,22 @@ class ViewsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to workspaces_url, notice: 'View was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def duplicate
+    new_view = @workspace.views.new(name: @view.name+'-duplicate', center_lat: @view.center_lat, center_lng: @view.center_lng, zoom: @view.zoom, basemap: @view.basemap)
+    active_layers = @view.view_layers.where(active: true).collect{ |layer| layer.layer }
+    
+    respond_to do |format|
+      if new_view.save
+        new_view.layers << active_layers
+        format.html { redirect_to edit_workspace_view_path(@workspace, new_view), notice: 'View was successfully created.' }
+        format.json { render :show, status: :created, location: new_view }
+      else
+        format.html { render :edit }
+        format.json { render json: new_view.errors, status: :unprocessable_entity }
+      end
     end
   end
 
