@@ -48,7 +48,7 @@ class WorkspacesChannel < ApplicationCable::Channel
   end
 
   def rebroadcast(data)
-    return if !current_workspace.presenter_id.blank? && current_workspace.presenter_id != params[:key]
+    return if !current_view.presenter_id.blank? && current_view.presenter_id != params[:key]
     WorkspacesChannel.broadcast_to(channel_name, data)
   end
 
