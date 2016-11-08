@@ -31,13 +31,14 @@
               
       .btn-group.btn-group-sm
         %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown' }, title: 'View Menu' }
-          %i.fa.fa-sticky-note-o
+          %i.fa.fa-files-o 
+          Views
           %span.caret
 
         %ul.dropdown-menu
           %li
-            = link_to new_workspace_view_path(@workspace) do
-              Create a new view
+            = link_to duplicate_workspace_view_path(@workspace) do
+              Duplicate this view
           %li.divider{ role: 'separator' }
 
           - @workspace.views.each do |view|
