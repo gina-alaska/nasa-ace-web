@@ -66,13 +66,8 @@ class ViewsController < ApplicationController
   end
 
   def duplicate
-    new_view = @workspace.views.new(name: @view.name + '-duplicate', center_lat: @view.center_lat, center_lng: @view.center_lng, zoom: @view.zoom, basemap: @view.basemap)
-
     respond_to do |format|
-      if new_view.save
-        active_layers = @view.view_layers.where(active: true).collect(&:layer)
-        new_view.layers << active_layers
-
+      if new_view = @view.duplicate(@workspace)
         format.html { redirect_to edit_workspace_view_path(@workspace, new_view), notice: 'View was successfully created.' }
         format.json { render :show, status: :created, location: new_view }
       else

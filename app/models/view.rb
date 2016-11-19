@@ -12,4 +12,17 @@ class View < ApplicationRecord
   def to_s
     name
   end
+
+  def duplicate(workspace)
+    new_view = workspace.views.new(name: self.name + '-duplicate', center_lat: self.center_lat, center_lng: self.center_lng, zoom: self.zoom, basemap: self.basemap)
+
+    if new_view.save
+      active_layers = self.view_layers.where(active: true).collect(&:layer)
+      new_view.layers << active_layers
+
+      new_view
+    else
+      nil
+    end
+  end 
 end
