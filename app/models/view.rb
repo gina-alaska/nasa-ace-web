@@ -13,7 +13,7 @@ class View < ApplicationRecord
     name
   end
 
-  def duplicate(workspace)
+  def duplicate
     new_view = workspace.views.new(name: name + '-duplicate', center_lat: center_lat, center_lng: center_lng, zoom: zoom, basemap: basemap)
 
     return nil unless new_view.save

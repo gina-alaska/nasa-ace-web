@@ -14,9 +14,8 @@ class ViewTest < ActiveSupport::TestCase
   end
 
   test "duplicate should return new view" do
-
     assert_difference('@workspace.views.count') do
-      new_view = @view.duplicate(@workspace)
+      new_view = @view.duplicate
       assert_equal "View1-duplicate", new_view.to_s
     end
   end
