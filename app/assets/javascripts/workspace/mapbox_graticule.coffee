@@ -10,9 +10,6 @@ class @Workspace.MapboxGraticule
     @ws.on 'ws.layers.reload', (e, data) =>
       @add(@map)
       @ws.trigger('ws.graticule.shown')
-    @ws.on 'ws.basemap.show', (e, data) =>
-      @add(@map)
-      @ws.trigger('ws.graticule.shown')
 
     @graticule_files = [
       {
@@ -47,20 +44,21 @@ class @Workspace.MapboxGraticule
       }
     ]
 
-    for gratFile in @graticule_files
-      @map.addSource(gratFile['name'], {
-        type: 'geojson',
-        data: "/graticules/#{gratFile['name']}"
-      })
-
   add: (map) =>
+    for gratFile in @graticule_files
+      if !@map.getSource(name)?
+        @map.addSource(gratFile['name'], {
+          type: 'geojson',
+          data: "/graticules/#{gratFile['name']}"
+        })
+
     for gratFile in @graticule_files
       map.addLayer({
         id: "#{gratFile['name']}-layer",
         type: 'line',
         minzoom: gratFile['minzoom'],
         maxzoom: gratFile['maxzoom'],
-        source: gratFile['name'], 
+        source: gratFile['name'],
         layout: { 'visibility': 'visible' },
         paint: { 'line-color': '#aaa' }
       })
@@ -69,11 +67,11 @@ class @Workspace.MapboxGraticule
         type: 'symbol',
         minzoom: gratFile['minzoom'],
         maxzoom: gratFile['maxzoom'],
-        source: gratFile['name'], 
+        source: gratFile['name'],
         layout: { 'text-field': '{label}', 'symbol-placement': 'line', 'text-anchor': 'bottom', 'text-size': 12 },
         paint: { 'text-color': 'rgba(255,255,255,0.8)', 'text-halo-color': 'rgba(0,0,0,0.5)', 'text-halo-width': 2 }
       })
-  
+
   toggle: () =>
     if !@ws.layers.isActive("#{@graticule_files[0]['name']}-layer")
       @add(@map)
