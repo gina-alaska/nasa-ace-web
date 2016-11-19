@@ -67,7 +67,8 @@ class ViewsController < ApplicationController
 
   def duplicate
     respond_to do |format|
-      if new_view = @view.duplicate(@workspace)
+      new_view = @view.duplicate(@workspace)
+      if new_view
         format.html { redirect_to edit_workspace_view_path(@workspace, new_view), notice: 'View was successfully created.' }
         format.json { render :show, status: :created, location: new_view }
       else

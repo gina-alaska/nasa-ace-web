@@ -14,15 +14,13 @@ class View < ApplicationRecord
   end
 
   def duplicate(workspace)
-    new_view = workspace.views.new(name: self.name + '-duplicate', center_lat: self.center_lat, center_lng: self.center_lng, zoom: self.zoom, basemap: self.basemap)
+    new_view = workspace.views.new(name: name + '-duplicate', center_lat: center_lat, center_lng: center_lng, zoom: zoom, basemap: basemap)
 
-    if new_view.save
-      active_layers = self.view_layers.where(active: true).collect(&:layer)
-      new_view.layers << active_layers
+    return nil unless new_view.save
 
-      new_view
-    else
-      nil
-    end
-  end 
+    active_layers = view_layers.where(active: true).collect(&:layer)
+    new_view.layers << active_layers
+
+    new_view
+  end
 end
