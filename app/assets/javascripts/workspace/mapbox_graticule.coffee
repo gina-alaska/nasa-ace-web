@@ -1,15 +1,9 @@
 class @Workspace.MapboxGraticule
   constructor: (@ws, @map) ->
-    @ws.on('ws.graticule.toggle', @toggle)
-    @ws.on 'ws.view.loaded', (e, data) =>
-      @add(@map)
-      @ws.trigger('ws.graticule.shown')
-    @ws.on 'ws.layers.reorder', (e, data) =>
-      @add(@map)
-      @ws.trigger('ws.graticule.shown')
-    @ws.on 'ws.layers.reload', (e, data) =>
-      @add(@map)
-      @ws.trigger('ws.graticule.shown')
+    @ws.on 'ws.graticule.toggle', @toggle
+    @ws.on 'ws.view.loaded', @reload
+    @ws.on 'ws.layers.reorder', @reload
+    @ws.on 'ws.layers.reload', @reload
 
     @graticule_files = [
       {
@@ -44,9 +38,15 @@ class @Workspace.MapboxGraticule
       }
     ]
 
+  reload: () =>
+    if @isActive()
+      @add(@map)
+    else
+      @remove(@map)
+
   add: (map) =>
     for gratFile in @graticule_files
-      if !@map.getSource(name)?
+      if !@map.getSource(gratFile['name'])?
         @map.addSource(gratFile['name'], {
           type: 'geojson',
           data: "/graticules/#{gratFile['name']}"
@@ -72,15 +72,21 @@ class @Workspace.MapboxGraticule
         paint: { 'text-color': 'rgba(255,255,255,0.8)', 'text-halo-color': 'rgba(0,0,0,0.5)', 'text-halo-width': 2 }
       })
 
+    @ws.trigger('ws.graticule.shown')
+
+  isActive: () =>
+    @ws.ui.getGraticule().hasClass('active')
+
   toggle: () =>
-    if !@ws.layers.isActive("#{@graticule_files[0]['name']}-layer")
+    if !@isActive()
       @add(@map)
-      @ws.trigger('ws.graticule.shown')
     else
       @remove(@map)
-      @ws.trigger('ws.graticule.hidden')
 
   remove: (map) =>
     for gratFile in @graticule_files
-      map.removeLayer("#{gratFile['name']}-layer")
-      map.removeLayer("#{gratFile['name']}-label")
+      if @ws.layers.isActive("#{gratFile['name']}-layer")
+        map.removeLayer("#{gratFile['name']}-layer")
+        map.removeLayer("#{gratFile['name']}-label")
+
+    @ws.trigger('ws.graticule.hidden')

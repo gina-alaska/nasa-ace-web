@@ -58,10 +58,10 @@ class @Workspace.UI
         @setPresenter(false)
 
     @ws.on 'ws.graticule.shown', (e, data) =>
-      $('[data-toggle="graticule"]').addClass('active btn-success').removeClass('btn-default')
+      @getGraticule().addClass('active btn-success').removeClass('btn-default')
 
     @ws.on 'ws.graticule.hidden', (e, data) =>
-      $('[data-toggle="graticule"]').removeClass('active btn-success').addClass('btn-default')
+      @getGraticule().removeClass('active btn-success').addClass('btn-default')
 
     @el.on 'input', '[data-adjust="opacity"]', @handleOpacity
 
@@ -113,6 +113,8 @@ class @Workspace.UI
         ws.view.map.easeTo(pitch: 60)
         $(this).addClass('active btn-success').removeClass('btn-default')
 
+  getGraticule: () =>
+    $('[data-toggle="graticule"]')
 
   setPresenter: (state) =>
     btn = $('[data-toggle="presenter"]')
