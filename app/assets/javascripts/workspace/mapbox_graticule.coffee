@@ -1,6 +1,18 @@
 class @Workspace.MapboxGraticule
   constructor: (@ws, @map) ->
     @ws.on('ws.graticule.toggle', @toggle)
+    @ws.on 'ws.view.loaded', (e, data) =>
+      @add(@map)
+      @ws.trigger('ws.graticule.shown')
+    @ws.on 'ws.layers.reorder', (e, data) =>
+      @add(@map)
+      @ws.trigger('ws.graticule.shown')
+    @ws.on 'ws.layers.reload', (e, data) =>
+      @add(@map)
+      @ws.trigger('ws.graticule.shown')
+    @ws.on 'ws.basemap.show', (e, data) =>
+      @add(@map)
+      @ws.trigger('ws.graticule.shown')
 
     @graticule_files = [
       {
@@ -61,18 +73,16 @@ class @Workspace.MapboxGraticule
         layout: { 'text-field': '{label}', 'symbol-placement': 'line', 'text-anchor': 'bottom', 'text-size': 12 },
         paint: { 'text-color': 'rgba(255,255,255,0.8)', 'text-halo-color': 'rgba(0,0,0,0.5)', 'text-halo-width': 2 }
       })
-       
-    @ws.trigger('ws.graticule.shown')
   
   toggle: () =>
     if !@ws.layers.isActive("#{@graticule_files[0]['name']}-layer")
       @add(@map)
+      @ws.trigger('ws.graticule.shown')
     else
       @remove(@map)
+      @ws.trigger('ws.graticule.hidden')
 
   remove: (map) =>
     for gratFile in @graticule_files
       map.removeLayer("#{gratFile['name']}-layer")
       map.removeLayer("#{gratFile['name']}-label")
-    @ws.trigger('ws.graticule.hidden')
-    
