@@ -249,7 +249,10 @@ class @Workspace.UI
     $('.overlay-list .layer.active').toArray()
 
   getActiveBasemap: () ->
-    $('#style-list .active').data('name')
+    name = $('#style-list .map-style.active').data('name')
+    name ||= $('#style-list .map-style').first().data('name')
+
+    return name
 
   startLoading: () ->
     @loading_count ||= 0
