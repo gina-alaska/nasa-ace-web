@@ -73,14 +73,8 @@ class ViewsController < ApplicationController
         format.html { redirect_to edit_workspace_view_path(@workspace, @view), notice: 'View was successfully created.' }
         format.json { render :show, status: :created, location: @view }
       else
-        format.html {
-          flash['error'] = 'Error saving duplicate view'
-          if @view.new_record?
-            render :new
-          else
-            render :edit
-          end
-        }
+        flash['error'] = 'Error saving duplicate view'
+        format.html { render @view.new_record? ? :new : :edit }
         format.json { render json: @view.errors, status: :unprocessable_entity }
       end
     end
