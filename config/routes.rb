@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   resources :workspaces do
-    resources :views
+    resources :views do
+      get 'duplicate', on: :member
+    end
   end
   resources :datasets
   get 'welcome/index'

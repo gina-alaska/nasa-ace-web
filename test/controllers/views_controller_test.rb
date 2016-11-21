@@ -47,4 +47,20 @@ class ViewsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to workspaces_url
   end
+
+  test "should duplicate view" do
+    assert_difference('@workspace.views.count') do
+      get duplicate_workspace_view_url(@workspace, @view)
+    end
+
+    assert_response :redirect
+  end
+
+  test "should fail to duplicate view" do
+    @view.duplicate
+    get duplicate_workspace_view_url(@workspace, @view)
+
+    assert_response :success
+    assert_equal flash['error'], 'Error saving duplicate view'
+  end
 end
