@@ -7,7 +7,12 @@ class WorkspacesController < ApplicationController
   end
 
   def show
-    redirect_to workspace_view_path(@workspace, @workspace.views.first.id)
+    if @workspace.views.empty?
+      flash[:error] = "Unable to show workspace, there are no views defined"
+      redirect_to root_url
+    else
+      redirect_to [@workspace, @workspace.views.first]
+    end
   end
 
   def new

@@ -16,6 +16,19 @@ class WorkspacesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should redirect show to first view" do
+    get workspace_url(@workspace)
+
+    assert_redirected_to workspace_view_path(@workspace, @workspace.views.first)
+  end
+
+  test "should redirect to root if no views" do
+    @workspace = Workspace.create(name: 'Failing workspace')
+    get workspace_url(@workspace)
+
+    assert_redirected_to root_url
+  end
+
   test "should create workspace" do
     assert_difference('Workspace.count') do
       post workspaces_url, params: { workspace: { name: @workspace.name + " testing" } }
