@@ -23,12 +23,28 @@
 
         %ul.dropdown-menu
           %li
-            = link_to workspace_path(@workspace, {view: '2d'}) do
+            = link_to workspace_view_path(@workspace, @view, {view: '2d'}) do
               Web mercator
           %li
-            = link_to workspace_path(@workspace, {view: '3d'}) do
+            = link_to workspace_view_path(@workspace, @view, {view: '3d'}) do
               Globe
-              
+
+      .btn-group.btn-group-sm
+        %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown' }, title: 'View Menu' }
+          %i.fa.fa-tv
+          View: #{@view.name}
+          %span.caret
+
+        %ul.dropdown-menu
+          %li
+            = link_to duplicate_workspace_view_path(@workspace) do
+              Duplicate this view
+          %li.divider{ role: 'separator' }
+
+          - @workspace.views.each do |view|
+            %li
+              = link_to view.name, workspace_view_path(@workspace, view)
+
       %i.fa.fa-spinner.loading.navbar-text{ style: 'font-size: 20px;'}
 
       .pull-right

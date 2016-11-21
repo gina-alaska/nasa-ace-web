@@ -24,11 +24,6 @@ class WorkspacesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to workspace_url(Workspace.last)
   end
 
-  test "should show workspace" do
-    get workspace_url(@workspace)
-    assert_response :success
-  end
-
   test "should get edit" do
     get edit_workspace_url(@workspace)
     assert_response :success

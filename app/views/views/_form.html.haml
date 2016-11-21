@@ -1,0 +1,23 @@
+= simple_form_for([@workspace, @view]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+
+    = f.input :basemap, collection: View::BASEMAP_LAYERS, label_method: :humanize, label: 'Default basemap layer'
+
+    .row
+      .col-sm-4
+        = f.input :center_lng
+      .col-sm-4
+        = f.input :center_lat
+      .col-sm-4
+        = f.input :zoom
+
+  .form-actions
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.button :submit, class: 'btn btn-primary'

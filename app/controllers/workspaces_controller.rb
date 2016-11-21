@@ -2,35 +2,26 @@
 class WorkspacesController < ApplicationController
   before_action :set_workspace, only: [:show, :edit, :update, :destroy]
 
-  # GET /workspaces
-  # GET /workspaces.json
   def index
     @workspaces = Workspace.all
   end
 
-  # GET /workspaces/1
-  # GET /workspaces/1.json
   def show
-    # WorkspacesChannel.broadcast_to "workspace_#{@workspace.id}", { test: 'testing' }
+    redirect_to workspace_view_path(@workspace, @workspace.views.first.id)
   end
 
-  # GET /workspaces/new
   def new
     @workspace = Workspace.new
   end
 
-  # GET /workspaces/1/edit
   def edit
   end
 
-  # POST /workspaces
-  # POST /workspaces.json
   def create
     @workspace = Workspace.new(workspace_params)
 
     respond_to do |format|
       if @workspace.save
-        @workspace.layers = Layer.all
         format.html { redirect_to @workspace, notice: 'Workspace was successfully created.' }
         format.json { render :show, status: :created, location: @workspace }
       else
@@ -40,8 +31,6 @@ class WorkspacesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /workspaces/1
-  # PATCH/PUT /workspaces/1.json
   def update
     respond_to do |format|
       if @workspace.update(workspace_params)
@@ -54,8 +43,6 @@ class WorkspacesController < ApplicationController
     end
   end
 
-  # DELETE /workspaces/1
-  # DELETE /workspaces/1.json
   def destroy
     @workspace.destroy
     respond_to do |format|
@@ -73,6 +60,6 @@ class WorkspacesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def workspace_params
-    params.require(:workspace).permit(:name, :center_lat, :center_lng, :zoom, :presenter_id, :basemap)
+    params.require(:workspace).permit(:name)
   end
 end

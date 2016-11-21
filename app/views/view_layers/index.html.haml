@@ -1,0 +1,25 @@
+%h1 Listing view_layers
+
+%table
+  %thead
+    %tr
+      %th Workspace
+      %th Layer
+      %th Position
+      %th
+      %th
+      %th
+
+  %tbody
+    - @view_layers.each do |view_layer|
+      %tr
+        %td= view_layer.view
+        %td= view_layer.layer
+        %td= view_layer.position
+        %td= link_to 'Show', view_layer
+        %td= link_to 'Edit', edit_view_layer_path(view_layer)
+        %td= link_to 'Destroy', view_layer, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New View layer', new_view_layer_path

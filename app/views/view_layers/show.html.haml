@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b View:
+  = @view_layer.view
+%p
+  %b Layer:
+  = @view_layer.layer
+%p
+  %b Position:
+  = @view_layer.position
+
+= link_to 'Edit', edit_view_layer_path(@view_layer)
+\|
+= link_to 'Back', view_layers_path

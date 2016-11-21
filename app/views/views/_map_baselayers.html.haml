@@ -1,5 +1,5 @@
-- Workspace::BASEMAP_LAYERS.each do |style|
-  = active_link_to '#', class: 'list-group-item map-style', active: @workspace.basemap == style, data: { behavior: 'switch-base', name: style } do
+- View::BASEMAP_LAYERS.each do |style|
+  = active_link_to '#', class: 'list-group-item map-style', active: @view.basemap == style, data: { behavior: 'switch-base', name: style } do
     .layer-handle
       &nbsp;
     .layer-controls

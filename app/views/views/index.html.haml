@@ -1,0 +1,29 @@
+.container.workspaces.site-content
+  .row
+    .col-sm-3
+      .panel.panel-default
+        .panel-body
+          = link_to 'New View', new_workspace_view_path(@workspace), class: 'btn btn-success btn-block'
+    .col-sm-9
+      .panel.panel-default
+        .panel-body
+          %h1.panel-title View List
+        - if @views.blank?
+          .text-center
+            %h1 No views found
+            = link_to 'Create a new view', new_workspace_view_path(@workspace), class: 'btn btn-success btn-lg navbar-btn'
+
+        - else
+          %table.table.table-striped
+            %thead
+              %tr
+                %th Name
+                %th.text-right Actions
+
+            %tbody
+              - @views.each do |view|
+                %tr
+                  %td= view.name
+                  %td.text-right
+                    .btn-groups
+                      = link_to 'View', workspace_view_path(@workspace, view), class: 'btn btn-default'

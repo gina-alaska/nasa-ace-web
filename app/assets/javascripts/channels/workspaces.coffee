@@ -3,6 +3,7 @@ $(document).on 'turbolinks:load', ->
   App.workspaces = App.cable.subscriptions.create {
       channel: "WorkspacesChannel",
       id: $('meta[name="workspace"]').attr('content'),
+      view_id: $('meta[name="view"]').attr('content'),
       key: $('meta[name="channel_key"]').attr('content')
     },
     connected: () ->
