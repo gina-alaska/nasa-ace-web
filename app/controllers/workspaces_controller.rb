@@ -9,7 +9,7 @@ class WorkspacesController < ApplicationController
   def show
     if @workspace.views.empty?
       flash[:error] = "Unable to show workspace, there are no views defined"
-      redirect_to root_url
+      redirect_to workspaces_url
     else
       redirect_to [@workspace, @workspace.views.first]
     end
