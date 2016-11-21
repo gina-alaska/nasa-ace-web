@@ -1,6 +1,9 @@
 class @Workspace.MapboxGraticule
   constructor: (@ws, @map) ->
-    @ws.on('ws.graticule.toggle', @toggle)
+    @ws.on 'ws.graticule.toggle', @toggle
+    # @ws.on 'ws.view.loaded', @reload
+    @ws.on 'ws.layers.reorder', @reload
+    @ws.on 'ws.layers.reload', @reload
 
     @graticule_files = [
       {
@@ -35,44 +38,55 @@ class @Workspace.MapboxGraticule
       }
     ]
 
-    for gratFile in @graticule_files
-      @map.addSource(gratFile['name'], {
-        type: 'geojson',
-        data: "/graticules/#{gratFile['name']}"
-      })
+  reload: () =>
+    if @isActive()
+      @add(@map)
+    else
+      @remove(@map)
 
   add: (map) =>
     for gratFile in @graticule_files
-      map.addLayer({
-        id: "#{gratFile['name']}-layer",
-        type: 'line',
-        minzoom: gratFile['minzoom'],
-        maxzoom: gratFile['maxzoom'],
-        source: gratFile['name'], 
-        layout: { 'visibility': 'visible' },
-        paint: { 'line-color': '#aaa' }
-      })
-      map.addLayer({
-        id: "#{gratFile['name']}-label",
-        type: 'symbol',
-        minzoom: gratFile['minzoom'],
-        maxzoom: gratFile['maxzoom'],
-        source: gratFile['name'], 
-        layout: { 'text-field': '{label}', 'symbol-placement': 'line', 'text-anchor': 'bottom', 'text-size': 12 },
-        paint: { 'text-color': 'rgba(255,255,255,0.8)', 'text-halo-color': 'rgba(0,0,0,0.5)', 'text-halo-width': 2 }
-      })
-       
+      if !@map.getSource(gratFile['name'])?
+        @map.addSource(gratFile['name'], {
+          type: 'geojson',
+          data: "/graticules/#{gratFile['name']}"
+        })
+
+      if !@ws.layers.isActive("#{gratFile['name']}-layer")
+        map.addLayer({
+          id: "#{gratFile['name']}-layer",
+          type: 'line',
+          minzoom: gratFile['minzoom'],
+          maxzoom: gratFile['maxzoom'],
+          source: gratFile['name'],
+          layout: { 'visibility': 'visible' },
+          paint: { 'line-color': '#aaa' }
+        })
+        map.addLayer({
+          id: "#{gratFile['name']}-label",
+          type: 'symbol',
+          minzoom: gratFile['minzoom'],
+          maxzoom: gratFile['maxzoom'],
+          source: gratFile['name'],
+          layout: { 'text-field': '{label}', 'symbol-placement': 'line', 'text-anchor': 'bottom', 'text-size': 12 },
+          paint: { 'text-color': 'rgba(255,255,255,0.8)', 'text-halo-color': 'rgba(0,0,0,0.5)', 'text-halo-width': 2 }
+        })
+
     @ws.trigger('ws.graticule.shown')
-  
+
+  isActive: () =>
+    @ws.ui.getGraticule().hasClass('active')
+
   toggle: () =>
-    if !@ws.layers.isActive("#{@graticule_files[0]['name']}-layer")
+    if !@isActive()
       @add(@map)
     else
       @remove(@map)
 
   remove: (map) =>
     for gratFile in @graticule_files
-      map.removeLayer("#{gratFile['name']}-layer")
-      map.removeLayer("#{gratFile['name']}-label")
+      if @ws.layers.isActive("#{gratFile['name']}-layer")
+        map.removeLayer("#{gratFile['name']}-layer")
+        map.removeLayer("#{gratFile['name']}-label")
+
     @ws.trigger('ws.graticule.hidden')
-    
