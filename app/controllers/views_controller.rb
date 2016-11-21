@@ -67,13 +67,21 @@ class ViewsController < ApplicationController
 
   def duplicate
     respond_to do |format|
-      new_view = @view.duplicate
-      if new_view
-        format.html { redirect_to edit_workspace_view_path(@workspace, new_view), notice: 'View was successfully created.' }
-        format.json { render :show, status: :created, location: new_view }
+      old_view = @view
+      @view = old_view.duplicate
+      if @view.errors.empty?
+        format.html { redirect_to edit_workspace_view_path(@workspace, @view), notice: 'View was successfully created.' }
+        format.json { render :show, status: :created, location: @view }
       else
-        format.html { render :edit }
-        format.json { render json: new_view.errors, status: :unprocessable_entity }
+        format.html {
+          flash['error'] = 'Error saving duplicate view'
+          if @view.new_record?
+            render :new
+          else
+            render :edit
+          end
+        }
+        format.json { render json: @view.errors, status: :unprocessable_entity }
       end
     end
   end

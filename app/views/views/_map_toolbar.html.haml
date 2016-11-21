@@ -28,11 +28,11 @@
           %li
             = link_to workspace_view_path(@workspace, @view, {view: '3d'}) do
               Globe
-              
+
       .btn-group.btn-group-sm
         %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown' }, title: 'View Menu' }
-          %i.fa.fa-files-o 
-          Views
+          %i.fa.fa-tv
+          View: #{@view.name}
           %span.caret
 
         %ul.dropdown-menu
