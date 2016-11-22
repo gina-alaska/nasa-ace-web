@@ -26,7 +26,7 @@ class WorkspacesControllerTest < ActionDispatch::IntegrationTest
     @workspace = Workspace.create(name: 'Failing workspace')
     get workspace_url(@workspace)
 
-    assert_redirected_to root_url
+    assert_redirected_to workspaces_url
   end
 
   test "should create workspace" do
