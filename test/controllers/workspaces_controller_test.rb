@@ -35,6 +35,8 @@ class WorkspacesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to workspace_url(Workspace.last)
+    follow_redirect!
+    assert_redirected_to workspace_view_path(Workspace.last, Workspace.last.views.first)
   end
 
   test "should get edit" do
