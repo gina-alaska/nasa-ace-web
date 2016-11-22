@@ -24,6 +24,11 @@ class WorkspacesController < ApplicationController
 
   def create
     @workspace = Workspace.new(workspace_params)
+    @workspace.views.build(name: 'Default',
+      center_lat: 64.5,
+      center_lng: -146.5,
+      zoom: 3.0,
+      basemap: 'satellite-streets')
 
     respond_to do |format|
       if @workspace.save
