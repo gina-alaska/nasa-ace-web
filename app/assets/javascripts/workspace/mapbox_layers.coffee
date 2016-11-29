@@ -70,6 +70,8 @@ class @Workspace.MapboxLayers extends Workspace.Layers
       }, beforeLayer, true)
 
   addToMap: (config, beforeLayer, clickable = false) =>
+    beforeLayer = 'graticule-10.geojson-layer' if @ws.ui.getGraticule().hasClass('active')
+    
     @map.addLayer(config, beforeLayer)
     @_layerGroups[config.source] ||= []
     @_layerGroups[config.source].push(config.id)
