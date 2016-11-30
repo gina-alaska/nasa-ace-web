@@ -57,12 +57,6 @@ class @Workspace.UI
       else
         @setPresenter(false)
 
-    @ws.on 'ws.graticule.shown', (e, data) =>
-      @getGraticule().addClass('active btn-success').removeClass('btn-default')
-
-    @ws.on 'ws.graticule.hidden', (e, data) =>
-      @getGraticule().removeClass('active btn-success').addClass('btn-default')
-
     @el.on 'input', '[data-adjust="opacity"]', @handleOpacity
 
     @el.on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
@@ -71,8 +65,6 @@ class @Workspace.UI
     @el.on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
     @el.on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
     @el.on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
-    @el.on 'click', '[data-toggle="graticule"]', (e) =>
-      @ws.trigger('ws.graticule.toggle')
 
     @el.on 'click', '[data-toggle="layer"]', (e) =>
       @toggleLayer($(e.currentTarget).parents('.layer').data('name'))
@@ -112,9 +104,6 @@ class @Workspace.UI
       else
         ws.view.map.easeTo(pitch: 60)
         $(this).addClass('active btn-success').removeClass('btn-default')
-
-  getGraticule: () =>
-    $('[data-toggle="graticule"]')
 
   setPresenter: (state) =>
     btn = $('[data-toggle="presenter"]')
