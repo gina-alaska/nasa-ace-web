@@ -29,6 +29,18 @@ class @Workspace.Mapbox.Layer
     for layer, index in @sublayers
       callback(layer, index)
 
+  setPaintProperty: (property, value) =>
+    return unless @isLayerActive()
+    @eachLayer (layer, index) =>
+      @setOpacity(layer, value) if property == 'opacity'
+
+  setOpacity: (layer, value) ->
+    type = @map.getLayer(layer).type
+    if type in ['circle', 'line', 'fill']
+      @map.setPaintProperty(layer, "#{type}-opacity", value)
+    if type in ['symbol']
+      @map.setPaintProperty(layer, "text-opacity", value)
+
   isLayerActive: () =>
     @map.getLayer(@getId(0))?
 

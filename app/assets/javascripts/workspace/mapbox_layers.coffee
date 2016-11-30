@@ -27,10 +27,7 @@ class @Workspace.MapboxLayers extends Workspace.Layers
     @_layerList[name]
 
   setPaintProperty: (name, property, value) =>
-    return unless @getLayer(name)?
-    @getLayer(name).eachLayer (layer, index) =>
-      [first,...,last] = layer.split('-')
-      @map.setPaintProperty(layer, "#{last}-#{property}", value)
+    @getLayer(name).setPaintProperty(property, value)
 
   create: (name) =>
     # return if @isActive(name)
