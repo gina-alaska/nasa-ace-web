@@ -30,7 +30,7 @@ class @Workspace.Layers
       item = el.next('.layer')
       while item.length > 0
         if $(item).hasClass('active')
-          config.before = @getLayer(item.data('name')).getId(0)
+          config.before = @getLayer(item.data('name')).getSublayer(0)
           item = []
         else
           item = $(item).next('.layer')

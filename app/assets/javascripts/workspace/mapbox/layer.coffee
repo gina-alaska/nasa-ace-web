@@ -15,7 +15,7 @@ class @Workspace.Mapbox.Layer
   createLayers: () =>
     throw 'createLayers method not implemented'
 
-  getId: (index) =>
+  getSublayer: (index) =>
     @sublayers[index]
 
   show: () =>
@@ -25,13 +25,13 @@ class @Workspace.Mapbox.Layer
   hide: () =>
     @remove()
 
-  eachLayer: (callback) =>
+  eachSublayer: (callback) =>
     for layer, index in @sublayers
       callback(layer, index)
 
   setPaintProperty: (property, value) =>
     return unless @isLayerActive()
-    @eachLayer (layer, index) =>
+    @eachSublayer (layer, index) =>
       @setOpacity(layer, value) if property == 'opacity'
 
   setOpacity: (layer, value) ->
@@ -42,13 +42,13 @@ class @Workspace.Mapbox.Layer
       @map.setPaintProperty(layer, "text-opacity", value)
 
   isLayerActive: () =>
-    @map.getLayer(@getId(0))?
+    @map.getLayer(@getSublayer(0))?
 
   isSourceActive: () =>
     @map.getSource(@sourceName)? if @sourceName?
 
   remove: (destroy = true) =>
-    @eachLayer (layer, index) =>
+    @eachSublayer (layer, index) =>
       @map.removeLayer(layer, destroy)
     @sublayers = []
 
