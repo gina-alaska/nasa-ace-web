@@ -12,7 +12,7 @@ namespace 'graticules' do
       points << [long, -90]
       points << [long, 90]
       line = GeoRuby::SimpleFeatures::LineString.from_coordinates(points, 4326)
-      lines << GeoRuby::GeoJSONFeature.new(line, label: format('%0.1f', long), far: (long % 10) == 0, medium: (long % 5) == 0, near: (long % 1) == 0, macro: (long % 0.5) == 0 )
+      lines << GeoRuby::GeoJSONFeature.new(line, label: format('%0.1f', long), far: (long % 10) == 0, medium: (long % 5) == 0, near: (long % 1) == 0, macro: (long % 0.5) == 0)
     end
 
     (-90..90).step(step) do |lat|
