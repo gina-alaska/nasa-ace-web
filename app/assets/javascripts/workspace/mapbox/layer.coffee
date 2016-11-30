@@ -49,7 +49,7 @@ class @Workspace.Mapbox.Layer
 
   remove: (destroy = true) =>
     @eachSublayer (layer, index) =>
-      @map.removeLayer(layer, destroy)
+      @map.removeLayer(layer, destroy) if @isLayerActive()
     @sublayers = []
 
   addToMap: (config, before) =>
