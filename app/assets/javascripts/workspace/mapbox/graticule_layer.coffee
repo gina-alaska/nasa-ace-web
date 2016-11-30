@@ -8,7 +8,7 @@ class @Workspace.Mapbox.GraticuleLayer extends Workspace.Mapbox.Layer
   createSource: () =>
     @map.addSource(@sourceName, {
       type: 'geojson',
-      data: "#{@config.url}/graticule-1.geojson"
+      data: @config.url
     })
 
   createLayers: () =>
