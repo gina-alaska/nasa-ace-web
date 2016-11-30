@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-namespace 'graticles' do
+namespace 'graticules' do
   desc 'Build graticle geojson files for map'
   task :build, [:step] => :environment do |_t, args|
     step = args[:step].to_f
@@ -12,7 +12,7 @@ namespace 'graticles' do
       points << [long, -90]
       points << [long, 90]
       line = GeoRuby::SimpleFeatures::LineString.from_coordinates(points, 4326)
-      lines << GeoRuby::GeoJSONFeature.new(line, label: format('%0.3f', long))
+      lines << GeoRuby::GeoJSONFeature.new(line, label: format('%0.1f', long), far: (long % 10) == 0, medium: (long % 5) == 0, near: (long % 1) == 0, macro: (long % 0.5) == 0 )
     end
 
     (-90..90).step(step) do |lat|
@@ -20,7 +20,7 @@ namespace 'graticles' do
       points << [-180, lat]
       points << [180, lat]
       line = GeoRuby::SimpleFeatures::LineString.from_coordinates(points, 4326)
-      lines << GeoRuby::GeoJSONFeature.new(line, label: format('%0.3f', lat))
+      lines << GeoRuby::GeoJSONFeature.new(line, label: format('%0.1f', lat), far: (lat % 10) == 0, medium: (lat % 5) == 0, near: (lat % 1) == 0, macro: (lat % 0.5) == 0)
     end
 
     puts "{ \"type\": \"FeatureCollection\", \"features\": [#{lines.map(&:to_json).join(',')}] }"
