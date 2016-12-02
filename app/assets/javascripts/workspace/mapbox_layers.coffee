@@ -33,7 +33,7 @@ class @Workspace.MapboxLayers extends Workspace.Layers
     # return if @isActive(name)
     config = @getConfig(name, true)
 
-    @_layerList[name] ||= Workspace.Mapbox.buildLayer(@map, name, config)
+    @_layerList[name] ||= Workspace.Mapbox.buildLayer(@ws, name, config)
     layer = @getLayer(name)
 
     layer.show()

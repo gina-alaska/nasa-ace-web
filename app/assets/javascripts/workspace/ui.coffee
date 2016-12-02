@@ -262,3 +262,14 @@ class @Workspace.UI
     if @loading_count <= 0
       @loading_count = 0
       $('.loading').removeClass('fa-pulse')
+
+  getNextActiveLayer: (current_layer) =>
+    el = @getLayer(current_layer)
+    item = el.next('.layer')
+    while item.length > 0
+      if item.hasClass('active')
+        return @ws.layers.getLayer(item.data('name')).getSublayer(0)
+
+      item = item.next('.layer')
+
+    return null

@@ -5,7 +5,8 @@ class @Workspace.Mapbox.Layer
     click: false
   }
 
-  constructor: (@map, @name, @config) ->
+  constructor: (@ws, @name, @config) ->
+    @map = @ws.view.map
     @sublayers = []
     @sourceName = "#{@name}-source"
 
@@ -52,7 +53,8 @@ class @Workspace.Mapbox.Layer
       @map.removeLayer(layer, destroy) if @isLayerActive()
     @sublayers = []
 
-  addToMap: (config, before) =>
+  addToMap: (config) =>
     return if @map.getLayer(config.id)?
+
+    @map.addLayer(config, @ws.ui.getNextActiveLayer(@name))
     @sublayers.push(config.id)
-    @map.addLayer(config, before)
