@@ -70,9 +70,7 @@ class @Workspace.UI
 
     @el.on 'click', '[data-behavior="remove-layer"]', (e) =>
       el = $(e.currentTarget).parents('.layer')
-      @deleteLayer(el.data('name'))
-      el.remove()
-
+      @deleteLayer(el.data('name'), el)
       e.preventDefault()
 
     @el.on 'click', '[data-toggle="collapse"]', @rotateIcon
@@ -123,8 +121,9 @@ class @Workspace.UI
         ws.view.map.easeTo(pitch: 60)
         $(this).addClass('active btn-success').removeClass('btn-default')
 
-  deleteLayer: (name) =>
+  deleteLayer: (name, layerEl) =>
     @ws.trigger('ws.layers.delete', { name: name })
+    layerEl.remove()
 
   getGraticule: () =>
     $('[data-toggle="graticule"]')

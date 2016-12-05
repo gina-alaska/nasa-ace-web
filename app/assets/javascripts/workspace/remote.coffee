@@ -6,7 +6,7 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['ws.layers.show', 'ws.layers.hide', 'ws.basemap.show', 'ws.layers.reorder', 'ws.layers.adjust'],
+    layers: ['ws.layers.show', 'ws.layers.hide', 'ws.basemap.show', 'ws.layers.reorder', 'ws.layers.adjust', 'ws.layers.delete'],
     movement: ['ws.view.move'],
     presenter: ['ws.presenter.request', 'ws.presenter.update', 'ws.presenter.state']
   }
@@ -14,6 +14,7 @@ class @Workspace.Remote
   rebroadcastEvents: [
     ['ws.layers.shown', 'ws.layers.show'],
     ['ws.layers.hidden', 'ws.layers.hide'],
+    ['ws.layers.deleted', 'ws.layers.delete'],
     ['ws.layers.reorder', 'ws.layers.reorder'],
     ['ws.layers.adjusted', 'ws.layers.adjust'],
     ['ws.basemap.shown', 'ws.basemap.show'],

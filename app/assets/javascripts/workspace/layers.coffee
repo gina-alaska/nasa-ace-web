@@ -10,7 +10,10 @@ class @Workspace.Layers
       @reload()
 
     @ws.on 'ws.layers.delete', (e, data) =>
-      @hide(data.name)
+      @ws.remote.ignoreBroadcasts =>
+        @hide(data.name)
+        
+      @ws.trigger('ws.layers.deleted', data)
 
     @ws.on 'ws.layers.adjust', (e, data) =>
       if data.property == 'opacity'
