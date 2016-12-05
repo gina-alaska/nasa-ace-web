@@ -56,8 +56,10 @@ class ViewLayersController < ApplicationController
   # DELETE /workspace_layers/1.json
   def destroy
     @view_layer.destroy
+
     respond_to do |format|
-      format.html { redirect_to view_layers_url, notice: 'View layer was successfully destroyed.' }
+      format.js
+      #format.html { redirect_to workspace_view_url(@workspace, @view), notice: 'View layer was successfully removed.' }
       format.json { head :no_content }
     end
   end

@@ -1,0 +1,10 @@
+#layer-modal{ class: 'modal fade' }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ data: { dismiss: 'modal' }}
+          %span &times;
+        %h4.modal-title Search Layers
+      .modal-body
+        - @layers.each do |layer|
+          %p= layer.name

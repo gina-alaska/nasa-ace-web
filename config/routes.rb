@@ -7,7 +7,10 @@ Rails.application.routes.draw do
 
   resources :workspaces do
     resources :views do
-      get 'duplicate', on: :member
+      member do
+        get 'duplicate'
+        get 'add_layer'
+      end
     end
   end
   resources :datasets
