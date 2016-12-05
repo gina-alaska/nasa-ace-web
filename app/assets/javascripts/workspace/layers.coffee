@@ -9,6 +9,9 @@ class @Workspace.Layers
     @ws.on 'ws.layers.reload', (e, data) =>
       @reload()
 
+    @ws.on 'ws.layers.delete', (e, data) =>
+      @hide(data.name)
+
     @ws.on 'ws.layers.adjust', (e, data) =>
       if data.property == 'opacity'
         @setPaintProperty(data.layer, data.property, data.value / 100)

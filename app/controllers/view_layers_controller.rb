@@ -65,7 +65,6 @@ class ViewLayersController < ApplicationController
   end
 
   private
-
   # Use callbacks to share common setup or constraints between actions.
   def set_view_layer
     @view_layer = ViewLayer.find(params[:id])

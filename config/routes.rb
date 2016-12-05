@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         get 'add_layer'
       end
     end
+    # resources :view_layers
   end
   resources :datasets
   get 'welcome/index'

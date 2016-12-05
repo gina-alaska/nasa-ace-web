@@ -32,10 +32,10 @@ class @Workspace.UI
     ui = @
     ws = @ws
 
-    @ws.on 'ws.layers.show', (e, data) =>
+    @ws.on 'ws.layers.shown', (e, data) =>
       @getLayer(data.name).addClass('active')
 
-    @ws.on 'ws.layers.hide', (e, data) =>
+    @ws.on 'ws.layers.hidden', (e, data) =>
       @getLayer(data.name).removeClass('active')
 
     @ws.on 'ws.layers.reorder', (e, data) =>
@@ -67,6 +67,14 @@ class @Workspace.UI
 
     @el.on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
     @el.on 'mouseleave', '[data-behavior="hover-toggle"]', @contract_sidebar
+
+    @el.on 'click', '[data-behavior="remove-layer"]', (e) =>
+      el = $(e.currentTarget).parents('.layer')
+      @deleteLayer(el.data('name'))
+      el.remove()
+
+      e.preventDefault()
+
     @el.on 'click', '[data-toggle="collapse"]', @rotateIcon
     @el.on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
     @el.on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
@@ -75,7 +83,9 @@ class @Workspace.UI
       @ws.trigger('ws.graticule.toggle')
 
     @el.on 'click', '[data-toggle="layer"]', (e) =>
-      @toggleLayer($(e.currentTarget).parents('.layer').data('name'))
+      el = $(e.currentTarget).parents('.layer')
+      @toggleLayer(el.data('name'))
+
       e.preventDefault()
 
     @el.on 'dragstart', '.overlay-list .layer', @layerDragStart
@@ -112,6 +122,9 @@ class @Workspace.UI
       else
         ws.view.map.easeTo(pitch: 60)
         $(this).addClass('active btn-success').removeClass('btn-default')
+
+  deleteLayer: (name) =>
+    @ws.trigger('ws.layers.delete', { name: name })
 
   getGraticule: () =>
     $('[data-toggle="graticule"]')
