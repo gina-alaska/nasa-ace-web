@@ -19,7 +19,9 @@ class WorkspacesChannel < ApplicationCable::Channel
       reorder_layers(data['layers'])
       rebroadcast(data)
     when 'ws.layers.delete'
-      # TODO: Implement deletion of layer from the view
+      layer = current_view.layers.where(name: data['name'])
+      view_layer = ViewLayer.where(view: current_view, layer: layer).first
+      view_layer.destroy
       rebroadcast(data)
     when 'ws.layers.show'
       update_layer_state(data['name'], active: true)
