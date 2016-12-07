@@ -57,12 +57,6 @@ class @Workspace.UI
       else
         @setPresenter(false)
 
-    @ws.on 'ws.graticule.shown', (e, data) =>
-      @getGraticule().addClass('active btn-success').removeClass('btn-default')
-
-    @ws.on 'ws.graticule.hidden', (e, data) =>
-      @getGraticule().removeClass('active btn-success').addClass('btn-default')
-
     @ws.on 'ws.layers.delete', (e, data) =>
       @getLayer(data.name).remove()
 
@@ -80,8 +74,6 @@ class @Workspace.UI
     @el.on 'click', '[data-toggle="auto-collapse"]', @toggleAutoCollapse
     @el.on 'click', '[data-behavior="move-layer-up"]', @moveLayerUp
     @el.on 'click', '[data-behavior="move-layer-down"]', @moveLayerDown
-    @el.on 'click', '[data-toggle="graticule"]', (e) =>
-      @ws.trigger('ws.graticule.toggle')
 
     @el.on 'click', '[data-toggle="layer"]', (e) =>
       el = $(e.currentTarget).parents('.layer')
@@ -127,9 +119,6 @@ class @Workspace.UI
   deleteLayer: (name) =>
     @ws.trigger('ws.layers.delete', { name: name })
     layerEl.remove()
-
-  getGraticule: () =>
-    $('[data-toggle="graticule"]')
 
   setPresenter: (state) =>
     btn = $('[data-toggle="presenter"]')
@@ -288,3 +277,14 @@ class @Workspace.UI
     if @loading_count <= 0
       @loading_count = 0
       $('.loading').removeClass('fa-pulse')
+
+  getNextActiveLayer: (current_layer) =>
+    el = @getLayer(current_layer)
+    item = el.next('.layer')
+    while item.length > 0
+      if item.hasClass('active')
+        return @ws.layers.getLayer(item.data('name')).getSublayer(0)
+
+      item = item.next('.layer')
+
+    return null
