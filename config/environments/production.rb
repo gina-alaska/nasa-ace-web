@@ -86,5 +86,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.web_socket_server_url = "wss://nasa-ace.herokuapp.com/cable"
-  config.action_cable.allowed_request_origins = ['https://nasa-ace.herokuapp.com', 'http://nasa-ace.herokuapp.com']
+  config.action_cable.allowed_request_origins = ['https://nasa-ace.herokuapp.com', 'http://nasa-ace.herokuapp.com', 'http://workspace.ace.uaf.edu']
 end
