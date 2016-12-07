@@ -39,7 +39,6 @@ class @Workspace.MapboxView
   onLoad: =>
     @ws.layers.addSources()
     @ws.layers.reload()
-    @graticule = new Workspace.MapboxGraticule(@ws, @map)
 
   featurePopup: (e) =>
     return if !@ws.layers.clickable.length
