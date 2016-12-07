@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
-  resources :view_layers
   resources :layers
   resources :categories
   mount ActionCable.server => '/cable'
@@ -11,8 +10,9 @@ Rails.application.routes.draw do
         get 'duplicate'
         get 'add_layer'
       end
+
+      resources :view_layers
     end
-    # resources :view_layers
   end
   resources :datasets
   get 'welcome/index'

@@ -32,6 +32,11 @@ class @Workspace.UI
     ui = @
     ws = @ws
 
+    @ws.on 'ws.layers.add', (e, data) =>
+      $.get(data.url).done (content) =>
+        el = $('#overlay-layer-list').append(content)
+        @toggleLayer(data.name)
+
     @ws.on 'ws.layers.shown', (e, data) =>
       @getLayer(data.name).addClass('active')
 

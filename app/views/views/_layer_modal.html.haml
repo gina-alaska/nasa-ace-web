@@ -7,4 +7,4 @@
         %h4.modal-title Search Layers
       .modal-body
         - @layers.each do |layer|
-          %p= layer.name
+          = link_to layer.name, workspace_view_view_layers_path(@workspace, @view, nil, view_layer: { layer_id: layer.id }), method: :post, remote: true

@@ -6,7 +6,7 @@ class @Workspace.Remote
   }
 
   commandTypes: {
-    layers: ['ws.layers.show', 'ws.layers.hide', 'ws.basemap.show', 'ws.layers.reorder', 'ws.layers.adjust', 'ws.layers.delete'],
+    layers: ['ws.layers.show', 'ws.layers.hide', 'ws.basemap.show', 'ws.layers.reorder', 'ws.layers.adjust', 'ws.layers.delete', 'ws.layers.add'],
     movement: ['ws.view.move'],
     presenter: ['ws.presenter.request', 'ws.presenter.update', 'ws.presenter.state']
   }

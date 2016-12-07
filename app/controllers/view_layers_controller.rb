@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ViewLayersController < ApplicationController
-  before_action :set_view_layer, only: [:show, :edit, :update, :destroy]
+  before_action :set_view_layer
 
   # GET /workspace_layers
   # GET /workspace_layers.json
@@ -11,6 +11,10 @@ class ViewLayersController < ApplicationController
   # GET /workspace_layers/1
   # GET /workspace_layers/1.json
   def show
+    respond_to do |format|
+      format.html { render layout: false }
+      format.json
+    end
   end
 
   # GET /workspace_layers/new
@@ -25,11 +29,17 @@ class ViewLayersController < ApplicationController
   # POST /workspace_layers
   # POST /workspace_layers.json
   def create
-    @view_layer = ViewLayer.new(view_layer_params)
+    @view_layer = @view.view_layers.build(view_layer_params)
 
     respond_to do |format|
       if @view_layer.save
-        format.html { redirect_to @view_layer, notice: 'View layer was successfully created.' }
+        ActionCable.server.broadcast "workspaces:workspace_#{@workspace.id}_#{@view.id}", {
+          command: 'ws.layers.add',
+          name: @view_layer.layer.name,
+          url: workspace_view_view_layer_path(@workspace, @view, @view_layer)
+        }
+        format.js { head :created, location: workspace_view_view_layer_path(@workspace, @view, @view_layer) }
+        format.html { redirect_to [@workspace, @view], notice: 'View layer was successfully created.' }
         format.json { render :show, status: :created, location: @view_layer }
       else
         format.html { render :new }
@@ -43,7 +53,7 @@ class ViewLayersController < ApplicationController
   def update
     respond_to do |format|
       if @view_layer.update(view_layer_params)
-        format.html { redirect_to @view_layer, notice: 'View layer was successfully updated.' }
+        format.html { redirect_to [@workspace, @view], notice: 'View layer was successfully updated.' }
         format.json { render :show, status: :ok, location: @view_layer }
       else
         format.html { render :edit }
@@ -67,7 +77,15 @@ class ViewLayersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_view_layer
-    @view_layer = ViewLayer.find(params[:id])
+    @workspace = Workspace.find(params[:workspace_id])
+    @view = @workspace.views.find(params[:view_id])
+    @view_layer = @view.view_layers.find(params[:id]) if params[:id].present?
+  end
+
+  def set_workspace
+  end
+
+  def set_view
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
