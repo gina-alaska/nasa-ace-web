@@ -63,6 +63,9 @@ class @Workspace.UI
     @ws.on 'ws.graticule.hidden', (e, data) =>
       @getGraticule().removeClass('active btn-success').addClass('btn-default')
 
+    @ws.on 'ws.layers.delete', (e, data) =>
+      @getLayer(data.name).remove()
+
     @el.on 'input', '[data-adjust="opacity"]', @handleOpacity
 
     @el.on 'mouseover', '[data-behavior="hover-toggle"]', @expand_sidebar
@@ -70,7 +73,7 @@ class @Workspace.UI
 
     @el.on 'click', '[data-behavior="remove-layer"]', (e) =>
       el = $(e.currentTarget).parents('.layer')
-      @deleteLayer(el.data('name'), el)
+      @deleteLayer(el.data('name'))
       e.preventDefault()
 
     @el.on 'click', '[data-toggle="collapse"]', @rotateIcon
@@ -121,7 +124,7 @@ class @Workspace.UI
         ws.view.map.easeTo(pitch: 60)
         $(this).addClass('active btn-success').removeClass('btn-default')
 
-  deleteLayer: (name, layerEl) =>
+  deleteLayer: (name) =>
     @ws.trigger('ws.layers.delete', { name: name })
     layerEl.remove()
 
