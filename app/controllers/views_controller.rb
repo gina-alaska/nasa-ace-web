@@ -81,7 +81,7 @@ class ViewsController < ApplicationController
   end
 
   def add_layer
-    @layers = @workspace.layers.all - @view.layers
+    @layers = Layer.all - @view.layers
 
     respond_to do |format|
       format.js
