@@ -20,8 +20,7 @@ class WorkspacesChannel < ApplicationCable::Channel
       rebroadcast(data)
     when 'ws.layers.delete'
       layer = current_view.layers.where(name: data['name'])
-      view_layer = ViewLayer.where(view: current_view, layer: layer).first
-      view_layer.destroy
+      current_view.layers.destroy(layer)
       rebroadcast(data)
     when 'ws.layers.show'
       update_layer_state(data['name'], active: true)

@@ -11,7 +11,7 @@ module ViewsHelper
     when 'geojson'
       symbol = 'circle'
       color = layer.style.try(:[], 'color')
-    when 'kml'
+    else
       symbol = 'circle'
       color = layer.style.try(:[], 'color')
     end

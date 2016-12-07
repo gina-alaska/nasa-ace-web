@@ -21,5 +21,8 @@
 //= require cable
 //= require_tree ./channels
 //= require workspace
+//= require workspace/mapbox/mapbox
+//= require workspace/mapbox/layer
+//= require_tree ./workspace/mapbox
 //= require workspace/layers
 //= require_tree ./workspace
