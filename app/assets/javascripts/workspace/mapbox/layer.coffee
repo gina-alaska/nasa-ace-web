@@ -42,15 +42,17 @@ class @Workspace.Mapbox.Layer
     if type in ['symbol']
       @map.setPaintProperty(layer, "text-opacity", value)
 
-  isLayerActive: () =>
-    @map.getLayer(@getSublayer(0))?
+  isLayerActive: (name = null) =>
+    name = @getSublayer(0) unless name?
+    @map.getLayer(name)?
 
   isSourceActive: () =>
     @map.getSource(@sourceName)? if @sourceName?
 
   remove: (destroy = true) =>
     @eachSublayer (layer, index) =>
-      @map.removeLayer(layer, destroy) if @isLayerActive()
+      @map.removeLayer(layer, destroy) if @isLayerActive(layer)
+      
     @sublayers = []
 
   addToMap: (config) =>
