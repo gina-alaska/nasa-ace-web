@@ -33,11 +33,11 @@ class ViewLayersController < ApplicationController
 
     respond_to do |format|
       if @view_layer.save
-        ActionCable.server.broadcast "workspaces:workspace_#{@workspace.id}_#{@view.id}", {
-          command: 'ws.layers.add',
-          name: @view_layer.layer.name,
-          url: workspace_view_view_layer_path(@workspace, @view, @view_layer)
-        }
+        ActionCable.server.broadcast "workspaces:workspace_#{@workspace.id}_#{@view.id}",
+                                     command: 'ws.layers.add',
+                                     name: @view_layer.layer.name,
+                                     url: workspace_view_view_layer_path(@workspace, @view, @view_layer)
+
         format.js { head :created, location: workspace_view_view_layer_path(@workspace, @view, @view_layer) }
         format.html { redirect_to [@workspace, @view, @view_layer], notice: 'View layer was successfully created.' }
         format.json { render :show, status: :created, location: @view_layer }
@@ -75,6 +75,7 @@ class ViewLayersController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_view_layer
     @workspace = Workspace.find(params[:workspace_id])
