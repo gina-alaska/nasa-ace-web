@@ -123,7 +123,6 @@ class @Workspace.UI
 
   deleteLayer: (name) =>
     @ws.trigger('ws.layers.delete', { name: name })
-    layerEl.remove()
 
   setPresenter: (state) =>
     btn = $('[data-toggle="presenter"]')

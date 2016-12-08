@@ -4,7 +4,13 @@
       .modal-header
         %button.close{ data: { dismiss: 'modal' }}
           %span &times;
-        %h4.modal-title Search Layers
+        %h4.modal-title Available Layers
       .modal-body
-        - @layers.each do |layer|
-          = link_to layer.name, workspace_view_view_layers_path(@workspace, @view, nil, view_layer: { layer_id: layer.id }), method: :post, remote: true
+        - if @layers.blank?
+          %p All layers have been added.
+        - else
+          - @layers.each do |layer|
+            = link_to layer.name, workspace_view_view_layers_path(@workspace, @view, nil, view_layer: { layer_id: layer.id }), method: :post, remote: true
+      .modal-footer
+        %button.close{ data: { dismiss: 'modal' }}
+          Close
