@@ -27,6 +27,10 @@ This application is the main landing page and rails application hosting the work
     # open browser and point to url the above command prints.  (Defaults to http://localhost:3000)
     ```
 
+## License
+
+Release under MIT license, see [LICENSE](/LICENSE)
+
 ## Contributing
 
 1. Fork the repository on Github

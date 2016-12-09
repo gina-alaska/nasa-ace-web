@@ -42,13 +42,12 @@ class @Workspace.MapboxLayers extends Workspace.Layers
 
   remove: (name, destroy = true) =>
     if @_layerList[name]?
-      @_layerList[name].remove(destroy)
-
       if @_layerList[name].supports.click
         @_layerList[name].eachSublayer (layer, index) =>
           ci = @clickable.indexOf(layer)
           @clickable.splice(ci, 1) if ci >= 0
 
+      @_layerList[name].remove(destroy)
       delete @_layerList[name] if destroy
 
   loading: () =>

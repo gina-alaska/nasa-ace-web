@@ -1,12 +1,12 @@
 - active ||= false
-.layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, url: layer.full_url, color: layer.style.try(:[], 'color') } }
+.layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, layers: layer.params, url: layer.full_url, color: layer.style.try(:[], 'color') } }
   .layer-handle{ draggable: "true", data: { toggle: 'layer' } }
     &nbsp;
 
   .layer-controls{ data: { toggle: 'layer' } }
     %span.layer-label
       = overlay_icon(layer)
-      = layer.name
+      %abbr{title:layer.name}= layer.name
 
   .layer-buttons.btn-group.btn-group-sm.hide-collapsed
     .btn.btn-default{ data: { toggle: 'collapse', target: dom_id(layer, '#info') }, title: layer.name }
