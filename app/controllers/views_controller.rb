@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ViewsController < ApplicationController
   before_action :set_workspace
-  before_action :set_view, only: [:show, :edit, :update, :destroy, :duplicate, :add_layer]
+  before_action :set_view, only: [:show, :edit, :update, :destroy, :duplicate, :available_layers]
 
   # GET /workspaces
   # GET /workspaces.json
@@ -80,7 +80,7 @@ class ViewsController < ApplicationController
     end
   end
 
-  def add_layer
+  def available_layers
     @layers = Layer.all - @view.layers
 
     respond_to do |format|

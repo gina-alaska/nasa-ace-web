@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :views do
       member do
         get 'duplicate'
-        get 'add_layer'
+        get 'available_layers'
       end
 
       resources :view_layers
