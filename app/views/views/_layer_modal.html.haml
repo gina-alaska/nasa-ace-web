@@ -12,5 +12,5 @@
           - @layers.each do |layer|
             = link_to layer.name, workspace_view_view_layers_path(@workspace, @view, nil, view_layer: { layer_id: layer.id }), method: :post, remote: true
       .modal-footer
-        %button.close{ data: { dismiss: 'modal' }}
+        = link_to '#', data: { dismiss: 'modal' }, class: 'btn btn-default' do
           Close
