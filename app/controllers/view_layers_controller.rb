@@ -28,6 +28,7 @@ class ViewLayersController < ApplicationController
 
   # POST /workspace_layers
   # POST /workspace_layers.json
+  # rubocop:disable Metrics/AbcSize
   def create
     @view_layer = @view.view_layers.build(view_layer_params)
 
@@ -47,6 +48,7 @@ class ViewLayersController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   # PATCH/PUT /workspace_layers/1
   # PATCH/PUT /workspace_layers/1.json
