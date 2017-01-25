@@ -10,6 +10,7 @@ class WorkspacesChannel < ApplicationCable::Channel
     clear_presenter(params[:key])
   end
 
+  # rubocop:disable Metrics/AbcSize
   def receive(data)
     case data["command"]
     when 'ws.basemap.show'
@@ -17,6 +18,10 @@ class WorkspacesChannel < ApplicationCable::Channel
       rebroadcast(data)
     when 'ws.layers.reorder'
       reorder_layers(data['layers'])
+      rebroadcast(data)
+    when 'ws.layers.delete'
+      layer = current_view.layers.where(name: data['name'])
+      current_view.layers.destroy(layer)
       rebroadcast(data)
     when 'ws.layers.show'
       update_layer_state(data['name'], active: true)
@@ -32,6 +37,7 @@ class WorkspacesChannel < ApplicationCable::Channel
       rebroadcast(data)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def request_presenter(data)
     if data['state']
