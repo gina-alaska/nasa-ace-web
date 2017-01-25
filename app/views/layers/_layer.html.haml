@@ -25,3 +25,11 @@
       .setting-group.text-center
         %button.btn.btn-default.btn-sm.btn-block{ data: { toggle: 'layer'} }
           Toggle layer
+      .setting-group
+        %dl
+          %dt Category
+          %dd
+            = "#{layer.category.maptype}"
+          %dt Url
+          %dd
+            = "#{wrap_url(layer.url, 35).html_safe}"
