@@ -17,6 +17,10 @@
   %p
     %b Style:
     = @layer.style.to_json
+- unless @layer.ckan_id.blank?
+  %p
+    %b Ckan ID:
+    = @layer.ckan_id
 
 = link_to 'Edit', edit_layer_path(@layer)
 \|
