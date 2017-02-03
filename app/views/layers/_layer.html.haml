@@ -1,3 +1,5 @@
+- unless layer.ckan_id.nil?
+  - metadata = parse_layer_api_metadata(layer)
 - active ||= false
 .layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, layers: layer.params, url: layer.full_url, color: layer.style.try(:[], 'color') } }
   .layer-handle{ draggable: "true", data: { toggle: 'layer' } }
@@ -25,11 +27,15 @@
       .setting-group.text-center
         %button.btn.btn-default.btn-sm.btn-block{ data: { toggle: 'layer'} }
           Toggle layer
-      .setting-group
-        %dl
-          %dt Category
-          %dd
-            = "#{layer.category.maptype}"
-          %dt Url
-          %dd
-            = "#{wrap_url(layer.url, 35).html_safe}"
+      - unless metadata.blank?
+        .setting-group
+          %dl
+            %dt Title
+            %dd
+              = "#{metadata['title']}"
+            %dt Description
+            %dd
+              = "#{metadata['description']}"
+            %dt Organization
+            %dd
+              = "#{metadata['organization']['title']}"
