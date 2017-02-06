@@ -5,25 +5,9 @@
         %button.btn.btn-default.navbar-btn{ title: 'Toggle sidebar', data: { toggle: 'auto-collapse' } }
           %i.fa.fa-columns
 
-        %button.btn.btn-default.navbar-btn{ title: 'Toggle perspective', data: { toggle: 'perspective' } }
-          %i.fa.fa-street-view
-
-      .btn-group.btn-group-sm
         %button.btn.btn-default.navbar-btn{ title: 'Presenter', data: { toggle: 'presenter' } }
           %i.fa.fa-user
-
-      .btn-group.btn-group-sm
-        %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown', behavior: 'map-view-picker' } }
-          %i.fa.fa-fw{ class: params[:view] == '3d' ? 'fa-globe' : 'fa-map-o' }
-          %span.caret
-
-        %ul.dropdown-menu
-          %li
-            = link_to workspace_view_path(@workspace, @view, {view: '2d'}) do
-              Web mercator
-          %li
-            = link_to workspace_view_path(@workspace, @view, {view: '3d'}) do
-              Globe
+          Presenter
 
       .btn-group.btn-group-sm
         %button.btn.btn-default.navbar-btn.dropdown-toggle{ type: 'button', data: { toggle: 'dropdown' }, title: 'View Menu' }

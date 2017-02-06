@@ -7,11 +7,23 @@
     %i.fa.fa-fw.fa-gear.loading
     %span.hide-collapsed Settings
 
+  %button.btn.btn-default.btn-block{ title: 'Toggle perspective', data: { toggle: 'perspective' } }
+    %i.fa.fa-street-view
+    %span.hide-collapsed Perspective
+
+  = link_to workspace_view_path(@workspace, @view, {view: '2d'}), class: 'list-group-item' do
+    %i.fa.fa-map-o
+    %span.hide-collapsed Mercator View
+
+  = link_to workspace_view_path(@workspace, @view, {view: '3d'}), class: 'list-group-item' do
+    %i.fa.fa-globe
+    %span.hide-collapsed Globe View
+
 %h5.text-left
   .hide-collapsed Layers
 .list-group
   = link_to '#style-list', class: 'list-group-item', data: { toggle: 'collapse' } do
-    %i.fa.fa-fw.fa-globe
+    %i.fa.fa-fw.fa-square
     %span.hide-collapsed Base Layer
     .pull-right.hide-collapsed
       %i.fa.fa-caret-left.rotatable
@@ -20,7 +32,7 @@
     = render 'map_baselayers'
 
   = link_to '#overlay-layer-list', class: 'list-group-item', data: { toggle: 'collapse' } do
-    %i.fa.fa-fw.fa-map-o
+    %i.fa.fa-fw.fa-map-pin
     %span.hide-collapsed Overlays
     .pull-right.hide-collapsed
       %i.fa.fa-caret-left.rotatable
