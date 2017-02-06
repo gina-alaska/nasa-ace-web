@@ -27,7 +27,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 # static web pages
 gem 'high_voltage', '~> 3.0.0'
-
+# Frindly ID for nice URLs
+gem 'friendly_id', '~> 5.1.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

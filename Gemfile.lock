@@ -69,6 +69,8 @@ GEM
     ffi (1.9.14)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     georuby (2.5.2)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -230,6 +232,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   font-awesome-rails
+  friendly_id (~> 5.1.0)
   georuby
   haml-rails (~> 0.9)
   high_voltage (~> 3.0.0)
