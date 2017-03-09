@@ -1,4 +1,3 @@
--# = render view_layer.layer, active: view_layer.active
 - active ||= view_layer.active
 - layer ||= view_layer.layer
 .layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, url: layer.full_url, color: layer.style.try(:[], 'color') } }
@@ -31,5 +30,3 @@
         .btn-group
           %button.btn.btn-danger.btn-sm{ data: { behavior: 'remove-layer', url: [@workspace, @view, @view_layer], method: :delete } }
             Remove
-        -# = link_to view_layer, method: :delete, class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure?' }, remote: true do
-        -#   Remove Layer
