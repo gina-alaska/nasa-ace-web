@@ -93,6 +93,6 @@ class ViewsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def view_params
-    params.require(:view).permit(:name, :center_lat, :center_lng, :zoom, :presenter_id, :basemap)
+    params.require(:view).permit(:name, :center_lat, :center_lng, :zoom, :presenter_id, :basemap, :view_3d_mode)
   end
 end
