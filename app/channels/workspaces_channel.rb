@@ -18,6 +18,10 @@ class WorkspacesChannel < ApplicationCable::Channel
     when 'ws.layers.reorder'
       reorder_layers(data['layers'])
       rebroadcast(data)
+    when 'ws.layers.delete'
+      layer = current_view.layers.where(name: data['name'])
+      current_view.layers.destroy(layer)
+      rebroadcast(data)
     when 'ws.layers.show'
       update_layer_state(data['name'], active: true)
       rebroadcast(data)
