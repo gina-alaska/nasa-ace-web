@@ -22,6 +22,8 @@
       .setting-group
         %label Opacity:
         %input{ name: 'opacity', type: 'range', min: 0, max: 100, step: 0, value: 100, data: { adjust: 'opacity', layer: layer.name } }
-      .setting-group.text-center
-        %button.btn.btn-default.btn-sm.btn-block{ data: { toggle: 'layer'} }
+      .setting-group.text-center.btn-group.btn-block
+        %button.btn.btn-default.btn-sm{ data: { toggle: 'layer'} }
           Toggle layer
+        =link_to view_layer_path(layer), class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure?' }, method: :delete, remote: true do
+          Remove Layer
