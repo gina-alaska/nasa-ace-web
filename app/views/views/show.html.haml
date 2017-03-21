@@ -5,4 +5,4 @@
   .map-sidebar{ data: { behavior: 'hover-toggle', target: '#workspace-map', class: 'expand' } }
     = render 'map_sidebar'
   .map-content
-    #map.map{ data: { center: [@view.center_lng.to_f, @view.center_lat.to_f], zoom: @view.zoom } }
+    #map.map{ data: { center: [@view.center_lng.to_f, @view.center_lat.to_f], zoom: @view.zoom, view_3d_mode: @view.view_3d_mode } }
