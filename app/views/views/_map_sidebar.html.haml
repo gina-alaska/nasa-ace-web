@@ -7,17 +7,9 @@
     %i.fa.fa-fw.fa-gear.loading
     %span.hide-collapsed Settings
 
-  %button.btn.btn-default.btn-block{ title: 'Toggle perspective', data: { toggle: 'perspective' } }
-    %i.fa.fa-street-view
-    %span.hide-collapsed Perspective
-
-  = link_to workspace_view_path(@workspace, @view, {view: '2d'}), class: 'list-group-item' do
-    %i.fa.fa-map-o
-    %span.hide-collapsed Mercator View
-
-  = link_to workspace_view_path(@workspace, @view, {view: '3d'}), class: 'list-group-item' do
-    %i.fa.fa-globe
-    %span.hide-collapsed Globe View
+  = link_to available_layers_workspace_view_path(@workspace, @view), class: 'list-group-item', remote: true do
+    %i.fa.fa-plus
+    %sapn.hide-collapsed Add Layer
 
 %h5.text-left
   .hide-collapsed Layers

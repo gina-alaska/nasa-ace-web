@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
-  resources :view_layers
   resources :layers
   resources :categories
   mount ActionCable.server => '/cable'
 
   resources :workspaces do
     resources :views do
-      get 'duplicate', on: :member
+      member do
+        get 'duplicate'
+        get 'available_layers'
+      end
+
+      resources :view_layers
     end
   end
   resources :datasets
