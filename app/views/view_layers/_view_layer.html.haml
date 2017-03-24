@@ -1,5 +1,7 @@
 - active ||= view_layer.active
 - layer ||= view_layer.layer
+- unless layer.ckan_id.nil?
+  - metadata = parse_layer_api_metadata(layer)
 .layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, url: layer.full_url, color: layer.style.try(:[], 'color') } }
   .layer-handle{ draggable: "true", data: { toggle: 'layer' } }
     &nbsp;
@@ -27,6 +29,14 @@
         .btn-group
           %button.btn.btn-default.btn-sm{ data: { toggle: 'layer'} }
             Toggle
+        - unless metadata.blank?
+          .btn-group
+            %button.btn.btn-info.btn-sm{ data: { toggle: 'popover', content: "#{render('layers/metadata', metadata: metadata)}", placement: 'bottom', html: 'true' }, title: 'Layer Information'}
+              More Info
         .btn-group
           %button.btn.btn-danger.btn-sm{ data: { behavior: 'remove-layer', url: [@workspace, @view, @view_layer], method: :delete } }
             Remove
+:javascript
+$(function () {
+  $('[data-toggle="popover"]').popover();
+})
