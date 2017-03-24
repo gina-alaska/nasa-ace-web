@@ -6,10 +6,7 @@ class @Workspace.Mapbox.WmsLayer extends Workspace.Mapbox.Layer
   createSource: () =>
     @map.addSource(@sourceName, {
       type: 'raster',
-      tiles: [
-        "#{@config.url}&#{@config.layers}"
-      ],
-      layers: @config.layers,
+      tiles: [ @config.url.replace('{layers}', @config.params) ],
       tileSize: 256
     })
 
