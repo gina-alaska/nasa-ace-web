@@ -66,7 +66,7 @@ class @Workspace.MapboxView
       html = $("<div></div>")
       # html.append(contents)
       for content in contents
-        html.append(content) unless content.nodeName == '#text'
+        html.append(content)
 
       table = html.find('table').addClass('table table-bordered table-striped')
 

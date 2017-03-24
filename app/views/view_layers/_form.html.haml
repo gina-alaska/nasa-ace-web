@@ -1,10 +1,8 @@
-= simple_form_for(@view_layer) do |f|
+= simple_form_for([@workspace, @view, @view_layer]) do |f|
   = f.error_notification
 
   .form-inputs
-    = f.association :view
     = f.association :layer
-    = f.input :position
 
   .form-actions
     = f.button :submit

@@ -30,6 +30,13 @@
         - unless metadata.blank?
           %button.btn.btn-info.btn-sm{ data: { toggle: 'popover', content: "#{render('layers/metadata', metadata: metadata)}", placement: 'bottom', html: 'true' }, title: 'Layer Information'}
             More Info
+
+      .setting-group.text-center.btn-group.btn-block
+        %button.btn.btn-default.btn-sm{ data: { toggle: 'layer'} }
+          Toggle layer
+        =link_to view_layer_path(layer), class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure?' }, method: :delete, remote: true do
+          Remove Layer
+
 :javascript
 $(function () {
   $('[data-toggle="popover"]').popover();
