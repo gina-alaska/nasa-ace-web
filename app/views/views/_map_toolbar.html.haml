@@ -34,7 +34,9 @@
         %ul.dropdown-menu
           %li
             = link_to duplicate_workspace_view_path(@workspace) do
-              Duplicate View
+              Duplicate this view
+            = link_to '', target: "_blank" do
+              Open in new Tab
           %li.divider{ role: 'separator' }
 
           - @workspace.views.each do |view|
