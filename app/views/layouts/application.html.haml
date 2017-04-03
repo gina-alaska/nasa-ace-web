@@ -13,14 +13,17 @@
     .container.site-content
       %section
         = yield
+
     %section.site-footer
       .footer-wrapper
-        = image_tag 'ace_logo.png', class: 'ace-logo'
-
-        %p
-          ACE Proudly Partners with
-          %br/
-          = image_tag 'exact_earth.png'
-
-      .site-cookie
-        This site uses cookies to improve your experience.
+        .row
+          .col-sm-3
+            = image_tag 'ace_logo.png', class: 'ace-logo'
+          .col-sm-9
+            %p
+              ACE Proudly Partners with
+              %br/
+              = image_tag 'exact_earth.png'
+              %br/
+              %span{class: 'site-cookie'}
+                This site uses cookies to improve your experience.
