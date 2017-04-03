@@ -1,6 +1,6 @@
 - active ||= view_layer.active
 - layer ||= view_layer.layer
-.layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, url: layer.full_url, color: layer.style.try(:[], 'color') } }
+.layer.list-group-item{ class: active ? 'active': '', data: { name: layer.name, type: layer.maptype, url: layer.full_url, params: layer.params, color: layer.style.try(:[], 'color') } }
   .layer-handle{ draggable: "true", data: { toggle: 'layer' } }
     &nbsp;
 
