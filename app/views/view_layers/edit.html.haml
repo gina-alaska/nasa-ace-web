@@ -2,6 +2,6 @@
 
 = render 'form'
 
-= link_to 'Show', @view_layer
+= link_to 'Show', [@workspace, @view, @view_layer]
 \|
-= link_to 'Back', view_layers_path
+= link_to 'Back', workspace_view_view_layers_path(@workspace, @view)

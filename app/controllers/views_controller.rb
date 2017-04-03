@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ViewsController < ApplicationController
   before_action :set_workspace
-  before_action :set_view, only: [:show, :edit, :update, :destroy, :duplicate]
+  before_action :set_view, only: [:show, :edit, :update, :destroy, :duplicate, :available_layers]
 
   # GET /workspaces
   # GET /workspaces.json
@@ -77,6 +77,14 @@ class ViewsController < ApplicationController
         format.html { render @view.new_record? ? :new : :edit }
         format.json { render json: @view.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def available_layers
+    @layers = Layer.all - @view.layers
+
+    respond_to do |format|
+      format.js
     end
   end
 

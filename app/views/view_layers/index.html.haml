@@ -16,10 +16,10 @@
         %td= view_layer.view
         %td= view_layer.layer
         %td= view_layer.position
-        %td= link_to 'Show', view_layer
-        %td= link_to 'Edit', edit_view_layer_path(view_layer)
-        %td= link_to 'Destroy', view_layer, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= link_to 'Show', workspace_view_view_layer_path(@workspace, @view, view_layer)
+        %td= link_to 'Edit', edit_workspace_view_view_layer_path(@workspace, @view, view_layer)
+        %td= link_to 'Destroy', workspace_view_view_layer_path(@workspace, @view, view_layer), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New View layer', new_view_layer_path
+= link_to 'New View layer', new_workspace_view_view_layer_path(@workspace, @view)

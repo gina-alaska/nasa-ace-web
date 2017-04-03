@@ -19,6 +19,10 @@
     %i.fa.fa-globe
     %span.hide-collapsed Globe View
 
+  = link_to available_layers_workspace_view_path(@workspace, @view), class: 'list-group-item', remote: true do
+    %i.fa.fa-plus
+    %sapn.hide-collapsed Add Layer
+
 %h5.text-left
   .hide-collapsed Layers
 .list-group
