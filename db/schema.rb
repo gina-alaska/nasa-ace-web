@@ -81,26 +81,6 @@ ActiveRecord::Schema.define(version: 20170310233114) do
     t.index ["workspace_id"], name: "index_views_on_workspace_id", using: :btree
   end
 
-  create_table "workspace_layers", force: :cascade do |t|
-    t.integer  "workspace_id"
-    t.integer  "layer_id"
-    t.integer  "position"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.boolean  "active",       default: false
-    t.index ["layer_id"], name: "index_workspace_layers_on_layer_id", using: :btree
-    t.index ["workspace_id"], name: "index_workspace_layers_on_workspace_id", using: :btree
-  end
-
-  create_table "workspace_views", force: :cascade do |t|
-    t.integer  "workspace_id"
-    t.integer  "view_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["view_id"], name: "index_workspace_views_on_view_id", using: :btree
-    t.index ["workspace_id"], name: "index_workspace_views_on_workspace_id", using: :btree
-  end
-
   create_table "workspaces", force: :cascade do |t|
     t.string "name"
   end
