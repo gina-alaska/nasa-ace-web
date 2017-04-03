@@ -15,7 +15,7 @@
   .hide-collapsed Layers
 .list-group
   = link_to '#style-list', class: 'list-group-item', data: { toggle: 'collapse' } do
-    %i.fa.fa-fw.fa-globe
+    %i.fa.fa-fw.fa-square
     %span.hide-collapsed Base Layer
     .pull-right.hide-collapsed
       %i.fa.fa-caret-left.rotatable
@@ -24,7 +24,7 @@
     = render 'map_baselayers'
 
   = link_to '#overlay-layer-list', class: 'list-group-item', data: { toggle: 'collapse' } do
-    %i.fa.fa-fw.fa-map-o
+    %i.fa.fa-fw.fa-map-pin
     %span.hide-collapsed Overlays
     .pull-right.hide-collapsed
       %i.fa.fa-caret-left.rotatable
