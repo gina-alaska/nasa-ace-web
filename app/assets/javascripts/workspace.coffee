@@ -7,7 +7,7 @@ class @Workspace
     'cesium': true
   }
 
-  constructor: (el, channel_key, view = 'cesium') ->
+  constructor: (el, channel_key, view = '2d') ->
     @el = $(el)
     return unless @el.length > 0
 

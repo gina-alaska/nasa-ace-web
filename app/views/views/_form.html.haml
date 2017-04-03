@@ -13,6 +13,10 @@
         = f.input :center_lat
       .col-sm-4
         = f.input :zoom
+    .row
+      .col-sm-12
+        = f.label 'Use 3D mode'
+        = f.check_box :view_3d_mode, lable: 'Use 3D mode'
 
   .form-actions
     = link_to :back, class: 'btn btn-default' do
