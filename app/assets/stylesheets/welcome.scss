@@ -53,29 +53,38 @@ html, body {
 
 .site-footer {
   padding: 20px;
-  background: #005d7a asset-url("bg.png");
-  color: #fff;
-  font-size: 20px;
+  background: #005d7a url("/images/bg.png");
+  color: #000;
+  font-size: 20px; 
+ }
 
-  .footer-wrapper {
+  .site-footer .footer-wrapper {
     height: 200px;
-    text-align: center;
+    width: 700px;
+    margin: auto;
   }
 
-  p {
-    margin: 0px 40px;
+  .site-footer p {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    margin: 20px 40px;
     display: inline-block;
     position: relative;
-    top: 35%;
-    -webkit-transform: perspective(1px) translateY(-50%);
-    -ms-transform: perspective(1px) translateY(-50%);
-    transform: perspective(1px) translateY(-50%);
-  }
+    border-radius: 4px;
+    top: 35%; }
 
-  .ace-logo {
-    width: 200px;
-  }
-}
+  .site-footer .ace-logo {
+    height: auto;
+    width: auto; 
+    max-width: 200px; 
+    max-height: 200px; }
+
+  .site-footer .site-cookie {
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: center; 
+    font-size: 14px; }
 
 .site-cookie {
   color: #fff;
