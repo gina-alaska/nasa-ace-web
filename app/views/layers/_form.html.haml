@@ -6,6 +6,7 @@
     = f.association :category, label_method: :pretty_name
     = f.input :url
     = f.input :params
+    = f.input :ckan_id
 
     %h3 Style
     = f.simple_fields_for :style do |style|
