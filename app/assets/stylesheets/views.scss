@@ -217,3 +217,17 @@ $sidebar_width: 300px;
   left: 0px;
   width: 100%;
 }
+
+#info {
+  display: block;
+  position: relative;
+  margin: 0px auto;
+  width: 400px;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+  background: $sidebar_color;
+  }

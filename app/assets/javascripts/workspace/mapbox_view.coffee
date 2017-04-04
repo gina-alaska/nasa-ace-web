@@ -24,6 +24,10 @@ class @Workspace.MapboxView
     draw = mapboxgl.Draw({ position: 'top-right' })
     @map.addControl(draw)
 
+    @map.on 'mousemove', (e) =>
+      document.getElementById('info').innerHTML =
+        e.lngLat
+
   initEvents: () =>
     @map.on 'load', @onLoad
     @map.on 'click', @featurePopup
