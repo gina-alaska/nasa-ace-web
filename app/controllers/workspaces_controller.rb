@@ -3,7 +3,7 @@ class WorkspacesController < ApplicationController
   before_action :set_workspace, only: [:show, :edit, :update, :destroy]
 
   def index
-    @workspaces = Workspace.all
+    @workspaces = Workspace.all.order(name: :desc)
   end
 
   def show
