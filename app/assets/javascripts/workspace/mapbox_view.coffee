@@ -26,7 +26,7 @@ class @Workspace.MapboxView
 
     @map.on 'mousemove', (e) =>
       document.getElementById('info').innerHTML =
-        e.lngLat
+        "Lat: " + e.lngLat.lat.toPrecision(6) + " Lng: " + e.lngLat.lng.toPrecision(7)
 
   initEvents: () =>
     @map.on 'load', @onLoad

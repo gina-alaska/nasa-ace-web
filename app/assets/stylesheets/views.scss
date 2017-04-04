@@ -220,9 +220,8 @@ $sidebar_width: 300px;
 
 #info {
   display: block;
-  position: relative;
-  margin: 0px auto;
-  width: 400px;
+  position: absolute;
+  width: 250px;
   padding: 10px;
   border: none;
   border-radius: 3px;
@@ -230,4 +229,6 @@ $sidebar_width: 300px;
   text-align: center;
   color: #fff;
   background: $sidebar_color;
+  bottom: 0px;
+  left: 0px;
   }
