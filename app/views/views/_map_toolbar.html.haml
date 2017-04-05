@@ -26,7 +26,7 @@
               Open in new Tab
           %li.divider{ role: 'separator' }
 
-          - @workspace.views.each do |view|
+          - @workspace.views.order(name: :asc).each do |view|
             %li
               = link_to view.name, workspace_view_path(@workspace, view)
 
