@@ -6,3 +6,4 @@
     = render 'map_sidebar'
   .map-content
     #map.map{ data: { center: [@view.center_lng.to_f, @view.center_lat.to_f], zoom: @view.zoom } }
+    %pre{ id: 'info' }
