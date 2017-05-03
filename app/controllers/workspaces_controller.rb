@@ -3,7 +3,16 @@ class WorkspacesController < ApplicationController
   before_action :set_workspace, only: [:show, :edit, :update, :destroy]
 
   def index
-    @workspaces = Workspace.all.order(name: :desc)
+    if params[:q].blank?
+      @workspaces = Workspace.all.order(name: :desc)
+    else
+      @workspaces = Workspace.where('name ilike ?', "%#{params[:q]}%").order(name: :desc)
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @workspaces }
+    end
   end
 
   def show
