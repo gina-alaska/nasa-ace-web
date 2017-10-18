@@ -88,7 +88,7 @@ class WorkspacesChannel < ApplicationCable::Channel
   def update_layer_state(name, state = {})
     layer = current_view.layers.where(name: name)
     wl = current_view.view_layers.where(layer: layer).first
-    wl&.update_attributes(state)
+    wl.update_attributes(state)
   end
 
   def update_workspace_state(state = {})

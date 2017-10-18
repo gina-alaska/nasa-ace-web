@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LayersController < ApplicationController
-  before_action :set_layer, only: %i[show edit update destroy]
+  before_action :set_layer, only: %i(show edit update destroy)
 
   # GET /layers
   # GET /layers.json

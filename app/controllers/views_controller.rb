@@ -2,7 +2,7 @@
 
 class ViewsController < ApplicationController
   before_action :set_workspace
-  before_action :set_view, only: %i[show edit update destroy duplicate available_layers]
+  before_action :set_view, only: %i(show edit update destroy duplicate available_layers)
 
   # GET /workspaces
   # GET /workspaces.json

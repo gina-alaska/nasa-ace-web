@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DatasetsController < ApplicationController
-  before_action :set_dataset, only: %i[show edit update destroy]
+  before_action :set_dataset, only: %i(show edit update destroy)
 
   # GET /datasets
   # GET /datasets.json

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class WorkspacesController < ApplicationController
-  before_action :set_workspace, only: %i[show edit update destroy]
+  before_action :set_workspace, only: %i(show edit update destroy)
 
   def index
     @workspaces = if params[:q].blank?
