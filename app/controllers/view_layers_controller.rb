@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize
+
 class ViewLayersController < ApplicationController
   before_action :set_view_layer
 
