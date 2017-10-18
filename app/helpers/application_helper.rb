@@ -3,15 +3,17 @@
 module ApplicationHelper
   def breadcrumbs(links)
     content_tag(:ol, class: 'breadcrumb') do
-      links.collect do |link|
-        content_tag(:li) do
-          if link.size == 1
-            link.first
-          else
-            link_to link.first, link.last
+      safe_join(
+        links.collect do |link|
+          content_tag(:li) do
+            if link.size == 1
+              link.first
+            else
+              link_to link.first, link.last
+            end
           end
         end
-      end.safe_join
+      )
     end
   end
 
