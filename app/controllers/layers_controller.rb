@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class LayersController < ApplicationController
-  before_action :set_layer, only: [:show, :edit, :update, :destroy]
+  before_action :set_layer, only: %i[show edit update destroy]
 
   # GET /layers
   # GET /layers.json
@@ -10,8 +11,7 @@ class LayersController < ApplicationController
 
   # GET /layers/1
   # GET /layers/1.json
-  def show
-  end
+  def show; end
 
   # GET /layers/new
   def new
@@ -19,8 +19,7 @@ class LayersController < ApplicationController
   end
 
   # GET /layers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /layers
   # POST /layers.json

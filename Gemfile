@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -42,25 +43,25 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
   gem 'listen', '~> 3.0.5'
+  gem 'web-console'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'meta_request'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'meta_request'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'haml-rails', '~> 0.9'
-gem 'simple_form'
-gem 'font-awesome-rails'
-gem 'metamagic'
-gem 'acts_as_list'
 gem 'active_link_to'
-gem 'sprockets-es6', require: 'sprockets/es6'
+gem 'acts_as_list'
+gem 'font-awesome-rails'
 gem 'georuby', require: ['georuby', 'geo_ruby/geojson']
+gem 'haml-rails', '~> 0.9'
+gem 'metamagic'
+gem 'simple_form'
+gem 'sprockets-es6', require: 'sprockets/es6'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '3.3.7'
@@ -68,8 +69,8 @@ source 'https://rails-assets.org' do
 end
 
 group :test do
-  gem 'simplecov', require: false
   gem 'rubocop', require: false
+  gem 'simplecov', require: false
 end
 
 ruby '2.3.1'

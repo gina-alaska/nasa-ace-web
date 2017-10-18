@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Workspace < ApplicationRecord
   has_many :views, dependent: :destroy
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ApplicationHelper
   def breadcrumbs(links)
     content_tag(:ol, class: 'breadcrumb') do

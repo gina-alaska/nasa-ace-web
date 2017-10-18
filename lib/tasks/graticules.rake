@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace 'graticules' do
   desc 'Build graticle geojson files for map'
   task :build, [:step] => :environment do |_t, args|
