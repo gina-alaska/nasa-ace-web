@@ -21,9 +21,4 @@ module ApplicationHelper
     ckan = Rails.application.secrets.ckan_url
     path.blank? ? ckan : ::File.join(ckan, path)
   end
-
-  def static_url(path = nil)
-    static = Rails.application.secrets.static_url
-    path.blank? ? static : ::File.join(static, path)
-  end
 end
