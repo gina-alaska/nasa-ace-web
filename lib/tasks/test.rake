@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace 'test' do
   desc 'Test the schema against the migrations'
   task 'schema' => :environment do

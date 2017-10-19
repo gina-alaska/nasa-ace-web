@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class ViewsController < ApplicationController
   before_action :set_workspace
-  before_action :set_view, only: [:show, :edit, :update, :destroy, :duplicate, :available_layers]
+  before_action :set_view, only: %i(show edit update destroy duplicate available_layers)
 
   # GET /workspaces
   # GET /workspaces.json
@@ -21,8 +22,7 @@ class ViewsController < ApplicationController
   end
 
   # GET /workspaces/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /workspaces
   # POST /workspaces.json

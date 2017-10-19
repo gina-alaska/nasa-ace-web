@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/AbcSize
+
 # Be sure to restart your server when you modify this file. Action Cable runs in a loop that does not support auto reloading.
 class WorkspacesChannel < ApplicationCable::Channel
   def subscribed
@@ -52,7 +55,7 @@ class WorkspacesChannel < ApplicationCable::Channel
   end
 
   def rebroadcast(data)
-    return if !current_view.presenter_id.blank? && current_view.presenter_id != params[:key]
+    return if current_view.presenter_id.present? && current_view.presenter_id != params[:key]
     WorkspacesChannel.broadcast_to(channel_name, data)
   end
 
@@ -85,7 +88,7 @@ class WorkspacesChannel < ApplicationCable::Channel
   def update_layer_state(name, state = {})
     layer = current_view.layers.where(name: name)
     wl = current_view.view_layers.where(layer: layer).first
-    wl.update_attributes(state) unless wl.nil?
+    wl.update_attributes(state)
   end
 
   def update_workspace_state(state = {})

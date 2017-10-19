@@ -53,7 +53,7 @@ html, body {
 
 .site-footer {
   padding: 20px;
-  background: #005d7a url("/images/bg.png");
+  background: #005d7a asset-url('bg.png');
   color: #000;
   font-size: 20px; 
  }

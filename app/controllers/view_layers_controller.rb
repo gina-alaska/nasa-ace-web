@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/AbcSize
+
 class ViewLayersController < ApplicationController
   before_action :set_view_layer
 
@@ -23,8 +26,7 @@ class ViewLayersController < ApplicationController
   end
 
   # GET /workspace_layers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /workspace_layers
   # POST /workspace_layers.json

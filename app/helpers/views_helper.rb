@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ViewsHelper
   def overlay_icon(layer)
     case layer.maptype

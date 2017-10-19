@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Layer < ApplicationRecord
   belongs_to :category
   has_many :view_layers, dependent: :destroy

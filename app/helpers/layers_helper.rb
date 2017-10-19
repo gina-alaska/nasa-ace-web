@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module LayersHelper
   def parse_layer_api_metadata(layer)
     params = { id: layer.ckan_id }

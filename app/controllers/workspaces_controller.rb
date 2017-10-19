@@ -1,13 +1,14 @@
 # frozen_string_literal: true
+
 class WorkspacesController < ApplicationController
-  before_action :set_workspace, only: [:show, :edit, :update, :destroy]
+  before_action :set_workspace, only: %i(show edit update destroy)
 
   def index
-    if params[:q].blank?
-      @workspaces = Workspace.all.order(name: :desc)
-    else
-      @workspaces = Workspace.where('name ilike ?', "%#{params[:q]}%").order(name: :desc)
-    end
+    @workspaces = if params[:q].blank?
+                    Workspace.all.order(name: :desc)
+                  else
+                    Workspace.where('name ilike ?', "%#{params[:q]}%").order(name: :desc)
+                  end
 
     respond_to do |format|
       format.html
@@ -28,8 +29,7 @@ class WorkspacesController < ApplicationController
     @workspace = Workspace.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @workspace = Workspace.new(workspace_params)

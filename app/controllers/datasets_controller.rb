@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class DatasetsController < ApplicationController
-  before_action :set_dataset, only: [:show, :edit, :update, :destroy]
+  before_action :set_dataset, only: %i(show edit update destroy)
 
   # GET /datasets
   # GET /datasets.json
@@ -10,8 +11,7 @@ class DatasetsController < ApplicationController
 
   # GET /datasets/1
   # GET /datasets/1.json
-  def show
-  end
+  def show; end
 
   # GET /datasets/new
   def new
@@ -19,8 +19,7 @@ class DatasetsController < ApplicationController
   end
 
   # GET /datasets/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /datasets
   # POST /datasets.json

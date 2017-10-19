@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ViewsHelperTest < ActionView::TestCase
   test "overlay_icon should return for kml" do
     layer = layers(:kml)
