@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :layers
-  resources :categories
   mount ActionCable.server => '/cable'
 
   resources :workspaces do
@@ -15,9 +13,13 @@ Rails.application.routes.draw do
       resources :view_layers
     end
   end
+  
   resources :datasets
-  get 'welcome/index'
+  resources :users
+  resources :layers
+  resources :categories
 
+  get 'welcome/index'
   root to: 'welcome#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

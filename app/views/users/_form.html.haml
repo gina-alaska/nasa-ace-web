@@ -1,0 +1,11 @@
+= simple_form_for(@user) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_id
+    = f.input :ckan_api_key
+    = f.input :name
+    = f.input :group
+
+  .form-actions
+    = f.button :submit

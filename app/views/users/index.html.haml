@@ -1,0 +1,27 @@
+%h1 Listing users
+
+%table
+  %thead
+    %tr
+      %th User
+      %th Ckan api key
+      %th Name
+      %th Group
+      %th
+      %th
+      %th
+
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.user_id
+        %td= user.ckan_api_key
+        %td= user.name
+        %td= user.group
+        %td= link_to 'Show', user
+        %td= link_to 'Edit', edit_user_path(user)
+        %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New User', new_user_path
