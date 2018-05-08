@@ -53,8 +53,20 @@
   .col-sm-3
     .img-preview.thumbnail
       %h4.text-center Current Daily Seaice Concentration
-      = image_tag("http://nsidc.org/data/seaice_index/images/daily_images/N_bm_conc.png")
+      = link_to "http://nsidc.org/data/seaice_index/images/daily_images/N_bm_conc.png", target: "_blank" do
+        = image_tag("http://nsidc.org/data/seaice_index/images/daily_images/N_bm_conc.png")
 
     .img-preview.thumbnail
-      %h4.text-center Arctic Cap Nowcast/Forecast
-      = image_tag("http://www7320.nrlssc.navy.mil/hycomARC/navo/arcticicespddrf_nowcast_anim30d.gif")
+      %h4.text-center 12 UTC GFS Model <br/> (North American domain) <br/> Surface 1 day
+      = link_to "http://tempest.aos.wisc.edu/wxp_images/gfs104_12h_12UTC/gblav_cpra024_h024.gif", target: "_blank" do
+        = image_tag("http://tempest.aos.wisc.edu/wxp_images/gfs104_12h_12UTC/gblav_cpra024_h024.gif")
+
+    .img-preview.thumbnail
+      %h4.text-center 12 UTC GFS Model <br/> (North American domain) <br/> Surface 3 day
+      = link_to "http://tempest.aos.wisc.edu/wxp_images/gfs104_12h_12UTC/gblav_cpra072_h072.gif", target: "_blank" do
+        = image_tag("http://tempest.aos.wisc.edu/wxp_images/gfs104_12h_12UTC/gblav_cpra072_h072.gif")
+
+    .img-preview.thumbnail
+      %h4.text-center 12 UTC GFS Model <br/> (North American domain) <br/> Surface 7 day
+      = link_to "http://tempest.aos.wisc.edu/wxp_images/gfs104_12h_12UTC/gblav_cpra168_h168.gif", target: "_blank" do
+        = image_tag("http://tempest.aos.wisc.edu/wxp_images/gfs104_12h_12UTC/gblav_cpra168_h168.gif")
