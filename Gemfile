@@ -30,6 +30,8 @@ gem 'redis', '~> 3.0'
 gem 'high_voltage', '~> 3.0.0'
 # Frindly ID for nice URLs
 gem 'friendly_id', '~> 5.1.0'
+# CAS client
+gem 'rack-cas'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -73,4 +75,4 @@ group :test do
   gem 'simplecov', require: false
 end
 
-ruby '2.3.1'
+ruby '2.4.3'
