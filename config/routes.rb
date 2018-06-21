@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :users, skip: [:sessions]
   mount ActionCable.server => '/cable'
 
   resources :workspaces do
@@ -15,7 +16,6 @@ Rails.application.routes.draw do
   end
   
   resources :datasets
-  resources :users
   resources :layers
   resources :categories
 

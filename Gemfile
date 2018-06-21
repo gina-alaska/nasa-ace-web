@@ -3,9 +3,9 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0'
+gem 'rails', '5.1.0'
 # Use sqlite3 as the database for Active Record
-gem 'pg'
+gem 'pg', '= 0.21'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -15,7 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -30,8 +30,11 @@ gem 'redis', '~> 3.0'
 gem 'high_voltage', '~> 3.0.0'
 # Frindly ID for nice URLs
 gem 'friendly_id', '~> 5.1.0'
+
 # CAS client
-gem 'rack-cas'
+gem 'devise'
+gem 'devise_cas_authenticatable'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -75,4 +78,4 @@ group :test do
   gem 'simplecov', require: false
 end
 
-ruby '2.4.3'
+ruby '2.4.4'

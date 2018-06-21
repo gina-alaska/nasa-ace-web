@@ -25,3 +25,4 @@ coverage
 app/assets/stylesheets/scaffolds.scss
 
 .DS_Store
+/public/*
