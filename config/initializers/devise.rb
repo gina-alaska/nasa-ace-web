@@ -8,7 +8,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ba35610f5d0448152ca0d2f985e78899a2daa1e43055c00f2e5e4a5cb30301a957e33f25d3abe5b1e2146b08458fe89465bd6d86c0a43bcbc47a18d756164909'
+  config.secret_key = 'ba35610f5d0448152ca0d2f985e78899a2daa1e43055c00f2e5e4a5cb30301a957e33f25d3abe5b1e2146b08458fe89465bd6d86c0a43bcbc47a18d756164909'
   
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -18,7 +18,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'jason@gina.alaska.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -40,7 +40,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [:email]
+  config.authentication_keys = [:username]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -64,8 +64,6 @@ Devise.setup do |config|
   # given strategies, for example, `config.params_authenticatable = [:database]` will
   # enable it only for database (email + password) authentication.
   # config.params_authenticatable = true
-
-  # Tell if authentication through HTTP Auth is enabled. False by default.
   # It can be set to an array that will enable http authentication only for the
   # given strategies, for example, `config.http_authenticatable = [:database]` will
   # enable it only for database authentication. The supported strategies are:
@@ -305,10 +303,10 @@ Devise.setup do |config|
   # By default, devise_cas_authenticatable will create users.  If you would rather
   # require user records to already exist locally before they can authenticate via
   # CAS, uncomment the following line.
-  # config.cas_create_user = false
+  config.cas_create_user = false
 
   # You can enable Single Sign Out, which by default is disabled.
-  # config.cas_enable_single_sign_out = true
+  config.cas_enable_single_sign_out = true
   
   # If you don't want to use the username returned from your CAS server as the unique
   # identifier, but some other field passed in cas_extra_attributes, you can specify
@@ -333,7 +331,7 @@ Devise.setup do |config|
   # config.cas_single_sign_out_mapping_strategy = :redis_cache
 
   # If you need to specify some extra configs for rubycas-client, you can do this via:
-  # config.cas_client_config_options = {
-  #     logger: Rails.logger
-  # }
+  config.cas_client_config_options = {
+      logger: Rails.logger
+  }
 end

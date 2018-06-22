@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users, skip: [:sessions]
+  devise_for :users, controllers: {sessions: 'devise/cas_sessions'}
   mount ActionCable.server => '/cable'
 
   resources :workspaces do
