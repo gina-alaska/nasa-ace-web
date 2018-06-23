@@ -17,5 +17,76 @@
         -if user_signed_in?
           %li= link_to 'Workspaces', workspaces_path
         %li= link_to 'Help', page_path('help')
-.row
-  = "User is signed in #{user_signed_in?}"
+
+
+- rootUrl = 'http://ace.rdidev.com'
+
+%header.account-masthead
+  %div.container-fluid
+    -if user_signed_in?
+      %div.account.avatar.authed{data: {module: "me", me: "**user-token**"}}
+        %ul.unstyled
+          %li
+            %a{href: "#{rootUrl}/ckan-admin", title: ""}
+              %i{class: "fa fa-legal", "aria-hidden": "true"}
+                %span.text
+                  ADMIN_VARIABLE
+
+          %li
+            -if current_user != nil
+              %a{href: "#{rootUrl}/user/#{current_user.username}", class: "image", title: "View Profile"}
+                %img.gravatar{width: 22, height: 22, src: "//gravatar.com/avatar/40b9bdd575600162e3b76ab6db429f69?s=22&d=identicon"}
+                  %span.username
+                    = current_user.fullname
+            -else
+              %a{href: "#{rootUrl}/user/-no-user-", class: "image", title: "View Profile"}
+                %img.gravatar{width: 22, height: 22, src: "//gravatar.com/avatar/40b9bdd575600162e3b76ab6db429f69?s=22&d=identicon"}
+                  %span.username
+                    Unknown User
+
+          %li.notifications
+            //set_notification_tooltip
+            %a{href:"#{rootUrl}/dashboard", title:"Dashboard (0 new items)"}
+              %i{class:"fa fa-dashboard", "aria-hidden": "true"}
+                %span.text
+                  Dashboard
+                %span.badge
+                  0
+
+          %li
+            -if current_user != nil
+              %a{href: "#{rootUrl}/user/edit/#{current_user?.username}", title:"Edit Settings"}
+                %i.fa.fa-cog{"aria-hidden": "true"}
+                  %span.text
+            - else
+              %a{href: "#{rootUrl}/user/edit/-no-user-", title:"Edit Settings"}
+                %i.fa.fa-cog{"aria-hidden": "true"}
+                  %span.text
+
+
+          %li
+            :javascript
+              // Popup window code
+              function newPopup(url) {
+                popupWindow = window.open(url,'popUpWindow','height=425,width=355,top=50,left=100,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=yes')
+              }
+            %a{href: "Javascript: newPopup('#{rootUrl}/chat')"}
+              Open Chat Pop-Up
+
+          %li
+            %a{href:"#{rootUrl}/usr/_logout", title:"true"}
+              %i.fa.fa-sign-out{"aria-hidden": "true"}
+              %span{class: "text"}
+                signout
+    -else
+      %nav.account.not-authed
+        %ul
+          %li
+            %a{href: "#{rootUrl}/user/login"}
+              Log In
+          %li
+            %a.sub{href: "#{rootUrl}/user/register"}
+              Register
+
+
+        
