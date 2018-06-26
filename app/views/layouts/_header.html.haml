@@ -22,9 +22,9 @@
 
 
 %header.account-masthead
-  %div.container-fluid
+  .container-fluid
     -if user_signed_in?
-      %div.account.avatar.authed{data: {module: "me", me: "**user-token**"}}
+      .account.avatar.authed{data: {module: "me", me: "**user-token**"}}
         %ul.unstyled
           %li
             %a{href: "#{rootUrl}/ckan-admin", title: ""}
