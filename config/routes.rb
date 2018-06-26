@@ -14,6 +14,10 @@ Rails.application.routes.draw do
       resources :view_layers
     end
   end
+
+  devise_scope :user do
+    get '/logout',  :to => 'devise/cas_sessions#destroy'
+  end
   
   resources :datasets
   resources :layers

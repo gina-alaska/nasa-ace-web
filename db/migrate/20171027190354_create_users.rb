@@ -3,7 +3,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
     create_table :users do |t|
       t.string :username, :null => false
       t.string :password
-      t.string :ckan_api_key
+      t.string :apikey
       t.string :fullname
       t.string :email
       t.string :group

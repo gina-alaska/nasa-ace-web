@@ -20,8 +20,4 @@ class User < ApplicationRecord
       end
     end
   end
-
-  def password
-    return encrypted_password
-  end
 end
